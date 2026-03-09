@@ -1,8 +1,8 @@
 /* Professional Violet Color Palette */
 :root {
-  --primary-color: #7c3aed;
-  --primary-dark: #6d28d9;
-  --primary-light: #8b5cf6;
+  --primary-color: #581c87;
+  --primary-dark: #4c1d95;
+  --primary-light: #6d28d9;
   --secondary-color: #64748b;
   --accent-color: #ec4899;
   --success-color: #10b981;
@@ -21,12 +21,12 @@
   --gray-700: #7e22ce;
   --gray-800: #6b21a8;
   --gray-900: #581c87;
-  --gradient-primary: linear-gradient(135deg, #7c3aed, #6d28d9);
-  --gradient-secondary: linear-gradient(135deg, #a855f7, #7e22ce);
-  --shadow-sm: 0 1px 2px 0 rgb(124, 58, 237 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(124, 58, 237 / 0.1), 0 2px 4px -2px rgb(124, 58, 237 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(124, 58, 237 / 0.1), 0 4px 6px -4px rgb(124, 58, 237 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(124, 58, 237 / 0.1), 0 8px 10px -6px rgb(124, 58, 237 / 0.1);
+  --gradient-primary: linear-gradient(135deg, #581c87, #4c1d95);
+  --gradient-secondary: linear-gradient(135deg, #6d28d9, #581c87);
+  --shadow-sm: 0 1px 2px 0 rgb(88, 28, 135 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(88, 28, 135 / 0.1), 0 2px 4px -2px rgb(88, 28, 135 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(88, 28, 135 / 0.1), 0 4px 6px -4px rgb(88, 28, 135 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(88, 28, 135 / 0.1), 0 8px 10px -6px rgb(88, 28, 135 / 0.1);
 }
 
 /* Global font and base styles */
@@ -233,7 +233,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(124, 58, 237, 0.9), rgba(109, 40, 217, 0.8));
+  background: linear-gradient(135deg, rgba(88, 28, 135, 0.9), rgba(76, 29, 149, 0.8));
   z-index: -1;
 }
 
@@ -569,7 +569,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(124, 58, 237, 0.95), rgba(109, 40, 217, 0.9));
+  background: linear-gradient(135deg, rgba(88, 28, 135, 0.95), rgba(76, 29, 149, 0.9));
   z-index: -1;
 }
 

@@ -51,7 +51,7 @@
           <div class="footer-section">
             <h4>Get Involved</h4>
             <ul class="footer-links">
-              <li><a href="#call-to-action">Donate</a></li>
+              <!-- <li><a href="#call-to-action">Donate</a></li> -->
               <li><a href="#contact">Volunteer</a></li>
               <li><a href="#contact">Partner With Us</a></li>
               <li><a href="#contact">Get Help</a></li>

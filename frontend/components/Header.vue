@@ -1,6 +1,5 @@
 <template>
   <header id="header" class="header">
-    <div class="container">
       <div class="header-content">
         <NuxtLink to="/" class="logo">
           <img src="/assets/img/logo.png" alt="GECO RWANDA Logo" class="logo-image" />
@@ -23,7 +22,6 @@
           </button>
         </div>
       </div>
-    </div>
   </header>
 </template>
 
@@ -88,13 +86,13 @@ onUnmounted(() => {
   right: 0;
   z-index: 1000;
   transition: all var(--transition);
-  background: #a755f7;
+  background: #581c87;
   box-shadow: none;
   border: none;
 }
 
 .header.scrolled {
-  background: #a755f7;
+  background: #581c87;
   box-shadow: none;
   border: none;
 }
@@ -103,9 +101,10 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-2) var(--space-4);
+  padding: 0 var(--space-4) 0 0;
   max-width: 100%;
   margin: 0;
+  height: 70px;
 }
 
 .logo {
@@ -117,14 +116,16 @@ onUnmounted(() => {
   flex-shrink: 0;
   padding: 0;
   margin: 0;
+  margin-left: 0;
   background: transparent;
   border: none !important;
   border-radius: 0;
   outline: none !important;
+  height: 100%;
 }
 
 .logo-image {
-  height: 50px;
+  height: 100%;
   width: auto;
   transition: all var(--transition);
   display: block;
@@ -162,6 +163,8 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  margin-left: auto;
+  height: 100%;
 }
 
 .nav-list {
@@ -170,6 +173,8 @@ onUnmounted(() => {
   margin: 0;
   padding: 0;
   gap: var(--space-2);
+  height: 100%;
+  align-items: center;
 }
 
 .nav-link {
@@ -181,7 +186,7 @@ onUnmounted(() => {
   font-family: var(--font-display);
   background: transparent !important;
   border-radius: 0;
-  transition: all var(--transition);
+  transition: none;
   position: relative;
   font-size: 0.95rem;
   white-space: nowrap;
@@ -190,7 +195,7 @@ onUnmounted(() => {
 .nav-link:hover {
   background: rgba(255, 255, 255, 0.1);
   color: #f3e8ff;
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .nav-link.active {
@@ -290,7 +295,8 @@ onUnmounted(() => {
 /* Mobile Responsive */
 @media (max-width: 1024px) {
   .header-content {
-    padding: var(--space-3) var(--space-4);
+    padding: 0 var(--space-4) 0 0;
+    height: 70px;
   }
   
   .nav-list {
@@ -359,12 +365,8 @@ onUnmounted(() => {
 
 @media (max-width: 480px) {
   .header-content {
-    padding: var(--space-2);
-  }
-  
-  .logo-image {
+    padding: 0 var(--space-2) 0 0;
     height: 60px;
-    max-width: 200px;
   }
   
   .logo-text {
