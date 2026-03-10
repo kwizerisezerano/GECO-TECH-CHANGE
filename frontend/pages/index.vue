@@ -739,38 +739,41 @@
           </div>
           
           <div class="contact-form-wrapper">
-            <form class="contact-form">
+            <form class="contact-form" @submit.prevent="submitForm">
               <div class="form-row">
                 <div class="form-group">
                   <label class="form-label">Your Name</label>
-                  <input type="text" class="form-input" placeholder="Enter your name" required>
+                  <input v-model="form.name" type="text" class="form-input" placeholder="Enter your name" required>
                 </div>
                 <div class="form-group">
                   <label class="form-label">Email</label>
-                  <input type="email" class="form-input" placeholder="your@email.com" required>
+                  <input v-model="form.email" type="email" class="form-input" placeholder="your@email.com" required>
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group">
                   <label class="form-label">Phone</label>
-                  <input type="tel" class="form-input" placeholder="+250 7xx xxx xxx" required>
+                  <input v-model="form.phone" type="tel" class="form-input" placeholder="+250 7xx xxx xxx" required>
                 </div>
                 <div class="form-group">
                   <label class="form-label">Subject</label>
-                  <input type="text" class="form-input" placeholder="How can we help?" required>
+                  <input v-model="form.subject" type="text" class="form-input" placeholder="How can we help?" required>
                 </div>
               </div>
               <div class="form-group">
                 <label class="form-label">Message</label>
-                <textarea class="form-textarea" placeholder="Share your thoughts..." required></textarea>
+                <textarea v-model="form.message" class="form-textarea" placeholder="Share your thoughts..." required></textarea>
               </div>
-              <button type="submit" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary" :disabled="isSubmitting">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                   <path d="M15.854.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L14.5 1.707V4.5a.5.5 0 0 1 1 0V1.707l2.146 2.147a.5.5 0 0 1 0 .708z"/>
                   <path d="M1 14s-1 0-1-1 1-4 5-4 5 4 1 4-1 1H1zm4-6a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
                 </svg>
-                Send Message
+                {{ isSubmitting ? 'Sending...' : 'Send Message' }}
               </button>
+              <div v-if="submitStatus" class="submit-message" :class="submitStatus.type">
+                {{ submitStatus.message }}
+              </div>
             </form>
           </div>
         </div>
@@ -793,9 +796,59 @@ const stats = ref({
   donations: 0
 })
 
+const form = ref({
+  name: '',
+  email: '',
+  phone: '',
+  subject: '',
+  message: ''
+})
+
+const isSubmitting = ref(false)
+const submitStatus = ref(null)
+
+const submitForm = async () => {
+  isSubmitting.value = true
+  submitStatus.value = null
+  
+  try {
+    const response = await $fetch(`${useRuntimeConfig().public.apiBase}/contact`, {
+      method: 'POST',
+      body: {
+        ...form.value,
+        toEmail: 'globalepelepticc@gmail.com',
+        appName: 'GECO RWANDA'
+      }
+    })
+    
+    submitStatus.value = {
+      type: 'success',
+      message: 'Thank you for your message! We will get back to you soon.'
+    }
+    
+    // Reset form
+    form.value = {
+      name: '',
+      email: '',
+      phone: '',
+      subject: '',
+      message: ''
+    }
+    
+  } catch (error) {
+    console.error('Form submission error:', error)
+    submitStatus.value = {
+      type: 'error',
+      message: 'Sorry, there was an error sending your message. Please try again.'
+    }
+  } finally {
+    isSubmitting.value = false
+  }
+}
+
 onMounted(async () => {
   try {
-    const response = await $fetch('/api/stats')
+    const response = await $fetch(`${useRuntimeConfig().public.apiBase}/stats`)
     stats.value = response
   } catch (error) {
     console.error('Failed to fetch stats:', error)
