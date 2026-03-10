@@ -79,6 +79,15 @@
   </head>
 
   <body class="index-page">
+    <!-- Dark Mode Toggle Button -->
+    <button 
+      id="darkModeToggle" 
+      class="dark-mode-toggle"
+      aria-label="Toggle dark mode"
+      title="Toggle dark mode"
+    >
+      <i class="bi bi-moon" id="themeIcon"></i>
+    </button>
     <header id="header" class="header d-flex align-items-center fixed-top">
       <div
         class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between"
@@ -1455,5 +1464,57 @@ thriving and sustainable holistic development.
 
     <!-- Main JS File -->
     <script src="assets/js/main.js"></script>
+
+    <!-- Dark Mode Toggle Script -->
+    <script>
+      // Dark mode functionality
+      const darkModeToggle = document.getElementById('darkModeToggle');
+      const themeIcon = document.getElementById('themeIcon');
+      const html = document.documentElement;
+
+      // Check for saved theme preference or default to light mode
+      const checkDarkMode = () => {
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        const isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+        updateTheme(isDark);
+      };
+
+      const toggleDarkMode = () => {
+        const isDark = html.getAttribute('data-theme') === 'dark';
+        const newTheme = !isDark;
+        updateTheme(newTheme);
+        localStorage.setItem('theme', newTheme ? 'dark' : 'light');
+      };
+
+      const updateTheme = (isDark) => {
+        if (isDark) {
+          html.setAttribute('data-theme', 'dark');
+          html.classList.add('dark');
+          themeIcon.classList.remove('bi-moon');
+          themeIcon.classList.add('bi-sun');
+        } else {
+          html.removeAttribute('data-theme');
+          html.classList.remove('dark');
+          themeIcon.classList.remove('bi-sun');
+          themeIcon.classList.add('bi-moon');
+        }
+      };
+
+      // Initialize dark mode
+      checkDarkMode();
+
+      // Add event listener to toggle button
+      darkModeToggle.addEventListener('click', toggleDarkMode);
+
+      // Listen for system theme changes
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      mediaQuery.addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+          updateTheme(e.matches);
+        }
+      });
+    </script>
   </body>
 </html>

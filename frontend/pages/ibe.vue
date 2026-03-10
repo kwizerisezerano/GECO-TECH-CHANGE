@@ -113,13 +113,43 @@
 <style scoped>
 .page-section {
   padding: 80px 0;
+  background-color: var(--gray-50);
+  color: var(--gray-800);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .content-card {
-  background: white;
+  background: var(--surface-color);
   padding: 40px;
   border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .page-section {
+    background-color: var(--gray-50);
+    color: var(--gray-200);
+  }
+  
+  .content-card {
+    background: var(--surface-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+}
+
+[data-theme="dark"] .page-section {
+  background-color: var(--gray-50);
+  color: var(--gray-200);
+}
+
+[data-theme="dark"] .content-card {
+  background: var(--surface-color);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .certificate-info {
@@ -129,19 +159,21 @@
   padding: 30px;
   background: linear-gradient(135deg, rgba(161, 83, 164, 0.1), rgba(141, 63, 144, 0.1));
   border-radius: 10px;
-  border-left: 4px solid rgb(161, 83, 164);
+  border-left: 4px solid var(--primary-color);
+  transition: all 0.3s ease;
 }
 
 .certificate-image {
   width: 120px;
   height: 120px;
-  background: rgb(161, 83, 164);
+  background: var(--primary-color);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: 30px;
   flex-shrink: 0;
+  transition: all 0.3s ease;
 }
 
 .certificate-image i {
@@ -151,20 +183,68 @@
 
 .certificate-details h4 {
   margin: 0 0 20px 0;
-  color: #333;
+  color: var(--gray-900);
   font-size: 1.5rem;
+  transition: color 0.3s ease;
 }
 
 .certificate-details p {
   margin: 8px 0;
-  color: #666;
+  color: var(--gray-600);
   font-size: 1rem;
+  transition: color 0.3s ease;
 }
 
 .certificate-details strong {
-  color: #333;
+  color: var(--gray-800);
   min-width: 120px;
   display: inline-block;
+  transition: color 0.3s ease;
+}
+
+/* Dark mode certificate details */
+@media (prefers-color-scheme: dark) {
+  .certificate-info {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(147, 51, 234, 0.15));
+    border-left-color: var(--primary-color);
+  }
+  
+  .certificate-image {
+    background: var(--primary-color);
+  }
+  
+  .certificate-details h4 {
+    color: var(--gray-100);
+  }
+  
+  .certificate-details p {
+    color: var(--gray-300);
+  }
+  
+  .certificate-details strong {
+    color: var(--gray-200);
+  }
+}
+
+[data-theme="dark"] .certificate-info {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(147, 51, 234, 0.15));
+  border-left-color: var(--primary-color);
+}
+
+[data-theme="dark"] .certificate-image {
+  background: var(--primary-color);
+}
+
+[data-theme="dark"] .certificate-details h4 {
+  color: var(--gray-100);
+}
+
+[data-theme="dark"] .certificate-details p {
+  color: var(--gray-300);
+}
+
+[data-theme="dark"] .certificate-details strong {
+  color: var(--gray-200);
 }
 
 .recognition-criteria {
@@ -172,10 +252,11 @@
 }
 
 .recognition-criteria h4 {
-  color: #333;
+  color: var(--gray-900);
   margin-bottom: 30px;
   text-align: center;
   font-size: 1.8rem;
+  transition: color 0.3s ease;
 }
 
 .criteria-grid {
@@ -187,28 +268,85 @@
 .criteria-item {
   text-align: center;
   padding: 25px;
-  background: #f8f9fa;
+  background: var(--gray-50);
   border-radius: 8px;
-  border-top: 3px solid rgb(161, 83, 164);
+  border-top: 3px solid var(--primary-color);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.criteria-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
 }
 
 .criteria-item i {
   font-size: 2.5rem;
-  color: rgb(161, 83, 164);
+  color: var(--primary-color);
   margin-bottom: 15px;
+  transition: all 0.3s ease;
 }
 
 .criteria-item h5 {
   margin: 0 0 10px 0;
-  color: #333;
+  color: var(--gray-900);
   font-size: 1.1rem;
+  transition: color 0.3s ease;
 }
 
 .criteria-item p {
   margin: 0;
-  color: #666;
+  color: var(--gray-600);
   font-size: 0.9rem;
   line-height: 1.4;
+  transition: color 0.3s ease;
+}
+
+/* Dark mode criteria items */
+@media (prefers-color-scheme: dark) {
+  .recognition-criteria h4 {
+    color: var(--gray-100);
+  }
+  
+  .criteria-item {
+    background: var(--gray-100);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .criteria-item:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+  
+  .criteria-item h5 {
+    color: var(--gray-100);
+  }
+  
+  .criteria-item p {
+    color: var(--gray-300);
+  }
+}
+
+[data-theme="dark"] .recognition-criteria h4 {
+  color: var(--gray-100);
+}
+
+[data-theme="dark"] .criteria-item {
+  background: var(--gray-100);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .criteria-item:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .criteria-item h5 {
+  color: var(--gray-100);
+}
+
+[data-theme="dark"] .criteria-item p {
+  color: var(--gray-300);
 }
 
 .benefits-section {
@@ -216,10 +354,11 @@
 }
 
 .benefits-section h4 {
-  color: #333;
+  color: var(--gray-900);
   margin-bottom: 25px;
   text-align: center;
   font-size: 1.8rem;
+  transition: color 0.3s ease;
 }
 
 .benefits-list {
@@ -232,29 +371,78 @@
   display: flex;
   align-items: center;
   padding: 15px 20px;
-  background: #f8f9fa;
+  background: var(--gray-50);
   border-radius: 5px;
-  border-left: 3px solid rgb(161, 83, 164);
+  border-left: 3px solid var(--primary-color);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.benefit-item:hover {
+  transform: translateX(5px);
+  box-shadow: var(--shadow-md);
 }
 
 .benefit-item i {
-  color: rgb(161, 83, 164);
+  color: var(--primary-color);
   margin-right: 15px;
   font-size: 1.2rem;
+  transition: all 0.3s ease;
 }
 
 .benefit-item span {
-  color: #333;
+  color: var(--gray-800);
   font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+/* Dark mode benefits */
+@media (prefers-color-scheme: dark) {
+  .benefits-section h4 {
+    color: var(--gray-100);
+  }
+  
+  .benefit-item {
+    background: var(--gray-100);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .benefit-item:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .benefit-item span {
+    color: var(--gray-200);
+  }
+}
+
+[data-theme="dark"] .benefits-section h4 {
+  color: var(--gray-100);
+}
+
+[data-theme="dark"] .benefit-item {
+  background: var(--gray-100);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .benefit-item:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .benefit-item span {
+  color: var(--gray-200);
 }
 
 .download-section {
   text-align: center;
   margin-top: 50px;
   padding: 40px;
-  background: linear-gradient(135deg, rgb(161, 83, 164), rgb(141, 63, 144));
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
   border-radius: 10px;
   color: white;
+  transition: all 0.3s ease;
 }
 
 .download-section h4 {
@@ -284,12 +472,13 @@
 
 .btn-download {
   background: white;
-  color: rgb(161, 83, 164);
+  color: var(--primary-color);
 }
 
 .btn-download:hover {
-  background: #f8f9fa;
+  background: var(--gray-50);
   transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
 .btn-verify {
@@ -301,6 +490,24 @@
 .btn-verify:hover {
   background: rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark mode buttons */
+@media (prefers-color-scheme: dark) {
+  .btn-download:hover {
+    background: var(--gray-100);
+  }
+}
+
+[data-theme="dark"] .btn-download:hover {
+  background: var(--gray-100);
+}
+
+.btn-verify:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 768px) {
@@ -321,7 +528,7 @@
   
   .btn-download, .btn-verify {
     width: 100%;
-    max-width: 250px;
+    max-width: 300px;
   }
 }
 </style>

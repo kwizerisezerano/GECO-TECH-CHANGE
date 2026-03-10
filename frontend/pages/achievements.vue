@@ -232,7 +232,7 @@ const recognitions = ref([
   min-height: 60vh;
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, #a153a4 0%, #8d3f90 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
   overflow: hidden;
 }
 
@@ -296,7 +296,8 @@ const recognitions = ref([
 /* Stats Section */
 .stats-section {
   padding: 80px 0;
-  background: #f8f9fa;
+  background: var(--gray-50);
+  transition: background-color 0.3s ease;
 }
 
 .stats-grid {
@@ -306,30 +307,31 @@ const recognitions = ref([
 }
 
 .stat-card {
-  background: white;
+  background: var(--surface-color);
   border-radius: 15px;
   padding: 40px 30px;
   text-align: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-lg);
   transition: all 0.3s ease;
   border: 2px solid transparent;
 }
 
 .stat-card:hover {
   transform: translateY(-10px);
-  border-color: #a153a4;
-  box-shadow: 0 20px 40px rgba(161, 83, 164, 0.2);
+  border-color: var(--primary-color);
+  box-shadow: 0 20px 40px rgba(168, 85, 247, 0.2);
 }
 
 .stat-card-icon {
   width: 70px;
   height: 70px;
-  background: linear-gradient(135deg, #a153a4, #8d3f90);
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 20px;
+  transition: all 0.3s ease;
 }
 
 .stat-card-icon i {
@@ -340,14 +342,16 @@ const recognitions = ref([
 .stat-card-content .stat-number {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #333;
+  color: var(--gray-900);
   margin-bottom: 10px;
+  transition: color 0.3s ease;
 }
 
 .stat-card-content .stat-label {
-  color: #666;
+  color: var(--gray-600);
   font-size: 0.95rem;
   line-height: 1.4;
+  transition: color 0.3s ease;
 }
 
 /* Section Headers */
@@ -359,20 +363,87 @@ const recognitions = ref([
 .section-header h2 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #333;
+  color: var(--gray-900);
   margin-bottom: 15px;
+  transition: color 0.3s ease;
 }
 
 .section-header p {
   font-size: 1.1rem;
-  color: #666;
+  color: var(--gray-600);
   max-width: 600px;
   margin: 0 auto;
+  transition: color 0.3s ease;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .stats-section {
+    background: var(--gray-50);
+  }
+  
+  .stat-card {
+    background: var(--surface-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  .stat-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+  
+  .stat-card-content .stat-number {
+    color: var(--gray-100);
+  }
+  
+  .stat-card-content .stat-label {
+    color: var(--gray-300);
+  }
+  
+  .section-header h2 {
+    color: var(--gray-100);
+  }
+  
+  .section-header p {
+    color: var(--gray-300);
+  }
+}
+
+[data-theme="dark"] .stats-section {
+  background: var(--gray-50);
+}
+
+[data-theme="dark"] .stat-card {
+  background: var(--surface-color);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .stat-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .stat-card-content .stat-number {
+  color: var(--gray-100);
+}
+
+[data-theme="dark"] .stat-card-content .stat-label {
+  color: var(--gray-300);
+}
+
+[data-theme="dark"] .section-header h2 {
+  color: var(--gray-100);
+}
+
+[data-theme="dark"] .section-header p {
+  color: var(--gray-300);
 }
 
 /* Achievements Timeline */
 .achievements-section {
   padding: 80px 0;
+  background: var(--gray-50);
+  transition: background-color 0.3s ease;
 }
 
 .achievements-timeline {
@@ -388,7 +459,7 @@ const recognitions = ref([
   top: 0;
   bottom: 0;
   width: 3px;
-  background: linear-gradient(180deg, #a153a4, #8d3f90);
+  background: linear-gradient(180deg, var(--primary-color), var(--primary-dark));
   transform: translateX(-50%);
 }
 
@@ -413,14 +484,14 @@ const recognitions = ref([
 .timeline-dot {
   width: 20px;
   height: 20px;
-  background: #a153a4;
+  background: var(--primary-color);
   border: 4px solid white;
   border-radius: 50%;
-  box-shadow: 0 0 0 3px rgba(161, 83, 164, 0.2);
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2);
 }
 
 .timeline-year {
-  background: #a153a4;
+  background: var(--primary-color);
   color: white;
   padding: 5px 15px;
   border-radius: 20px;
@@ -435,11 +506,12 @@ const recognitions = ref([
 }
 
 .achievement-card {
-  background: white;
+  background: var(--surface-color);
   padding: 30px;
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-lg);
   transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .achievement-card:hover {
@@ -448,33 +520,92 @@ const recognitions = ref([
 }
 
 .achievement-card h3 {
-  color: #333;
+  color: var(--gray-900);
   margin-bottom: 15px;
   font-size: 1.3rem;
+  transition: color 0.3s ease;
 }
 
 .achievement-card p {
-  color: #666;
+  color: var(--gray-600);
   line-height: 1.6;
   margin-bottom: 20px;
+  transition: color 0.3s ease;
 }
 
 .impact-tag {
   display: inline-block;
   padding: 8px 16px;
-  background: rgba(161, 83, 164, 0.1);
-  color: #a153a4;
+  background: rgba(168, 85, 247, 0.1);
+  color: var(--primary-color);
   border-radius: 20px;
   font-size: 0.85rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+/* Dark mode timeline adjustments */
+@media (prefers-color-scheme: dark) {
+  .achievements-section {
+    background: var(--gray-50);
+  }
+  
+  .achievement-card {
+    background: var(--surface-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  .achievement-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+  
+  .achievement-card h3 {
+    color: var(--gray-100);
+  }
+  
+  .achievement-card p {
+    color: var(--gray-300);
+  }
+  
+  .impact-tag {
+    background: rgba(168, 85, 247, 0.2);
+  }
+}
+
+[data-theme="dark"] .achievements-section {
+  background: var(--gray-50);
+}
+
+[data-theme="dark"] .achievement-card {
+  background: var(--surface-color);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .achievement-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .achievement-card h3 {
+  color: var(--gray-100);
+}
+
+[data-theme="dark"] .achievement-card p {
+  color: var(--gray-300);
+}
+
+[data-theme="dark"] .impact-tag {
+  background: rgba(168, 85, 247, 0.2);
 }
 
 /* Stories Section */
 .stories-section {
   padding: 80px 0;
-  background: #f8f9fa;
+  background: var(--gray-50);
+  transition: background-color 0.3s ease;
 }
 
 .stories-grid {
@@ -484,11 +615,12 @@ const recognitions = ref([
 }
 
 .story-card {
-  background: white;
+  background: var(--surface-color);
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-lg);
   transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .story-card:hover {
@@ -497,7 +629,7 @@ const recognitions = ref([
 }
 
 .story-header {
-  background: linear-gradient(135deg, #a153a4, #8d3f90);
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
   padding: 30px;
   text-align: center;
   color: white;
@@ -512,6 +644,7 @@ const recognitions = ref([
   align-items: center;
   justify-content: center;
   margin: 0 auto 20px;
+  transition: all 0.3s ease;
 }
 
 .story-icon i {
@@ -529,34 +662,40 @@ const recognitions = ref([
 }
 
 .story-content p {
-  color: #666;
+  color: var(--gray-600);
   line-height: 1.6;
   margin-bottom: 20px;
+  transition: color 0.3s ease;
 }
 
 .story-outcome {
-  background: rgba(161, 83, 164, 0.1);
+  background: rgba(168, 85, 247, 0.1);
   padding: 15px;
   border-radius: 10px;
+  transition: all 0.3s ease;
 }
 
 .outcome-label {
   font-weight: 600;
-  color: #a153a4;
+  color: var(--primary-color);
   margin-bottom: 5px;
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  transition: color 0.3s ease;
 }
 
 .outcome-text {
-  color: #333;
+  color: var(--gray-800);
   font-weight: 500;
+  transition: color 0.3s ease;
 }
 
 /* Recognition Section */
 .recognition-section {
   padding: 80px 0;
+  background: var(--gray-50);
+  transition: background-color 0.3s ease;
 }
 
 .recognition-grid {
@@ -566,13 +705,14 @@ const recognitions = ref([
 }
 
 .recognition-card {
-  background: white;
+  background: var(--surface-color);
   border-radius: 15px;
   padding: 40px 30px;
   text-align: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-lg);
   transition: all 0.3s ease;
-  border-top: 4px solid #a153a4;
+  border-top: 4px solid var(--primary-color);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .recognition-card:hover {
@@ -580,15 +720,99 @@ const recognitions = ref([
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
+/* Dark mode stories and recognition adjustments */
+@media (prefers-color-scheme: dark) {
+  .stories-section {
+    background: var(--gray-50);
+  }
+  
+  .story-card {
+    background: var(--surface-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  .story-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+  
+  .story-content p {
+    color: var(--gray-300);
+  }
+  
+  .story-outcome {
+    background: rgba(168, 85, 247, 0.2);
+  }
+  
+  .outcome-text {
+    color: var(--gray-200);
+  }
+  
+  .recognition-section {
+    background: var(--gray-50);
+  }
+  
+  .recognition-card {
+    background: var(--surface-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  .recognition-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+}
+
+[data-theme="dark"] .stories-section {
+  background: var(--gray-50);
+}
+
+[data-theme="dark"] .story-card {
+  background: var(--surface-color);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .story-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .story-content p {
+  color: var(--gray-300);
+}
+
+[data-theme="dark"] .story-outcome {
+  background: rgba(168, 85, 247, 0.2);
+}
+
+[data-theme="dark"] .outcome-text {
+  color: var(--gray-200);
+}
+
+[data-theme="dark"] .recognition-section {
+  background: var(--gray-50);
+}
+
+[data-theme="dark"] .recognition-card {
+  background: var(--surface-color);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .recognition-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
 .recognition-icon {
   width: 70px;
   height: 70px;
-  background: linear-gradient(135deg, #a153a4, #8d3f90);
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 25px;
+  transition: all 0.3s ease;
 }
 
 .recognition-icon i {
@@ -596,28 +820,51 @@ const recognitions = ref([
   color: white;
 }
 
-.recognition-content h3 {
-  color: #333;
-  margin-bottom: 10px;
-  font-size: 1.2rem;
+.recognition-card h3 {
+  color: var(--gray-900);
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+  transition: color 0.3s ease;
 }
 
-.recognition-content .organization {
-  color: #666;
-  margin-bottom: 5px;
-  font-weight: 500;
+.recognition-card p {
+  color: var(--gray-600);
+  line-height: 1.6;
+  margin-bottom: 0;
+  transition: color 0.3s ease;
 }
 
-.recognition-content .year {
-  color: #a153a4;
-  font-weight: 600;
-  font-size: 0.9rem;
+/* Dark mode recognition adjustments */
+@media (prefers-color-scheme: dark) {
+  .recognition-icon {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  }
+  
+  .recognition-card h3 {
+    color: var(--gray-100);
+  }
+  
+  .recognition-card p {
+    color: var(--gray-300);
+  }
+}
+
+[data-theme="dark"] .recognition-icon {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+}
+
+[data-theme="dark"] .recognition-card h3 {
+  color: var(--gray-100);
+}
+
+[data-theme="dark"] .recognition-card p {
+  color: var(--gray-300);
 }
 
 /* CTA Section */
 .cta-section {
   padding: 80px 0;
-  background: linear-gradient(135deg, #a153a4, #8d3f90);
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
   color: white;
   text-align: center;
 }
@@ -658,7 +905,7 @@ const recognitions = ref([
 
 .btn-primary {
   background: white;
-  color: #a153a4;
+  color: var(--primary-color);
 }
 
 .btn-primary:hover {
@@ -674,18 +921,25 @@ const recognitions = ref([
 
 .btn-secondary:hover {
   background: white;
-  color: #a153a4;
+  color: var(--primary-color);
   transform: translateY(-3px);
 }
 
-/* Responsive Design */
+/* Dark mode CTA adjustments */
+@media (prefers-color-scheme: dark) {
+  .btn-primary:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  }
+}
+
+[data-theme="dark"] .btn-primary:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive Design - Professional Mobile Layout */
 @media (max-width: 768px) {
   .hero-title {
     font-size: 2.5rem;
-  }
-  
-  .hero-subtitle {
-    font-size: 1.1rem;
   }
   
   .hero-stats {
@@ -697,48 +951,150 @@ const recognitions = ref([
   }
   
   .timeline-item {
-    flex-direction: column !important;
-    padding-left: 60px;
+    flex-direction: row !important;
   }
   
   .timeline-marker {
     left: 30px;
+    transform: translateX(-50%);
   }
   
   .timeline-content {
-    width: 100%;
+    width: calc(100% - 80px);
+    margin-left: 80px;
   }
   
   .stories-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 0 16px;
+  }
+  
+  .story-card {
+    padding: 24px;
+    border-radius: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .story-header {
+    margin-bottom: 16px;
+  }
+  
+  .story-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 12px;
+  }
+  
+  .story-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+  }
+  
+  .story-content p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  
+  .recognition-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 0 16px;
+  }
+  
+  .recognition-item {
+    padding: 24px;
+    border-radius: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .recognition-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 12px;
+  }
+  
+  .recognition-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+  }
+  
+  .recognition-content p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  
+  .cta-section {
+    padding: 60px 20px;
+  }
+  
+  .cta-content h2 {
+    font-size: 1.8rem;
+    margin-bottom: 16px;
+  }
+  
+  .cta-content p {
+    font-size: 1rem;
+    margin-bottom: 24px;
   }
   
   .cta-buttons {
     flex-direction: column;
     align-items: center;
+    gap: 16px;
   }
   
   .btn {
-    width: 250px;
+    width: 100%;
+    max-width: 280px;
     text-align: center;
+    padding: 16px 24px;
+    font-size: 1rem;
+    border-radius: 12px;
   }
 }
 
 @media (max-width: 480px) {
-  .hero-title {
-    font-size: 2rem;
-  }
-  
-  .section-header h2 {
-    font-size: 2rem;
-  }
-  
-  .cta-content h2 {
-    font-size: 2rem;
-  }
-  
-  .stats-grid {
+  .hero-stats {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .stat-card {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+  }
+  
+  .stories-grid {
+    padding: 0 12px;
+    gap: 16px;
+  }
+  
+  .story-card {
+    padding: 20px;
+  }
+  
+  .recognition-grid {
+    padding: 0 12px;
+    gap: 16px;
+  }
+  
+  .recognition-item {
+    padding: 20px;
+  }
+  
+  .cta-section {
+    padding: 40px 16px;
+  }
+  
+  .btn {
+    max-width: 240px;
+    padding: 14px 20px;
   }
 }
 </style>

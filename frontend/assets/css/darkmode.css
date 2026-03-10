@@ -1,0 +1,90 @@
+/* GitHub-Style Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-color: #a78bfa;
+    --dark-color: #e6edf3;
+    --light-color: #0d1117;
+    --gray-50: #0d1117;
+    --gray-100: #161b22;
+    --gray-200: #21262d;
+    --gray-600: #8b949e;
+    --gray-700: #c9d1d9;
+    --gray-800: #e6edf3;
+    --gray-900: #ffffff;
+  }
+
+  body {
+    background-color: #0d1117 !important;
+    color: #c9d1d9 !important;
+  }
+
+  h1, h2, h3, h4, h5, h6, p, span, a, li {
+    color: #c9d1d9 !important;
+  }
+
+  .section-title h2, .section-title p {
+    color: #c9d1d9 !important;
+  }
+
+  .section, .about, .hero, .call-to-action, .stats {
+    background-color: #0d1117 !important;
+  }
+
+  .icon-box, .service-item, .mission-card, .contact-card, .portfolio-item {
+    background: #161b22 !important;
+    border-color: #30363d !important;
+  }
+}
+
+[data-theme="dark"] {
+  --primary-color: #a78bfa;
+  --dark-color: #e6edf3;
+  --light-color: #0d1117;
+  --gray-50: #0d1117;
+  --gray-100: #161b22;
+  --gray-200: #21262d;
+  --gray-600: #8b949e;
+  --gray-700: #c9d1d9;
+  --gray-800: #e6edf3;
+  --gray-900: #ffffff;
+}
+
+[data-theme="dark"] body {
+  background-color: #0d1117 !important;
+  color: #c9d1d9 !important;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6,
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] a,
+[data-theme="dark"] li {
+  color: #c9d1d9 !important;
+}
+
+[data-theme="dark"] .section-title h2,
+[data-theme="dark"] .section-title p {
+  color: #c9d1d9 !important;
+}
+
+[data-theme="dark"] .section,
+[data-theme="dark"] .about,
+[data-theme="dark"] .hero,
+[data-theme="dark"] .call-to-action,
+[data-theme="dark"] .stats {
+  background-color: #0d1117 !important;
+}
+
+[data-theme="dark"] .icon-box,
+[data-theme="dark"] .service-item,
+[data-theme="dark"] .mission-card,
+[data-theme="dark"] .contact-card,
+[data-theme="dark"] .portfolio-item {
+  background: #161b22 !important;
+  border-color: #30363d !important;
+}

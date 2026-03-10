@@ -7,12 +7,12 @@
 
         <nav class="nav" :class="{ active: isMobileMenuOpen }">
           <ul class="nav-list">
-            <li><a href="#hero" class="nav-link">Home</a></li>
-            <li><a href="#about" class="nav-link">About</a></li>
-            <li><a href="#services" class="nav-link">Services</a></li>
-            <li><a href="#stats" class="nav-link">Impact</a></li>
-            <li><a href="#portfolio" class="nav-link">Stories</a></li>
-            <li><a href="#contact" class="nav-link">Contact</a></li>
+            <li><a href="#hero" class="nav-link" @click="closeMobileMenu">Home</a></li>
+            <li><a href="#about" class="nav-link" @click="closeMobileMenu">About</a></li>
+            <li><a href="#services" class="nav-link" @click="closeMobileMenu">Services</a></li>
+            <li><a href="#stats" class="nav-link" @click="closeMobileMenu">Impact</a></li>
+            <li><a href="#portfolio" class="nav-link" @click="closeMobileMenu">Stories</a></li>
+            <li><a href="#contact" class="nav-link" @click="closeMobileMenu">Contact</a></li>
           </ul>
         </nav>
 
@@ -239,57 +239,61 @@ onUnmounted(() => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 44px;
-  height: 44px;
-  background: var(--accent-50);
-  border: 2px solid var(--accent-200);
-  border-radius: var(--radius-lg);
+  width: 50px;
+  height: 50px;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
   cursor: pointer;
-  padding: 0;
-  transition: all var(--transition);
+  padding: 12px;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
 .mobile-nav-toggle:hover {
-  background: var(--accent-100);
-  border-color: var(--accent-300);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-nav-toggle:active {
+  transform: scale(0.95);
 }
 
 .hamburger {
   position: relative;
-  width: 20px;
-  height: 2px;
-  background: var(--accent-700);
-  transition: all var(--transition);
+  width: 24px;
+  height: 3px;
+  background: transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 2px;
 }
 
 .hamburger::before,
 .hamburger::after {
   content: '';
   position: absolute;
-  width: 20px;
-  height: 2px;
-  background: inherit;
-  transition: all var(--transition);
+  width: 24px;
+  height: 3px;
+  background: white;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 2px;
 }
 
 .hamburger::before {
-  transform: translateY(-6px);
+  transform: translateY(-8px);
 }
 
 .hamburger::after {
-  transform: translateY(6px);
-}
-
-.mobile-nav-toggle.active .hamburger {
-  background: transparent;
+  transform: translateY(8px);
 }
 
 .mobile-nav-toggle.active .hamburger::before {
   transform: rotate(45deg);
+  width: 28px;
 }
 
 .mobile-nav-toggle.active .hamburger::after {
   transform: rotate(-45deg);
+  width: 28px;
 }
 
 /* Mobile Responsive */
@@ -322,13 +326,14 @@ onUnmounted(() => {
     position: fixed;
     top: 0;
     right: -100%;
-    width: 80%;
-    max-width: 320px;
+    width: 100%;
+    max-width: 100%;
     height: 100vh;
     background: white;
     box-shadow: -5px 0 20px rgba(0, 0, 0, 0.15);
-    transition: right var(--transition);
-    z-index: 999;
+    transition: right 0.3s ease;
+    z-index: 9999;
+    overflow-y: auto;
   }
   
   .nav.active {
@@ -336,12 +341,16 @@ onUnmounted(() => {
   }
   
   .nav-list {
+    display: flex;
     flex-direction: column;
-    padding: var(--space-20) var(--space-4) var(--space-4);
+    padding: 80px var(--space-4) var(--space-4);
     gap: 0;
+    background: white;
+    min-height: 100vh;
   }
   
   .nav-link {
+    display: block;
     padding: var(--space-4) var(--space-4);
     border-radius: var(--radius-lg);
     margin-bottom: var(--space-2);
@@ -350,6 +359,8 @@ onUnmounted(() => {
     width: 100%;
     text-align: left;
     font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
   }
   
   .nav-link:hover {

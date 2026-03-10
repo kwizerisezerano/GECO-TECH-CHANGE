@@ -388,8 +388,8 @@
           <div class="section-header">
             <div class="section-badge">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                <path d="M7.982 1.566a1.5 1.5 0 0 1 1.036 1.036l1.733 1.733a1.5 1.5 0 0 1 0 2.121l-1.733 1.733a1.5 1.5 0 0 1-2.121 0L4.464 4.464a1.5 1.5 0 0 1 0-2.121L6.197.61a1.5 1.5 0 0 1 1.036-.044z"/>
-                <path d="M12.152 6.596a1.5 1.5 0 0 1-2.121 0l-1.733-1.733a1.5 1.5 0 0 1 0-2.121l1.733-1.733a1.5 1.5 0 0 1 2.121 0l1.733 1.733a1.5 1.5 0 0 1 0 2.121z"/>
+                <path d="M7.982 1.566a1.5 1.5 0 0 1 1.036 1.036l1.733 1.733a1.5 1.5 0 0 1 0 2.121l-1.733 1.733a1.5 1.5 0 0 1 0 2.121l1.733 1.733a1.5 1.5 0 0 1 0-2.121L4.464 4.464a1.5 1.5 0 0 1 0-2.121L6.197.61a1.5 1.5 0 0 1 1.036-.044z"/>
+                <path d="M12.152 6.596a1.5 1.5 0 0 1-2.121 0l-1.733-1.733a1.5 1.5 0 0 1 0-2.121l1.733 1.733a1.5 1.5 0 0 1 2.121z"/>
               </svg>
               <span>Testimonials</span>
             </div>
@@ -399,135 +399,52 @@
             </p>
           </div>
           
-          <!-- Swiper Testimonials -->
-          <div class="testimonials-swiper">
-            <div class="testimonial-wrapper">
-              <div class="testimonial-item">
-                <div class="testimonial-content">
-                  <div class="quote-left">
-                    <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
-                      <path d="M7.982 1.566a1.5 1.5 0 0 1 1.036 1.036l1.733 1.733a1.5 1.5 0 0 1 0 2.121l-1.733 1.733a1.5 1.5 0 0 1-2.121 0L4.464 4.464a1.5 1.5 0 0 1 0-2.121L6.197.61a1.5 1.5 0 0 1 1.036-.044z"/>
-                      <path d="M12.152 6.596a1.5 1.5 0 0 1-2.121 0l-1.733-1.733a1.5 1.5 0 0 1 0-2.121l1.733-1.733a1.5 1.5 0 0 1 2.121 0l1.733 1.733a1.5 1.5 0 0 1 0 2.121z"/>
-                    </svg>
-                  </div>
-                  <p class="testimonial-text">GECO's comprehensive epilepsy care program has been life-changing. The professional medical support and community services provide exceptional care for patients and families.</p>
-                  <div class="quote-right">
-                    <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
-                      <path d="M7.982 1.566a1.5 1.5 0 0 1 1.036 1.036l1.733 1.733a1.5 1.5 0 0 1 0 2.121l-1.733 1.733a1.5 1.5 0 0 1-2.121 0L4.464 4.464a1.5 1.5 0 0 1 0-2.121L6.197.61a1.5 1.5 0 0 1 1.036-.044z"/>
-                      <path d="M12.152 6.596a1.5 1.5 0 0 1-2.121 0l-1.733-1.733a1.5 1.5 0 0 1 0-2.121l1.733-1.733a1.5 1.5 0 0 1 2.121 0l1.733 1.733a1.5 1.5 0 0 1 0 2.121z"/>
-                    </svg>
-                  </div>
-                </div>
-                <div class="testimonial-author">
-                  <img src="/assets/img/testimonials/testimonials-2.png" alt="NSHAVUJABANDI Jean" class="testimonial-avatar" />
-                  <div class="author-info">
-                    <h4>NSHAVUJABANDI Jean</h4>
-                    <p>GECO General Secretary</p>
-                  </div>
-                </div>
+          <!-- Professional Testimonials Grid -->
+          <div class="testimonials-grid">
+            <div class="testimonial-card">
+              <div class="testimonial-avatar">
+                <img src="/assets/img/testimonials/testimonials-2.png" alt="NSHAVUJABANDI Jean" />
               </div>
-              
-              <div class="testimonial-item">
-                <div class="testimonial-content">
-                  <div class="quote-left">
-                    <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
-                      <path d="M7.982 1.566a1.5 1.5 0 0 1 1.036 1.036l1.733 1.733a1.5 1.5 0 0 1 0 2.121l-1.733 1.733a1.5 1.5 0 0 1-2.121 0L4.464 4.464a1.5 1.5 0 0 1 0-2.121L6.197.61a1.5 1.5 0 0 1 1.036-.044z"/>
-                      <path d="M12.152 6.596a1.5 1.5 0 0 1-2.121 0l-1.733-1.733a1.5 1.5 0 0 1 0-2.121l1.733-1.733a1.5 1.5 0 0 1 2.121 0l1.733 1.733a1.5 1.5 0 0 1 0 2.121z"/>
-                    </svg>
-                  </div>
-                  <p class="testimonial-text">GECO's training programs have equipped our healthcare workers with essential skills to manage epilepsy effectively in communities throughout Rwanda.</p>
-                  <div class="quote-right">
-                    <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
-                      <path d="M7.982 1.566a1.5 1.5 0 0 1 1.036 1.036l1.733 1.733a1.5 1.5 0 0 1 0 2.121l-1.733 1.733a1.5 1.5 0 0 1-2.121 0L4.464 4.464a1.5 1.5 0 0 1 0-2.121L6.197.61a1.5 1.5 0 0 1 1.036-.044z"/>
-                      <path d="M12.152 6.596a1.5 1.5 0 0 1-2.121 0l-1.733-1.733a1.5 1.5 0 0 1 0-2.121l1.733-1.733a1.5 1.5 0 0 1 2.121 0l1.733 1.733a1.5 1.5 0 0 1 0 2.121z"/>
-                    </svg>
-                  </div>
+              <div class="testimonial-content">
+                <div class="testimonial-text">
+                  <p>"GECO has transformed my life through their comprehensive epilepsy care program. I now have access to proper medication and support services."</p>
                 </div>
                 <div class="testimonial-author">
-                  <img src="/assets/img/testimonials/testimonials-1.png" alt="MUHAWENIMANA Evariste" class="testimonial-avatar" />
-                  <div class="author-info">
-                    <h4>MUHAWENIMANA Evariste</h4>
-                    <p>Legal Representative</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="testimonial-item">
-                <div class="testimonial-content">
-                  <div class="quote-left">
-                    <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
-                      <path d="M7.982 1.566a1.5 1.5 0 0 1 1.036 1.036l1.733 1.733a1.5 1.5 0 0 1 0 2.121l-1.733 1.733a1.5 1.5 0 0 1-2.121 0L4.464 4.464a1.5 1.5 0 0 1 0-2.121L6.197.61a1.5 1.5 0 0 1 1.036-.044z"/>
-                      <path d="M12.152 6.596a1.5 1.5 0 0 1-2.121 0l-1.733-1.733a1.5 1.5 0 0 1 0-2.121l1.733-1.733a1.5 1.5 0 0 1 2.121 0l1.733 1.733a1.5 1.5 0 0 1 0 2.121z"/>
-                    </svg>
-                  </div>
-                  <p class="testimonial-text">Working with GECO has been an incredible journey. Their commitment to epilepsy awareness and patient care is truly inspiring and life-changing.</p>
-                  <div class="quote-right">
-                    <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
-                      <path d="M7.982 1.566a1.5 1.5 0 0 1 1.036 1.036l1.733 1.733a1.5 1.5 0 0 1 0 2.121l-1.733 1.733a1.5 1.5 0 0 1-2.121 0L4.464 4.464a1.5 1.5 0 0 1 0-2.121L6.197.61a1.5 1.5 0 0 1 1.036-.044z"/>
-                      <path d="M12.152 6.596a1.5 1.5 0 0 1-2.121 0l-1.733-1.733a1.5 1.5 0 0 1 0-2.121l1.733-1.733a1.5 1.5 0 0 1 2.121 0l1.733 1.733a1.5 1.5 0 0 1 0 2.121z"/>
-                    </svg>
-                  </div>
-                </div>
-                <div class="testimonial-author">
-                  <img src="/assets/img/testimonials/testimonials-3.png" alt="Habanzintwari Theogene" class="testimonial-avatar" />
-                  <div class="author-info">
-                    <h4>Habanzintwari Theogene</h4>
-                    <p>Deputy Legal Representative</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="testimonial-item">
-                <div class="testimonial-content">
-                  <div class="quote-left">
-                    <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
-                      <path d="M7.982 1.566a1.5 1.5 0 0 1 1.036 1.036l1.733 1.733a1.5 1.5 0 0 1 0 2.121l-1.733 1.733a1.5 1.5 0 0 1-2.121 0L4.464 4.464a1.5 1.5 0 0 1 0-2.121L6.197.61a1.5 1.5 0 0 1 1.036-.044z"/>
-                      <path d="M12.152 6.596a1.5 1.5 0 0 1-2.121 0l-1.733-1.733a1.5 1.5 0 0 1 0-2.121l1.733 1.733a1.5 1.5 0 0 1 2.121 0l1.733 1.733a1.5 1.5 0 0 1 0 2.121z"/>
-                    </svg>
-                  </div>
-                  <p class="testimonial-text">Working with GECO as an Advisor has been incredibly rewarding. The opportunity to contribute to strategic planning and help shape our epilepsy awareness initiatives brings deep fulfillment.</p>
-                  <div class="quote-right">
-                    <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
-                      <path d="M7.982 1.566a1.5 1.5 0 0 1 1.036 1.036l1.733 1.733a1.5 1.5 0 0 1 0 2.121l-1.733 1.733a1.5 1.5 0 0 1-2.121 0L4.464 4.464a1.5 1.5 0 0 1 0-2.121L6.197.61a1.5 1.5 0 0 1 1.036-.044z"/>
-                      <path d="M12.152 6.596a1.5 1.5 0 0 1-2.121 0l-1.733-1.733a1.5 1.5 0 0 1 0-2.121l1.733 1.733a1.5 1.5 0 0 1 2.121 0l1.733 1.733a1.5 1.5 0 0 1 0 2.121z"/>
-                    </svg>
-                  </div>
-                </div>
-                <div class="testimonial-author">
-                  <img src="/assets/img/testimonials/testimonials-4.png" alt="Nyirahabineza Emeritha" class="testimonial-avatar" />
-                  <div class="author-info">
-                    <h4>Nyirahabineza Emeritha</h4>
-                    <p>GECO Advisor</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="testimonial-item">
-                <div class="testimonial-content">
-                  <div class="quote-left">
-                    <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
-                      <path d="M7.982 1.566a1.5 1.5 0 0 1 1.036 1.036l1.733 1.733a1.5 1.5 0 0 1 0 2.121l-1.733 1.733a1.5 1.5 0 0 1-2.121 0L4.464 4.464a1.5 1.5 0 0 1 0-2.121L6.197.61a1.5 1.5 0 0 1 1.036-.044z"/>
-                      <path d="M12.152 6.596a1.5 1.5 0 0 1-2.121 0l-1.733-1.733a1.5 1.5 0 0 1 0-2.121l1.733-1.733a1.5 1.5 0 0 1 2.121 0l1.733 1.733a1.5 1.5 0 0 1 0 2.121z"/>
-                    </svg>
-                  </div>
-                  <p class="testimonial-text">It is pleasure to work with this organization</p>
-                  <div class="quote-right">
-                    <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
-                      <path d="M7.982 1.566a1.5 1.5 0 0 1 1.036 1.036l1.733 1.733a1.5 1.5 0 0 1 0 2.121l-1.733 1.733a1.5 1.5 0 0 1-2.121 0L4.464 4.464a1.5 1.5 0 0 1 0-2.121L6.197.61a1.5 1.5 0 0 1 1.036-.044z"/>
-                      <path d="M12.152 6.596a1.5 1.5 0 0 1-2.121 0l-1.733-1.733a1.5 1.5 0 0 1 0-2.121l1.733-1.733a1.5 1.5 0 0 1 2.121 0l1.733 1.733a1.5 1.5 0 0 1 0 2.121z"/>
-                    </svg>
-                  </div>
-                </div>
-                <div class="testimonial-author">
-                  <img src="/assets/img/testimonials/testimonials-5.png" alt="Niyikiza Jackson" class="testimonial-avatar" />
-                  <div class="author-info">
-                    <h4>Niyikiza Jackson</h4>
-                    <p>GECO Advisor</p>
-                  </div>
+                  <h4>NSHAVUJABANDI Jean</h4>
+                  <p class="author-role">GECO General Secretary</p>
                 </div>
               </div>
             </div>
-            <div class="swiper-pagination"></div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-avatar">
+                <img src="/assets/img/testimonials/testimonials-1.png" alt="MUHAWENIMANA Evariste" />
+              </div>
+              <div class="testimonial-content">
+                <div class="testimonial-text">
+                  <p>"The training programs provided by GECO have equipped our healthcare workers with essential skills to manage epilepsy effectively in our communities."</p>
+                </div>
+                <div class="testimonial-author">
+                  <h4>MUHAWENIMANA Evariste</h4>
+                  <p class="author-role">Legal Representative</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-avatar">
+                <img src="/assets/img/testimonials/testimonials-3.png" alt="Habanzintwari Theogene" />
+              </div>
+              <div class="testimonial-content">
+                <div class="testimonial-text">
+                  <p>"It is a pleasure to work with this organization that truly understands the needs of people with epilepsy and mental health conditions."</p>
+                </div>
+                <div class="testimonial-author">
+                  <h4>Habanzintwari Theogene</h4>
+                  <p class="author-role">Deputy Legal Representative</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

@@ -486,7 +486,7 @@ p {
   display: flex;
   align-items: center;
   overflow: hidden;
-  background: var(--white);
+  background: linear-gradient(135deg, #581c87 0%, #4c1d95 100%);
 }
 
 .hero-background {
@@ -521,7 +521,7 @@ p {
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--gradient-hero);
+  background: rgba(88, 28, 135, 0.85);
   opacity: 0.85;
   z-index: 3;
 }
@@ -534,6 +534,13 @@ p {
   max-width: 1200px;
   margin: 0 auto;
   padding: var(--space-8) var(--space-4);
+}
+
+.hero-content h1,
+.hero-content h2,
+.hero-content h3,
+.hero-content p {
+  color: white !important;
 }
 
 .hero-badge {
@@ -1145,7 +1152,7 @@ p {
 /* CTA Section with SVG Elements */
 .cta-section {
   padding: var(--space-24) 0;
-  background: var(--white);
+  background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
   position: relative;
   overflow: hidden;
 }
@@ -1172,7 +1179,7 @@ p {
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--gradient-subtle);
+  background: transparent;
   z-index: 2;
 }
 
@@ -1199,14 +1206,14 @@ p {
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 800;
   margin-bottom: var(--space-6);
-  color: var(--gray-900);
+  color: var(--gray-900) !important;
 }
 
 .cta-description {
   font-size: 1.25rem;
   line-height: 1.6;
   margin-bottom: var(--space-8);
-  color: var(--gray-600);
+  color: var(--gray-700) !important;
 }
 
 .cta-impact {
@@ -1503,88 +1510,487 @@ p {
   }
 }
 
-/* Testimonials Section - Professional Redesign */
-.testimonials-swiper {
+/* Professional Dark Mode - Like GitHub/Twitter */
+html.dark-mode,
+body.dark-mode,
+.dark-mode html,
+.dark-mode body,
+.dark-mode {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+.dark-mode body {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+/* Force all elements to dark mode */
+.dark-mode *,
+.dark-mode *::before,
+.dark-mode *::after {
+  background-color: transparent !important;
+}
+
+/* Comprehensive dark mode for all elements */
+.dark-mode,
+.dark-mode body,
+.dark-mode html,
+.dark-mode main,
+.dark-mode .container,
+.dark-mode .content,
+.dark-mode .wrapper,
+.dark-mode .page,
+.dark-mode [class*="container"],
+.dark-mode [class*="content"],
+.dark-mode [class*="wrapper"],
+.dark-mode [class*="page"],
+.dark-mode [class*="main"] {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+.dark-mode .hero-section,
+.dark-mode .section,
+.dark-mode .section-light,
+.dark-mode .testimonial-item,
+.dark-mode .service-card,
+.dark-mode .mission-card,
+.dark-mode .stat-card,
+.dark-mode .card,
+.dark-mode footer,
+.dark-mode .nav,
+.dark-mode .nav-list,
+.dark-mode #hero,
+.dark-mode #stats,
+.dark-mode #take-action,
+.dark-mode #contact,
+.dark-mode #about,
+.dark-mode #services,
+.dark-mode #portfolio,
+.dark-mode #team,
+.dark-mode #testimonials {
+  background: #000000 !important;
+}
+
+.dark-mode [class*="section"],
+.dark-mode [class*="hero"],
+.dark-mode [class*="stats"],
+.dark-mode [class*="impact"],
+.dark-mode [class*="take-action"],
+.dark-mode [class*="action"],
+.dark-mode [class*="change"],
+.dark-mode [class*="be-part"],
+.dark-mode [class*="donate"],
+.dark-mode [class*="support"],
+.dark-mode [class*="volunteer"],
+.dark-mode [class*="partner"],
+.dark-mode [class*="join"],
+.dark-mode [class*="help"],
+.dark-mode [class*="contribute"],
+.dark-mode [id*="hero"],
+.dark-mode [id*="stats"],
+.dark-mode [id*="impact"],
+.dark-mode [id*="take-action"],
+.dark-mode [id*="action"],
+.dark-mode [id*="change"],
+.dark-mode [id*="donate"],
+.dark-mode [id*="support"],
+.dark-mode [id*="volunteer"],
+.dark-mode [id*="partner"],
+.dark-mode [id*="join"],
+.dark-mode [id*="help"],
+.dark-mode [id*="contribute"] {
+  background: #000000 !important;
+}
+
+/* Force all divs and common elements to dark */
+.dark-mode div,
+.dark-mode section,
+.dark-mode article,
+.dark-mode aside,
+.dark-mode .row,
+.dark-mode .col,
+.dark-mode .grid,
+.dark-mode .flex,
+.dark-mode [class*="row"],
+.dark-mode [class*="col"],
+.dark-mode [class*="grid"],
+.dark-mode [class*="flex"] {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+/* All headings and text elements */
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4,
+.dark-mode h5,
+.dark-mode h6,
+.dark-mode .h1,
+.dark-mode .h2,
+.dark-mode .h3,
+.dark-mode .h4,
+.dark-mode .h5,
+.dark-mode .h6,
+.dark-mode [class*="title"],
+.dark-mode [class*="heading"],
+.dark-mode [class*="headline"],
+.dark-mode .section-title,
+.dark-mode .section-heading,
+.dark-mode .page-title,
+.dark-mode .card-title,
+.dark-mode .hero-title,
+.dark-mode .feature-title,
+.dark-mode .service-title,
+.dark-mode .testimonial-title {
+  color: #ffffff !important;
+}
+
+/* Success Stories and specific section headings */
+.dark-mode .success-stories,
+.dark-mode .success-stories *,
+.dark-mode [class*="success"],
+.dark-mode [class*="story"],
+.dark-mode [id*="success"],
+.dark-mode [id*="story"],
+.dark-mode .success-title,
+.dark-mode .story-title,
+.dark-mode .success-heading,
+.dark-mode .story-heading {
+  color: #ffffff !important;
+}
+
+/* All paragraph and text content */
+.dark-mode p,
+.dark-mode span,
+.dark-mode .text,
+.dark-mode .content,
+.dark-mode .description,
+.dark-mode .subtitle,
+.dark-mode .subheading,
+.dark-mode [class*="text"],
+.dark-mode [class*="content"],
+.dark-mode [class*="description"],
+.dark-mode [class*="subtitle"],
+.dark-mode [class*="subheading"] {
+  color: #ffffff !important;
+}
+
+/* Specific targeting for any remaining light elements */
+.dark-mode [class*="light"],
+.dark-mode [class*="white"],
+.dark-mode [class*="bright"],
+.dark-mode [id*="light"],
+.dark-mode [id*="white"],
+.dark-mode [id*="bright"] {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+.dark-mode .header {
+  background: #111111 !important;
+  border-bottom: 1px solid #333333 !important;
+}
+
+.dark-mode .header.scrolled {
+  background: #111111 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
+}
+
+.dark-mode .nav-link {
+  color: #ffffff !important;
+}
+
+.dark-mode .nav-link:hover {
+  background: #222222 !important;
+  color: #ffffff !important;
+}
+
+.dark-mode .nav-link.active {
+  background: #7c3aed !important;
+  color: #ffffff !important;
+}
+
+.dark-mode .logo-text {
+  color: #ffffff !important;
+}
+
+.dark-mode .hero-title {
+  color: #ffffff !important;
+}
+
+.dark-mode .hero-subtitle {
+  color: #cccccc !important;
+}
+
+.dark-mode .section-title {
+  color: #ffffff !important;
+}
+
+.dark-mode .section-subtitle {
+  color: #cccccc !important;
+}
+
+/* Force ALL content to be visible in dark mode */
+.dark-mode *,
+.dark-mode *::before,
+.dark-mode *::after {
+  color: #ffffff !important;
+  background-color: transparent !important;
+}
+
+.dark-mode .hero-section,
+.dark-mode .section,
+.dark-mode .section-light,
+.dark-mode .testimonial-item,
+.dark-mode .service-card,
+.dark-mode .mission-card,
+.dark-mode .stat-card,
+.dark-mode .card,
+.dark-mode footer,
+.dark-mode .nav,
+.dark-mode .nav-list,
+.dark-mode #hero,
+.dark-mode #stats,
+.dark-mode #take-action,
+.dark-mode #contact,
+.dark-mode #about,
+.dark-mode #services,
+.dark-mode #portfolio,
+.dark-mode #team,
+.dark-mode #testimonials {
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+
+.dark-mode .header {
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+
+.dark-mode .testimonial-item {
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+
+.dark-mode .service-card,
+.dark-mode .mission-card,
+.dark-mode .stat-card,
+.dark-mode .card {
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+
+.dark-mode footer {
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+
+.dark-mode .nav-link {
+  color: #ffffff !important;
+}
+
+.dark-mode .logo-text {
+  color: #ffffff !important;
+}
+
+.dark-mode .hero-title {
+  color: #ffffff !important;
+}
+
+.dark-mode .hero-subtitle {
+  color: #cccccc !important;
+}
+
+.dark-mode .section-title {
+  color: #ffffff !important;
+}
+
+.dark-mode .section-subtitle {
+  color: #cccccc !important;
+}
+
+.dark-mode .testimonial-text {
+  color: #ffffff !important;
+}
+
+.dark-mode .author-info h4 {
+  color: #ffffff !important;
+}
+
+.dark-mode .author-info p {
+  color: #cccccc !important;
+}
+
+.dark-mode .service-card h3,
+.dark-mode .mission-card h3,
+.dark-mode .stat-card h3,
+.dark-mode .card-title {
+  color: #ffffff !important;
+}
+
+.dark-mode .service-card p,
+.dark-mode .mission-card p,
+.dark-mode .stat-card p,
+.dark-mode .card-text {
+  color: #cccccc !important;
+}
+
+.dark-mode .footer-content {
+  color: #ffffff !important;
+}
+
+.dark-mode .social-link {
+  background: #222222 !important;
+  color: #ffffff !important;
+}
+
+.dark-mode .btn-primary,
+.dark-mode .btn-secondary,
+.dark-mode .btn,
+.dark-mode button,
+.dark-mode .cta-btn,
+.dark-mode [class*="btn"],
+.dark-mode [class*="button"],
+.dark-mode .testimonial-btn,
+.dark-mode .testimonials button,
+.dark-mode .testimonial-item button {
+  background: #7c3aed !important;
+  color: #ffffff !important;
+  border: 1px solid #7c3aed !important;
+}
+
+.dark-mode input,
+.dark-mode textarea,
+.dark-mode select {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 1px solid #333333 !important;
+}
+
+.dark-mode .nav {
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+
+.dark-mode .nav-list {
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+
+.dark-mode .theme-toggle-btn {
+  background: #222222 !important;
+  color: #ffffff !important;
+}
+
+/* Testimonials Section - Professional Grid Layout */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 32px;
+  padding: var(--space-4) 0;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.testimonial-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  padding: 32px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(124, 58, 237, 0.1);
+  border: 1px solid rgba(124, 58, 237, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-  padding: 40px 0;
 }
 
-.testimonial-wrapper {
-  display: flex;
-  gap: 30px;
-  transition: transform 0.5s ease;
-  padding: 0 20px;
+.testimonial-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  opacity: 0.8;
 }
 
-.testimonial-item {
-  background: white;
-  padding: 25px 20px;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  min-height: 240px;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  max-width: 400px;
-}
-
-.testimonial-item:hover {
+.testimonial-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 40px rgba(124, 58, 237, 0.2);
+  border-color: rgba(124, 58, 237, 0.3);
+}
+
+.testimonial-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 24px;
+  border: 4px solid var(--primary-color);
+  padding: 4px;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.testimonial-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.testimonial-avatar:hover img {
+  transform: scale(1.05);
 }
 
 .testimonial-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  z-index: 2;
-  margin-bottom: 25px;
+  text-align: center;
 }
 
 .testimonial-text {
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   line-height: 1.7;
-  color: #374151;
-  margin-bottom: 0;
+  color: #4b5563;
+  margin-bottom: 24px;
   font-style: italic;
   position: relative;
-  padding: 0;
-  flex: 1;
-  text-align: left;
+  padding: 0 20px;
+}
+
+.testimonial-text::before,
+.testimonial-text::after {
+  content: '"';
+  font-size: 3rem;
+  color: var(--primary-color);
+  opacity: 0.3;
+  position: absolute;
+  font-family: Georgia, serif;
 }
 
 .testimonial-text::before {
-  content: '"';
-  position: absolute;
-  left: -15px;
   top: -10px;
-  font-size: 4rem;
-  color: #e2e8f0;
-  font-family: Georgia, serif;
-  line-height: 1;
-  opacity: 0.3;
+  left: 0;
+}
+
+.testimonial-text::after {
+  bottom: -20px;
+  right: 0;
 }
 
 .testimonial-author {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 15px;
-  margin-top: auto;
-  padding-top: 20px;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  gap: 8px;
 }
 
-.testimonial-avatar {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
+.testimonial-author h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary-color);
   border: 3px solid white;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
@@ -2405,3 +2811,5 @@ p {
     font-size: 0.8rem;
   }
 }
+
+
