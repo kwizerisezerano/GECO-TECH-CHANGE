@@ -410,7 +410,7 @@
                       <path d="M12.152 6.596a1.5 1.5 0 0 1-2.121 0l-1.733-1.733a1.5 1.5 0 0 1 0-2.121l1.733-1.733a1.5 1.5 0 0 1 2.121 0l1.733 1.733a1.5 1.5 0 0 1 0 2.121z"/>
                     </svg>
                   </div>
-                  <p class="testimonial-text">GECO has transformed my life through their comprehensive epilepsy care program. I now have access to proper medication and support services.</p>
+                  <p class="testimonial-text">GECO's comprehensive epilepsy care program has been life-changing. The professional medical support and community services provide exceptional care for patients and families.</p>
                   <div class="quote-right">
                     <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
                       <path d="M7.982 1.566a1.5 1.5 0 0 1 1.036 1.036l1.733 1.733a1.5 1.5 0 0 1 0 2.121l-1.733 1.733a1.5 1.5 0 0 1-2.121 0L4.464 4.464a1.5 1.5 0 0 1 0-2.121L6.197.61a1.5 1.5 0 0 1 1.036-.044z"/>
@@ -435,7 +435,7 @@
                       <path d="M12.152 6.596a1.5 1.5 0 0 1-2.121 0l-1.733-1.733a1.5 1.5 0 0 1 0-2.121l1.733-1.733a1.5 1.5 0 0 1 2.121 0l1.733 1.733a1.5 1.5 0 0 1 0 2.121z"/>
                     </svg>
                   </div>
-                  <p class="testimonial-text">The training programs provided by GECO have equipped our healthcare workers with essential skills to manage epilepsy effectively in our communities.</p>
+                  <p class="testimonial-text">GECO's training programs have equipped our healthcare workers with essential skills to manage epilepsy effectively in communities throughout Rwanda.</p>
                   <div class="quote-right">
                     <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
                       <path d="M7.982 1.566a1.5 1.5 0 0 1 1.036 1.036l1.733 1.733a1.5 1.5 0 0 1 0 2.121l-1.733 1.733a1.5 1.5 0 0 1-2.121 0L4.464 4.464a1.5 1.5 0 0 1 0-2.121L6.197.61a1.5 1.5 0 0 1 1.036-.044z"/>
@@ -460,7 +460,7 @@
                       <path d="M12.152 6.596a1.5 1.5 0 0 1-2.121 0l-1.733-1.733a1.5 1.5 0 0 1 0-2.121l1.733-1.733a1.5 1.5 0 0 1 2.121 0l1.733 1.733a1.5 1.5 0 0 1 0 2.121z"/>
                     </svg>
                   </div>
-                  <p class="testimonial-text">It is pleasure to work with this organization</p>
+                  <p class="testimonial-text">Working with GECO has been an incredible journey. Their commitment to epilepsy awareness and patient care is truly inspiring and life-changing.</p>
                   <div class="quote-right">
                     <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
                       <path d="M7.982 1.566a1.5 1.5 0 0 1 1.036 1.036l1.733 1.733a1.5 1.5 0 0 1 0 2.121l-1.733 1.733a1.5 1.5 0 0 1-2.121 0L4.464 4.464a1.5 1.5 0 0 1 0-2.121L6.197.61a1.5 1.5 0 0 1 1.036-.044z"/>
@@ -482,14 +482,14 @@
                   <div class="quote-left">
                     <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
                       <path d="M7.982 1.566a1.5 1.5 0 0 1 1.036 1.036l1.733 1.733a1.5 1.5 0 0 1 0 2.121l-1.733 1.733a1.5 1.5 0 0 1-2.121 0L4.464 4.464a1.5 1.5 0 0 1 0-2.121L6.197.61a1.5 1.5 0 0 1 1.036-.044z"/>
-                      <path d="M12.152 6.596a1.5 1.5 0 0 1-2.121 0l-1.733-1.733a1.5 1.5 0 0 1 0-2.121l1.733-1.733a1.5 1.5 0 0 1 2.121 0l1.733 1.733a1.5 1.5 0 0 1 0 2.121z"/>
+                      <path d="M12.152 6.596a1.5 1.5 0 0 1-2.121 0l-1.733-1.733a1.5 1.5 0 0 1 0-2.121l1.733 1.733a1.5 1.5 0 0 1 2.121 0l1.733 1.733a1.5 1.5 0 0 1 0 2.121z"/>
                     </svg>
                   </div>
-                  <p class="testimonial-text">It is pleasure to work with this organization</p>
+                  <p class="testimonial-text">Working with GECO as an Advisor has been incredibly rewarding. The opportunity to contribute to strategic planning and help shape our epilepsy awareness initiatives brings deep fulfillment.</p>
                   <div class="quote-right">
                     <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
                       <path d="M7.982 1.566a1.5 1.5 0 0 1 1.036 1.036l1.733 1.733a1.5 1.5 0 0 1 0 2.121l-1.733 1.733a1.5 1.5 0 0 1-2.121 0L4.464 4.464a1.5 1.5 0 0 1 0-2.121L6.197.61a1.5 1.5 0 0 1 1.036-.044z"/>
-                      <path d="M12.152 6.596a1.5 1.5 0 0 1-2.121 0l-1.733-1.733a1.5 1.5 0 0 1 0-2.121l1.733-1.733a1.5 1.5 0 0 1 2.121 0l1.733 1.733a1.5 1.5 0 0 1 0 2.121z"/>
+                      <path d="M12.152 6.596a1.5 1.5 0 0 1-2.121 0l-1.733-1.733a1.5 1.5 0 0 1 0-2.121l1.733 1.733a1.5 1.5 0 0 1 2.121 0l1.733 1.733a1.5 1.5 0 0 1 0 2.121z"/>
                     </svg>
                   </div>
                 </div>

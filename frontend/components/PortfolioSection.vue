@@ -70,10 +70,6 @@
             {{ filter.label }}
           </button>
         </div>
-      <!-- Back to Top Button -->
-        <button class="back-to-top" @click="scrollToTop" v-show="showBackToTop">
-          <i class="bi bi-arrow-up"></i>
-        </button>
       </div>
     </div>
 
@@ -648,41 +644,6 @@ const closeLightbox = () => {
     height: 30px;
     font-size: 0.9rem;
   }
-}
-
-/* Back to Top Button */
-.back-to-top {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 50px;
-  height: 50px;
-  background: #7c3aed;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
-  transition: all 0.3s ease;
-  z-index: 1000;
-}
-
-.back-to-top:hover {
-  background: #6d28d9;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
-}
-
-.back-to-top i {
-  transition: transform 0.3s ease;
-}
-
-.back-to-top:hover i {
-  transform: translateY(-2px);
 }
 
 /* Lightbox Styles */

@@ -5,41 +5,42 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  background: #a755f7;
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--gray-200);
   transition: all var(--transition);
 }
 
 .header.scrolled {
-  background: #a755f7;
-  box-shadow: none;
-  border-bottom: 1px solid var(--gray-200);
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .header-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0;
-  width: 100%;
+  padding: var(--space-4) 0;
 }
 
 .logo {
   display: flex;
   align-items: center;
+  gap: var(--space-3);
   text-decoration: none;
-  background: transparent !important;
-  padding: var(--space-2);
-  margin: 0;
-  border: none !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
+  background: white !important;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   transition: all 0.3s ease;
+  border: 2px solid rgba(124, 58, 237, 0.2);
 }
 
 .logo:hover {
-  transform: scale(1.05);
+  background: white !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  border-color: rgba(124, 58, 237, 0.4);
 }
 
 .logo-text {
@@ -67,7 +68,6 @@
 .nav {
   display: flex;
   align-items: center;
-  padding: var(--space-2);
 }
 
 .nav-list {
@@ -439,7 +439,7 @@ p {
 
 .btn-outline-light:hover {
   background: white;
-  color: #581c87;
+  color: #7c3aed;
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   text-shadow: none;
@@ -1507,38 +1507,35 @@ p {
 .testimonials-swiper {
   position: relative;
   overflow: hidden;
-  padding: var(--space-4) 0;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 40px 0;
 }
 
 .testimonial-wrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  display: flex;
   gap: 30px;
-  padding: 20px 0;
-  max-width: 1200px;
-  margin: 0 auto;
+  transition: transform 0.5s ease;
+  padding: 0 20px;
 }
 
 .testimonial-item {
-  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-  padding: 40px;
-  border-radius: 16px;
+  background: white;
+  padding: 25px 20px;
+  border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(124, 58, 237, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
-  min-height: 280px;
+  min-height: 240px;
   display: flex;
   flex-direction: column;
+  flex: 1;
+  max-width: 400px;
 }
 
 .testimonial-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(124, 58, 237, 0.15);
-  border-color: rgba(124, 58, 237, 0.2);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
 .testimonial-content {
@@ -1547,49 +1544,40 @@ p {
   flex-direction: column;
   position: relative;
   z-index: 2;
-  margin-bottom: auto;
+  margin-bottom: 25px;
 }
 
 .testimonial-text {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: #4b5563;
-  margin-bottom: 20px;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #374151;
+  margin-bottom: 0;
   font-style: italic;
   position: relative;
-  padding-left: 20px;
+  padding: 0;
   flex: 1;
+  text-align: left;
 }
 
 .testimonial-text::before {
   content: '"';
   position: absolute;
-  left: 0;
-  top: -5px;
-  font-size: 3rem;
-  color: #7c3aed;
+  left: -15px;
+  top: -10px;
+  font-size: 4rem;
+  color: #e2e8f0;
   font-family: Georgia, serif;
   line-height: 1;
-}
-
-.testimonial-text::after {
-  content: '"';
-  position: absolute;
-  right: 0;
-  bottom: -10px;
-  font-size: 3rem;
-  color: #7c3aed;
-  font-family: Georgia, serif;
-  line-height: 1;
+  opacity: 0.3;
 }
 
 .testimonial-author {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
   margin-top: auto;
   padding-top: 20px;
-  border-top: 1px solid rgba(124, 58, 237, 0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .testimonial-avatar {
