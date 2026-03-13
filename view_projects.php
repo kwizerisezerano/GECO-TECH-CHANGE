@@ -55,35 +55,120 @@
             background-color: #5a3791; /* Darker purple on hover */
         }
 
-        /* Project list styling */
-        .project-list {
-            margin-top: 20px;
+        /* Enhanced project card styling */
+        .project-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .project-list ul {
-            list-style-type: none;
-            padding: 0;
+        .project-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
         }
 
-        .project-list li {
-            background-color: #f1f1f1;
-            margin: 5px 0;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .project-header {
+            background: linear-gradient(135deg, rgb(161, 83, 164), #5a3791);
+            color: white;
+            padding: 20px;
+            position: relative;
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-ongoing {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .status-pending {
+            background-color: #ffc107;
+            color: #212529;
+        }
+
+        .status-completed {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .project-body {
+            padding: 20px;
+        }
+
+        .project-info {
+            margin-bottom: 15px;
+        }
+
+        .project-info h6 {
+            color: #6c757d;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .project-info p {
+            margin: 0;
+            font-size: 1rem;
+            color: #212529;
+        }
+
+        .project-actions {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-top: 1px solid #e9ecef;
         }
 
         .btn-actions {
             background-color: rgb(161, 83, 164);
             border: none;
             color: white;
+            padding: 8px 16px;
+            margin-right: 8px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
         }
 
         .btn-actions:hover {
             background-color: #5a3791;
+            transform: translateY(-1px);
+        }
+
+        .btn-actions a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .no-projects {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6c757d;
+        }
+
+        .no-projects i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #dee2e6;
         }
     </style>
 </head>
@@ -130,7 +215,7 @@
             
             <!-- Project List -->
             <div class="project-list">
-                <ul id="projectList"></ul>
+                <div id="projectList"></div>
             </div>
         </div>
     </div>
@@ -157,20 +242,68 @@
                     if (data.length > 0) {
                         // Loop through the projects and display them
                         data.forEach(project => {
-                            let li = document.createElement('li');
-                            li.innerHTML = `
-                                ID: ${project.project_id} - ${project.project_name} (${project.status})
-                                <div>
-                                   
+                            let statusClass = project.status.toLowerCase() === 'ongoing' ? 'status-ongoing' : 
+                                             project.status.toLowerCase() === 'pending' ? 'status-pending' : 'status-completed';
+                            
+                            let projectCard = document.createElement('div');
+                            projectCard.className = 'project-card';
+                            projectCard.innerHTML = `
+                                <div class="project-header">
+                                    <h5 class="project-title">${project.project_name}</h5>
+                                    <span class="status-badge ${statusClass}">${project.status}</span>
+                                </div>
+                                <div class="project-body">
+                                    ${project.description ? `
+                                        <div class="project-info">
+                                            <h6>Description</h6>
+                                            <p>${project.description}</p>
+                                        </div>
+                                    ` : ''}
+                                    <div class="row">
+                                        ${project.start_date ? `
+                                            <div class="col-md-6">
+                                                <div class="project-info">
+                                                    <h6>Start Date</h6>
+                                                    <p>${new Date(project.start_date).toLocaleDateString()}</p>
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                        ${project.end_date ? `
+                                            <div class="col-md-6">
+                                                <div class="project-info">
+                                                    <h6>End Date</h6>
+                                                    <p>${new Date(project.end_date).toLocaleDateString()}</p>
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                    ${project.budget ? `
+                                        <div class="project-info">
+                                            <h6>Budget</h6>
+                                            <p>RWF ${parseFloat(project.budget).toLocaleString()}</p>
+                                        </div>
+                                    ` : ''}
+                                    <div class="project-info">
+                                        <h6>Created</h6>
+                                        <p>${new Date(project.created_at).toLocaleDateString()}</p>
+                                    </div>
+                                </div>
+                                <div class="project-actions">
                                     <button class="btn-actions"><a href="projects.php" class="text-white">Add Project</a></button>
-                                    <button class="btn-actions" onclick="updateProject(${project.project_id})">Update</button>
-                                    <button class="btn-actions" onclick="deleteProject(${project.project_id})">Delete</button>
+                                    <button class="btn-actions" onclick="updateProject(${project.id})">Update</button>
+                                    <button class="btn-actions" onclick="deleteProject(${project.id})">Delete</button>
                                 </div>
                             `;
-                            projectList.appendChild(li);
+                            projectList.appendChild(projectCard);
                         });
                     } else {
-                        projectList.innerHTML = '<li>No projects found.</li>';
+                        projectList.innerHTML = `
+                            <div class="no-projects">
+                                <i class="bi bi-folder-x"></i>
+                                <h5>No projects found</h5>
+                                <p>No projects match the selected status.</p>
+                            </div>
+                        `;
                     }
                 })
                 .catch(error => console.error('Error fetching projects:', error));

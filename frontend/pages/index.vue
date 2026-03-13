@@ -35,15 +35,15 @@
           </p>
           <div class="hero-stats">
             <div class="hero-stat">
-              <span class="stat-number">600K+</span>
-              <span class="stat-label">Lives Impacted</span>
+              <span class="stat-number">14.5K+</span>
+              <span class="stat-label">People in Treatment</span>
             </div>
             <div class="hero-stat">
               <span class="stat-number">30</span>
               <span class="stat-label">Districts Reached</span>
             </div>
             <div class="hero-stat">
-              <span class="stat-number">14</span>
+              <span class="stat-number">15</span>
               <span class="stat-label">Years of Service</span>
             </div>
           </div>
@@ -80,11 +80,11 @@
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                 <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 0 1 1 0 0 1 0 2z"/>
               </svg>
-              <span>Our Story</span>
+              <span>About</span>
             </div>
-            <h2 class="section-title">Pioneers in Epilepsy Care</h2>
+            <h2 class="section-title">About GECO RWANDA</h2>
             <p class="section-subtitle">
-              From a small initiative in Rubavu to Rwanda's leading epilepsy advocacy organization
+              Transforming lives through comprehensive epilepsy care and community support
             </p>
           </div>
           
@@ -94,30 +94,29 @@
                 <div class="about-text">
                   <h3>A Journey of Hope and Transformation</h3>
                   <p>
-                    Founded in 2010, GECO RWANDA began as a response to the overwhelming need 
-                    for epilepsy care and support in Rwanda. What started as a small group of 
-                    dedicated volunteers has grown into a nationwide movement touching hundreds 
-                    of thousands of lives.
+                    Founded in 2010, Global Epileptic Connection (GECO) is a national non-governmental organization 
+                    in Rwanda dedicated to improving the lives of persons living with epilepsy and other neurological 
+                    conditions. Founded by parents, persons living with epilepsy, and health professionals, 
+                    GECO works to eliminate stigma, improve access to treatment, and promote social and economic inclusion.
                   </p>
                   <p>
-                    Today, we operate across all 30 districts of Rwanda, providing medical 
-                    support, community education, and advocacy for people living with epilepsy. 
-                    Our work is driven by the belief that everyone deserves access to quality 
-                    healthcare and opportunity to live with dignity.
+                    Today, we operate across all 30 districts of Rwanda with over 14,500 people receiving treatment 
+                    through 42 hospitals. Our work is driven by the vision of a Rwanda where persons living with epilepsy 
+                    live with dignity, access quality healthcare, and fully participate in society without stigma or discrimination.
                   </p>
                 </div>
                 <div class="impact-numbers">
                   <div class="impact-item">
-                    <div class="impact-number">600K+</div>
-                    <div class="impact-label">People Reached</div>
+                    <div class="impact-number">14,506</div>
+                    <div class="impact-label">People in Treatment</div>
                   </div>
                   <div class="impact-item">
-                    <div class="impact-number">50+</div>
-                    <div class="impact-label">Healthcare Partners</div>
+                    <div class="impact-number">{{ stats.partners }}+</div>
+                    <div class="impact-label">Strategic Partners</div>
                   </div>
                   <div class="impact-item">
-                    <div class="impact-number">1000+</div>
-                    <div class="impact-label">Volunteers</div>
+                    <div class="impact-number">42</div>
+                    <div class="impact-label">Health Facilities</div>
                   </div>
                 </div>
               </div>
@@ -132,8 +131,9 @@
                 </div>
                 <h4>Our Vision</h4>
                 <p>
-                  A Rwanda where epilepsy is understood, treated, and where every person 
-                  affected can live their full potential without stigma or barriers.
+                  A Rwanda where persons living with epilepsy live with dignity, 
+                  access quality healthcare, and fully participate in society 
+                  without stigma or discrimination.
                 </p>
               </div>
               
@@ -145,8 +145,9 @@
                 </div>
                 <h4>Our Mission</h4>
                 <p>
-                  To provide comprehensive care, advance medical treatment, educate communities, 
-                  and advocate for policies that protect and empower people with epilepsy.
+                  To improve the health, protection, and socio-economic wellbeing of persons 
+                  living with epilepsy through advocacy, community engagement, health system 
+                  strengthening, and sustainable empowerment initiatives.
                 </p>
               </div>
             </div>
@@ -165,9 +166,9 @@
               </svg>
               <span>Our Services</span>
             </div>
-            <h2 class="section-title">Comprehensive Epilepsy Care</h2>
+            <h2 class="section-title">Our Services</h2>
             <p class="section-subtitle">
-              Providing holistic support through medical care, education, and community empowerment
+              Comprehensive care and support for people living with epilepsy
             </p>
           </div>
 
@@ -258,9 +259,9 @@
               </svg>
               <span>Our Impact</span>
             </div>
-            <h2 class="section-title">Transforming Communities</h2>
+            <h2 class="section-title">Our Impact</h2>
             <p class="section-subtitle">
-              Every number represents a life changed, a family supported, and a community transformed
+              Real numbers showing our reach and transformation across Rwanda
             </p>
           </div>
           
@@ -268,13 +269,12 @@
             <div class="stat-card">
               <div class="stat-icon">
                 <svg width="32" height="32" viewBox="0 0 16 16" fill="currentColor">
-                  <path d="M7 14s-1 0-1-1 1-4 5-4 5 4 1 4-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                  <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 2v1c0 .55.45 1 1 1h4.216zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+                  <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
                 </svg>
               </div>
-              <div class="stat-number">{{ stats.beneficiaries }}+</div>
-              <div class="stat-label">Direct Beneficiaries</div>
-              <div class="stat-description">Receiving comprehensive care and support services</div>
+              <div class="stat-number">14,506</div>
+              <div class="stat-label">People in Treatment</div>
+              <div class="stat-description">Across 42 hospitals in 30 districts</div>
             </div>
 
             <div class="stat-card">
@@ -294,9 +294,9 @@
                   <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687z"/>
                 </svg>
               </div>
-              <div class="stat-number">{{ stats.partners }}+</div>
-              <div class="stat-label">Partners</div>
-              <div class="stat-description">Healthcare facilities and organizations</div>
+              <div class="stat-number">{{ stats.projects }}</div>
+              <div class="stat-label">Active Projects</div>
+              <div class="stat-description">Strategic initiatives 2026-2031</div>
             </div>
 
             <div class="stat-card">
@@ -309,6 +309,42 @@
               <div class="stat-number">{{ stats.donations }}+</div>
               <div class="stat-label">Supporters</div>
               <div class="stat-description">Making our work possible every day</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects Section -->
+      <section id="projects" class="section section-white">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-badge">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+              </svg>
+              <span>Our Projects</span>
+            </div>
+            <h2 class="section-title">Strategic Initiatives</h2>
+            <p class="section-subtitle">
+              Ongoing projects transforming epilepsy care and community support across Rwanda
+            </p>
+          </div>
+          
+          <div class="projects-showcase">
+            <div v-for="project in projects" :key="project.id" class="project-card">
+              <div class="project-content">
+                <h3>{{ project.project_name }}</h3>
+                <p>{{ project.description }}</p>
+                <div class="project-meta">
+                  <div class="project-budget">${{ project.budget?.toLocaleString() }}</div>
+                  <div class="project-status" :class="project.status">
+                    {{ project.status.charAt(0).toUpperCase() + project.status.slice(1) }}
+                  </div>
+                </div>
+                <div class="project-dates">
+                  <span class="project-duration">{{ formatDate(project.start_date) }} - {{ formatDate(project.end_date) }}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -340,24 +376,24 @@
               </svg>
               <span>Take Action Today</span>
             </div>
-            <h2 class="cta-title">Be Part of the Change</h2>
+            <h2 class="cta-title">Safe Cooking Initiative for People Living with Epilepsy</h2>
             <p class="cta-description">
-              Your support helps us provide life-saving medication, education, and hope to 
-              thousands of Rwandans living with epilepsy. Together, we can build a more 
-              inclusive and compassionate society.
+              Preventing Burn Injuries through Inclusive Clean Cooking Solutions. 
+              This 12-month, $120,000 initiative will provide improved cook stoves to 1,500 households, 
+              train families on safe cooking practices, and reach 7,500+ community members through awareness activities.
             </p>
             <div class="cta-impact">
               <div class="impact-item">
-                <span class="impact-number">$25</span>
-                <span class="impact-text">Provides medication for one person for a month</span>
+                <span class="impact-number">1,500</span>
+                <span class="impact-text">Households with improved cook stoves</span>
               </div>
               <div class="impact-item">
-                <span class="impact-number">$100</span>
-                <span class="impact-text">Supports a family education workshop</span>
+                <span class="impact-number">7,500+</span>
+                <span class="impact-text">Community members reached</span>
               </div>
               <div class="impact-item">
-                <span class="impact-number">$500</span>
-                <span class="impact-text">Trains community healthcare workers</span>
+                <span class="impact-number">$120K</span>
+                <span class="impact-text">Total investment needed</span>
               </div>
             </div>
             <div class="cta-actions">
@@ -403,45 +439,45 @@
           <div class="testimonials-grid">
             <div class="testimonial-card">
               <div class="testimonial-avatar">
-                <img src="/assets/img/testimonials/testimonials-2.png" alt="NSHAVUJABANDI Jean" />
+                <img src="/assets/img/testimonials/testimonials-2.png" alt="Humanity & Inclusion Partner" />
               </div>
               <div class="testimonial-content">
                 <div class="testimonial-text">
-                  <p>"GECO has transformed my life through their comprehensive epilepsy care program. I now have access to proper medication and support services."</p>
+                  <p>"Our partnership with GECO has been transformative. Together, we've trained 67 health professionals and strengthened epilepsy care across Rwanda. GECO's community-based approach perfectly complements our expertise in disability inclusion."</p>
                 </div>
                 <div class="testimonial-author">
-                  <h4>NSHAVUJABANDI Jean</h4>
-                  <p class="author-role">GECO General Secretary</p>
+                  <h4>Humanity & Inclusion</h4>
+                  <p class="author-role">International NGO Partner</p>
                 </div>
               </div>
             </div>
 
             <div class="testimonial-card">
               <div class="testimonial-avatar">
-                <img src="/assets/img/testimonials/testimonials-1.png" alt="MUHAWENIMANA Evariste" />
+                <img src="/assets/img/testimonials/testimonials-1.png" alt="Ministry of Health Partner" />
               </div>
               <div class="testimonial-content">
                 <div class="testimonial-text">
-                  <p>"The training programs provided by GECO have equipped our healthcare workers with essential skills to manage epilepsy effectively in our communities."</p>
+                  <p>"GECO is a vital partner in Rwanda's healthcare system. Their work reaching 14,506 people across 42 hospitals demonstrates their capacity to deliver results at scale. We value their evidence-based approach to epilepsy care."</p>
                 </div>
                 <div class="testimonial-author">
-                  <h4>MUHAWENIMANA Evariste</h4>
-                  <p class="author-role">Legal Representative</p>
+                  <h4>Rwanda Ministry of Health</h4>
+                  <p class="author-role">Government Partner</p>
                 </div>
               </div>
             </div>
 
             <div class="testimonial-card">
               <div class="testimonial-avatar">
-                <img src="/assets/img/testimonials/testimonials-3.png" alt="Habanzintwari Theogene" />
+                <img src="/assets/img/testimonials/testimonials-3.png" alt="Clean Cooking Alliance Partner" />
               </div>
               <div class="testimonial-content">
                 <div class="testimonial-text">
-                  <p>"It is a pleasure to work with this organization that truly understands the needs of people with epilepsy and mental health conditions."</p>
+                  <p>"The Safe Cooking Initiative represents innovative thinking at the intersection of health and environmental sustainability. GECO's understanding of community needs makes them an ideal partner for impactful interventions."</p>
                 </div>
                 <div class="testimonial-author">
-                  <h4>Habanzintwari Theogene</h4>
-                  <p class="author-role">Deputy Legal Representative</p>
+                  <h4>Clean Cooking Alliance</h4>
+                  <p class="author-role">Environmental Partner</p>
                 </div>
               </div>
             </div>
@@ -460,9 +496,9 @@
               </svg>
               <span>Our Team</span>
             </div>
-            <h2 class="section-title">Dedicated Professionals</h2>
+            <h2 class="section-title">Our Team</h2>
             <p class="section-subtitle">
-              Our team is composed of dedicated professionals committed to delivering exceptional results through collaboration, innovation, and expertise.
+              Dedicated professionals committed to transforming epilepsy care in Rwanda
             </p>
           </div>
           
@@ -686,6 +722,119 @@
         </div>
       </section>
       
+      <!-- Partners Section -->
+      <section id="partners" class="section section-light">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-badge">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687z"/>
+              </svg>
+              <span>Our Partners</span>
+            </div>
+            <h2 class="section-title">Strategic Partnership Opportunities</h2>
+            <p class="section-subtitle">
+              Join our network of 26+ partners making a difference in epilepsy care and community development
+            </p>
+          </div>
+          
+          <div class="partners-grid">
+            <!-- Government Partners -->
+            <div class="partner-category" v-if="partners.filter(p => p.partnership_type === 'Government').length > 0">
+              <div class="category-header">
+                <h3>Government Partners</h3>
+                <span class="partner-count">{{ partners.filter(p => p.partnership_type === 'Government').length }}</span>
+              </div>
+              <div class="partner-list">
+                <div v-for="partner in partners.filter(p => p.partnership_type === 'Government')" :key="partner.id" class="partner-item">
+                  <div class="partner-logo">
+                    <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                    </svg>
+                  </div>
+                  <div class="partner-info">
+                    <h4>{{ partner.partner_name }}</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- International NGO Partners -->
+            <div class="partner-category" v-if="partners.filter(p => p.partnership_type === 'International NGO').length > 0">
+              <div class="category-header">
+                <h3>International NGO Partners</h3>
+                <span class="partner-count">{{ partners.filter(p => p.partnership_type === 'International NGO').length }}</span>
+              </div>
+              <div class="partner-list">
+                <div v-for="partner in partners.filter(p => p.partnership_type === 'International NGO')" :key="partner.id" class="partner-item">
+                  <div class="partner-logo">
+                    <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                    </svg>
+                  </div>
+                  <div class="partner-info">
+                    <h4>{{ partner.partner_name }}</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Private Sector Partners -->
+            <div class="partner-category" v-if="partners.filter(p => p.partnership_type === 'Private Sector').length > 0">
+              <div class="category-header">
+                <h3>Private Sector Partners</h3>
+                <span class="partner-count">{{ partners.filter(p => p.partnership_type === 'Private Sector').length }}</span>
+              </div>
+              <div class="partner-list">
+                <div v-for="partner in partners.filter(p => p.partnership_type === 'Private Sector')" :key="partner.id" class="partner-item">
+                  <div class="partner-logo">
+                    <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                    </svg>
+                  </div>
+                  <div class="partner-info">
+                    <h4>{{ partner.partner_name }}</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Other Partners -->
+            <div class="partner-category" v-if="partners.filter(p => !['Government', 'International NGO', 'Private Sector'].includes(p.partnership_type)).length > 0">
+              <div class="category-header">
+                <h3>Other Partners</h3>
+                <span class="partner-count">{{ partners.filter(p => !['Government', 'International NGO', 'Private Sector'].includes(p.partnership_type)).length }}</span>
+              </div>
+              <div class="partner-list">
+                <div v-for="partner in partners.filter(p => !['Government', 'International NGO', 'Private Sector'].includes(p.partnership_type))" :key="partner.id" class="partner-item">
+                  <div class="partner-logo">
+                    <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                    </svg>
+                  </div>
+                  <div class="partner-info">
+                    <h4>{{ partner.partner_name }}</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="partners-cta">
+            <h3>Become a Partner</h3>
+            <p>Join us in transforming lives through strategic collaboration. We offer flexible partnership models tailored to your organization's goals and expertise.</p>
+            <div class="partners-cta-actions">
+              <a href="#contact" class="btn btn-primary">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/>
+                </svg>
+                Explore Partnership Opportunities
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+      
       <!-- Contact Section -->
       <section id="contact" class="contact-section">
         <div class="container">
@@ -796,6 +945,36 @@ const stats = ref({
   donations: 0
 })
 
+// Fetch projects and partners data
+const projects = ref([])
+const partners = ref([])
+
+// Fetch real data from API
+onMounted(async () => {
+  try {
+    // Fetch stats
+    const statsData = await $fetch(`${useRuntimeConfig().public.apiBase}/stats`)
+    stats.value = statsData
+    
+    // Fetch projects
+    const projectsData = await $fetch(`${useRuntimeConfig().public.apiBase}/projects`)
+    projects.value = projectsData || []
+    
+    // Fetch partners
+    const partnersData = await $fetch(`${useRuntimeConfig().public.apiBase}/partners`)
+    partners.value = partnersData || []
+  } catch (error) {
+    console.error('Error fetching data:', error)
+  }
+})
+
+// Format date function
+const formatDate = (dateString) => {
+  if (!dateString) return 'TBD'
+  const date = new Date(dateString)
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+}
+
 const form = ref({
   name: '',
   email: '',
@@ -845,13 +1024,335 @@ const submitForm = async () => {
     isSubmitting.value = false
   }
 }
-
-onMounted(async () => {
-  try {
-    const response = await $fetch(`${useRuntimeConfig().public.apiBase}/stats`)
-    stats.value = response
-  } catch (error) {
-    console.error('Failed to fetch stats:', error)
-  }
-})
 </script>
+
+<style scoped>
+/* Partners Section Styles */
+.category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e5e7eb;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+.category-header h3 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 1.25rem;
+  font-weight: 600;
+  flex-shrink: 1;
+}
+
+.partner-count {
+  background: var(--gradient-primary);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  min-width: 30px;
+  text-align: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.partner-category {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.partner-category:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(124, 58, 237, 0.15);
+  border-color: rgba(124, 58, 237, 0.2);
+}
+
+.partner-category h3 {
+  color: #7c3aed;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.partner-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.partner-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background: #f9fafb;
+  transition: all 0.3s ease;
+}
+
+.partner-item:hover {
+  background: #f3f4f6;
+  transform: translateY(-2px);
+}
+
+.partner-logo {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-primary);
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.partner-logo svg {
+  width: 20px;
+  height: 20px;
+  color: white;
+}
+
+.partner-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.partner-info h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
+  line-height: 1.4;
+}
+
+.partner-info p {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.partners-cta {
+  text-align: center;
+  margin-top: 3rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(109, 40, 217, 0.1) 100%);
+  border-radius: 12px;
+  border: 1px solid rgba(124, 58, 237, 0.2);
+}
+
+.partners-cta h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.partners-cta p {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.partners-cta-actions {
+  display: flex;
+  justify-content: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .partners-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .partner-category {
+    padding: 1.5rem;
+  }
+  
+  .partner-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+  
+  .partner-logo {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .partners-cta {
+    padding: 1.5rem;
+  }
+}
+
+/* Projects Showcase Styles */
+.projects-showcase {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
+}
+
+.projects-showcase .project-card {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.projects-showcase .project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(124, 58, 237, 0.15);
+}
+
+.projects-showcase .project-status {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.projects-showcase .project-status.ongoing {
+  background: #10b981;
+  color: white;
+}
+
+.projects-showcase .project-status.planning {
+  background: #f59e0b;
+  color: white;
+}
+
+.projects-showcase .project-status.completed {
+  background: #6b7280;
+  color: white;
+}
+
+.projects-showcase .project-content h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.projects-showcase .project-content p {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.projects-showcase .project-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.projects-showcase .project-budget {
+  font-weight: 700;
+  color: #7c3aed;
+  font-size: 1.1rem;
+}
+
+.projects-showcase .project-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.projects-showcase .project-budget {
+  font-weight: 700;
+  color: #7c3aed;
+  font-size: 1.1rem;
+}
+
+.projects-showcase .project-status {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.projects-showcase .project-status.ongoing {
+  background: #10b981;
+  color: white;
+}
+
+.projects-showcase .project-status.planning {
+  background: #f59e0b;
+  color: white;
+}
+
+.projects-showcase .project-status.completed {
+  background: #6b7280;
+  color: white;
+}
+
+.projects-showcase .project-dates {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.projects-cta {
+  text-align: center;
+  margin-top: 3rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(109, 40, 217, 0.1) 100%);
+  border-radius: 12px;
+  border: 1px solid rgba(124, 58, 237, 0.2);
+}
+
+.projects-cta h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.projects-cta p {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+</style>

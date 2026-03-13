@@ -4,6 +4,9 @@ const mysql = require('mysql2/promise');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
+// Import API routes
+const projectsRouter = require('./api/projects');
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -11,6 +14,9 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// API Routes
+app.use('/api/projects', projectsRouter);
 
 // Database connection
 const dbConfig = {
@@ -36,7 +42,7 @@ async function initDB() {
 app.get('/api/stats', async (req, res) => {
   try {
     const [beneficiaries] = await db.execute('SELECT COUNT(*) as count FROM beneficiaries');
-    const [projects] = await db.execute('SELECT COUNT(*) as count FROM projects WHERE status = ?', ['Completed']);
+    const [projects] = await db.execute('SELECT COUNT(*) as count FROM projects WHERE status = ?', ['ongoing']);
     const [partners] = await db.execute('SELECT COUNT(*) as count FROM partners');
     const [donations] = await db.execute('SELECT COUNT(*) as count FROM donation WHERE payment_status = ?', ['success']);
 
@@ -85,9 +91,15 @@ app.get('/api/partners', async (req, res) => {
 app.post('/api/donation', async (req, res) => {
   try {
     const { name, email, amount, phone } = req.body;
+    
+    // Split name into first_name and last_name for compatibility
+    const nameParts = name.split(' ');
+    const firstName = nameParts[0] || name;
+    const lastName = nameParts.slice(1).join(' ') || '';
+    
     const [result] = await db.execute(
-      'INSERT INTO donation (name, email, amount, phone, payment_status) VALUES (?, ?, ?, ?, ?)',
-      [name, email, amount, phone, 'pending']
+      'INSERT INTO donation (first_name, last_name, email, amount, phone_number, payment_status, transaction_ref) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [firstName, lastName, email, amount, phone, 'pending', 'don_' + Date.now()]
     );
     res.json({ success: true, id: result.insertId });
   } catch (error) {

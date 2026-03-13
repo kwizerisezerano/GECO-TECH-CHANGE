@@ -1,9 +1,9 @@
 {
-  "_hash": "tBcNlUEH4HFezMNbwHkdwlDf9iLWRdeJChykTOp3KbM",
+  "_hash": "SfVUoILSodelQHndB-ZY_Hnvz4nmPZvLfs82iUT3HFY",
   "project": {
-    "rootDir": "C:/xampp/htdocs/gecorwanda/frontend"
+    "rootDir": "D:/GECORWANDA/GECO-TECH-CHANGE/frontend"
   },
   "versions": {
-    "nuxt": "3.21.1"
+    "nuxt": "3.21.2"
   }
 }

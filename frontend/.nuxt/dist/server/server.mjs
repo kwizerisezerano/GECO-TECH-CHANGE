@@ -1,1 +1,1 @@
-export { default } from "file:///C:/xampp/htdocs/gecorwanda/frontend/node_modules/@nuxt/vite-builder/dist/vite-node-entry.mjs"
+export { default } from "file:///D:/GECORWANDA/GECO-TECH-CHANGE/frontend/node_modules/@nuxt/vite-builder/dist/vite-node-entry.mjs"

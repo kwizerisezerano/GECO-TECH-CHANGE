@@ -8,7 +8,7 @@ include('config.php');  // Assuming you have a db_connection.php file for the DB
 $status = isset($_GET['status']) ? $_GET['status'] : '';
 
 // Prepare the SQL query
-$sql = "SELECT * FROM projects WHERE status = :status";
+$sql = "SELECT id, project_name, status, description, start_date, end_date, budget, created_at FROM projects WHERE status = :status";
 
 // Prepare the statement
 $stmt = $pdo->prepare($sql);

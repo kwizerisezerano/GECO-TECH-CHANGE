@@ -7,12 +7,15 @@
 
         <nav class="nav" :class="{ active: isMobileMenuOpen }">
           <ul class="nav-list">
-            <li><a href="#hero" class="nav-link" @click="closeMobileMenu">Home</a></li>
-            <li><a href="#about" class="nav-link" @click="closeMobileMenu">About</a></li>
-            <li><a href="#services" class="nav-link" @click="closeMobileMenu">Services</a></li>
-            <li><a href="#stats" class="nav-link" @click="closeMobileMenu">Impact</a></li>
-            <li><a href="#portfolio" class="nav-link" @click="closeMobileMenu">Stories</a></li>
-            <li><a href="#contact" class="nav-link" @click="closeMobileMenu">Contact</a></li>
+            <li><NuxtLink to="/" class="nav-link" @click="closeMobileMenu">Home</NuxtLink></li>
+            <li><NuxtLink to="/#about" class="nav-link" @click="closeMobileMenu">About</NuxtLink></li>
+            <li><NuxtLink to="/#services" class="nav-link" @click="closeMobileMenu">Services</NuxtLink></li>
+            <li><NuxtLink to="/#stats" class="nav-link" @click="closeMobileMenu">Impact</NuxtLink></li>
+            <li><NuxtLink to="/projects" class="nav-link" @click="closeMobileMenu">Manage Projects</NuxtLink></li>
+            <li><NuxtLink to="/#projects" class="nav-link" @click="closeMobileMenu">Projects</NuxtLink></li>
+            <li><NuxtLink to="/#partners" class="nav-link" @click="closeMobileMenu">Partners</NuxtLink></li>
+            <li><NuxtLink to="/#portfolio" class="nav-link" @click="closeMobileMenu">Stories</NuxtLink></li>
+            <li><NuxtLink to="/#contact" class="nav-link" @click="closeMobileMenu">Contact</NuxtLink></li>
           </ul>
         </nav>
 
@@ -27,6 +30,9 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
 
 const isMobileMenuOpen = ref(false)
 const activeSection = ref('hero')
@@ -40,7 +46,12 @@ const closeMobileMenu = () => {
 }
 
 const updateActiveSection = () => {
-  const sections = ['hero', 'about', 'services', 'portfolio', 'stats', 'contact']
+  // Only update active section if we're on the index page
+  if (route.path !== '/') {
+    return
+  }
+  
+  const sections = ['hero', 'about', 'services', 'stats', 'projects', 'partners', 'portfolio', 'contact']
   const scrollPosition = window.scrollY + 100
 
   for (const section of sections) {
@@ -70,6 +81,19 @@ const handleScroll = () => {
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
   updateActiveSection()
+  
+  // Handle hash navigation on page load
+  if (route.hash) {
+    setTimeout(() => {
+      const targetElement = document.getElementById(route.hash.substring(1))
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        })
+      }
+    }, 100)
+  }
 })
 
 onUnmounted(() => {
@@ -198,7 +222,9 @@ onUnmounted(() => {
   transform: none;
 }
 
-.nav-link.active {
+.nav-link.active,
+.nav-link.router-link-active,
+.nav-link.exact-active {
   background: rgba(255, 255, 255, 0.2);
   color: white;
   box-shadow: none;
@@ -368,7 +394,12 @@ onUnmounted(() => {
     color: var(--accent-700);
   }
   
-  .nav-link.active {
+  .nav-link.router-link-active {
+    background: var(--gradient-primary);
+    color: white;
+  }
+  
+  .nav-link.exact-active {
     background: var(--gradient-primary);
     color: white;
   }
