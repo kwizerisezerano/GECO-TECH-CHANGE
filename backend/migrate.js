@@ -27,33 +27,23 @@ DROP TABLE IF EXISTS partners;
 DROP TABLE IF EXISTS projects;
 DROP TABLE IF EXISTS members;
 DROP TABLE IF EXISTS beneficiaries;
+DROP TABLE IF EXISTS people;
+DROP TABLE IF EXISTS admin_users;
 SET FOREIGN_KEY_CHECKS = 1;
 
--- Beneficiaries table
-CREATE TABLE beneficiaries (
+-- Beneficiaries and Members combined table (people table)
+CREATE TABLE people (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(100) NOT NULL,
-    last_name VARCHAR(100) NOT NULL,
-    phone_number VARCHAR(20) NOT NULL,
+    name_encrypted TEXT NOT NULL,
+    phone_number_encrypted TEXT NOT NULL,
     idno_type VARCHAR(50),
-    idno VARCHAR(50) UNIQUE NOT NULL,
+    idno_encrypted TEXT NOT NULL,
+    person_type ENUM('beneficiary', 'member') NOT NULL,
+    role VARCHAR(100), -- Only for members
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    INDEX idx_idno (idno),
-    INDEX idx_phone (phone_number)
-);
-
--- Members table
-CREATE TABLE members (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(100) NOT NULL,
-    last_name VARCHAR(100) NOT NULL,
-    phone_number VARCHAR(20) NOT NULL,
-    idno_type VARCHAR(50),
-    idno VARCHAR(50) UNIQUE NOT NULL,
-    role VARCHAR(100) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    INDEX idx_idno (idno),
-    INDEX idx_phone (phone_number)
+    INDEX idx_idno_encrypted (idno_encrypted(255)),
+    INDEX idx_phone_encrypted (phone_number_encrypted(255)),
+    INDEX idx_person_type (person_type)
 );
 
 -- Projects table
@@ -71,17 +61,17 @@ CREATE TABLE projects (
     INDEX idx_project_name (project_name)
 );
 
--- Partners table
+-- Partners table (with encrypted fields)
 CREATE TABLE partners (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    partner_name VARCHAR(255) NOT NULL UNIQUE,
-    contact_person VARCHAR(100),
-    email VARCHAR(100),
-    phone VARCHAR(20),
+    partner_name_encrypted TEXT NOT NULL,
+    contact_person_encrypted TEXT,
+    email_encrypted TEXT,
+    phone_encrypted TEXT,
     description TEXT,
     partnership_type VARCHAR(50),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    INDEX idx_partner_name (partner_name)
+    INDEX idx_partner_name_encrypted (partner_name_encrypted(255))
 );
 
 -- Donation table - Updated to match both PHP and Node.js requirements
@@ -116,16 +106,25 @@ CREATE TABLE pdf_files (
     INDEX idx_file_type (file_type)
 );
 
+-- Admin users table
+CREATE TABLE admin_users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email_encrypted TEXT NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    name_encrypted TEXT NOT NULL,
+    role VARCHAR(50) DEFAULT 'admin',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_login TIMESTAMP NULL,
+    INDEX idx_email_encrypted (email_encrypted(255))
+);
+
 -- Insert some default data for testing
 INSERT INTO projects (project_name, status, description) VALUES 
 ('Education Support Program', 'ongoing', 'Providing educational support to underprivileged children'),
 ('Healthcare Initiative', 'completed', 'Free medical camps in rural areas'),
 ('Women Empowerment', 'ongoing', 'Skills training and microfinance for women');
 
-INSERT INTO partners (partner_name, contact_person, email, phone, partnership_type) VALUES 
-('UNICEF Rwanda', 'John Doe', 'john@unicef.rw', '+250788123456', 'International NGO'),
-('Ministry of Education', 'Jane Smith', 'jane@mineduc.rw', '+250788123457', 'Government'),
-('Local Community Bank', 'Bob Wilson', 'bob@bank.rw', '+250788123458', 'Financial');
+-- Note: Partners data will be added through update_real_data.js with encryption
 
 -- Show migration completion
 SELECT 'Database migration completed successfully' as status;
@@ -170,11 +169,10 @@ async function runMigration() {
     
     // Show sample data counts
     const [projectCount] = await connection.execute('SELECT COUNT(*) as count FROM projects');
-    const [partnerCount] = await connection.execute('SELECT COUNT(*) as count FROM partners');
     
     console.log('\n📈 Sample data inserted:');
     console.log(`   • Projects: ${projectCount[0].count}`);
-    console.log(`   • Partners: ${partnerCount[0].count}`);
+    console.log('   • Partners: Will be added through update_real_data.js');
     
     console.log('\n🎉 Database setup completed successfully!');
     console.log('💡 You can now start your server with: npm run dev');

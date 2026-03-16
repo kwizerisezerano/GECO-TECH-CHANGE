@@ -1,242 +1,128 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <!-- Mobile Menu Toggle -->
-    <div class="lg:hidden fixed top-4 left-4 z-50">
-      <button
-        @click="toggleSidebar"
-        class="bg-purple-600 text-white p-3 rounded-lg shadow-lg hover:bg-purple-700 transition duration-200"
-      >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
-      </button>
-    </div>
-
-    <!-- Sidebar -->
-    <div
-      :class="[
-        'fixed lg:static inset-y-0 left-0 z-40 w-64 bg-gradient-to-b from-purple-600 to-purple-800 text-white transform transition-transform duration-300 ease-in-out lg:translate-x-0',
-        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      ]"
-    >
-      <!-- Logo -->
-      <div class="p-6 border-b border-purple-700">
-        <div class="text-center">
-          <img src="/img/logo.png" alt="GECO RWANDA Logo" class="w-16 h-16 mx-auto mb-3 rounded-full bg-white p-2">
-          <h3 class="text-xl font-bold">GECO RWANDA</h3>
-          <p class="text-purple-200 text-sm">Admin Panel</p>
+  <AdminLayout>
+    <!-- Page Header -->
+    <div class="bg-white shadow-sm border-b border-gray-200">
+      <div class="px-6 py-4">
+        <div class="flex justify-between items-center">
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900">Projects Management</h1>
+            <p class="text-gray-600">Manage and monitor all organization projects</p>
+          </div>
+          <button
+            @click="showAddProjectForm = true"
+            class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-200 flex items-center"
+          >
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            </svg>
+            Add New Project
+          </button>
         </div>
       </div>
-      
-      <!-- Navigation -->
-      <nav class="p-4">
-        <ul class="space-y-2">
-          <li>
-            <NuxtLink
-              to="/admin/dashboard"
-              class="flex items-center px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200"
-            >
-              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-              </svg>
-              Dashboard
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink
-              to="/admin/projects"
-              class="flex items-center px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200 bg-purple-700"
-            >
-              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
-              </svg>
-              Projects Management
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink
-              to="/admin/beneficiaries"
-              class="flex items-center px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200"
-            >
-              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-              </svg>
-              Beneficiaries
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink
-              to="/admin/donations"
-              class="flex items-center px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200"
-            >
-              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-              </svg>
-              Donations
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink
-              to="/admin/members"
-              class="flex items-center px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200"
-            >
-              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-              </svg>
-              Members
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink
-              to="/admin/partners"
-              class="flex items-center px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200"
-            >
-              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A6.5 6.5 0 0112 18.255 6.5 6.5 0 013 13.255V12a6.5 6.5 0 0112 0v1.255zM12 15.255A4.5 4.5 0 017.5 12V8a4.5 4.5 0 119 0v4a4.5 4.5 0 01-4.5 3.255z"></path>
-              </svg>
-              Partners
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink
-              to="/admin/documents"
-              class="flex items-center px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200"
-            >
-              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-              </svg>
-              Upload Documents
-            </NuxtLink>
-          </li>
-        </ul>
-      </nav>
-      
-      <!-- Logout Button -->
-      <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-purple-700">
-        <button
-          @click="handleLogout"
-          class="w-full bg-purple-900 hover:bg-purple-950 text-white py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center"
-        >
-          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-          </svg>
-          Logout
-        </button>
-      </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="lg:ml-64 min-h-screen">
-      <!-- Page Header -->
-      <div class="bg-white shadow-sm border-b border-gray-200">
-        <div class="px-6 py-4">
-          <div class="flex justify-between items-center">
+    <!-- Add Project Form Modal -->
+    <div v-if="showAddProjectForm" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white rounded-xl p-6 w-full max-w-2xl max-h-screen overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-semibold text-gray-900">Add New Project</h3>
+          <button @click="showAddProjectForm = false" class="text-gray-400 hover:text-gray-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+
+        <form @submit.prevent="handleAddProject">
+          <div class="mb-4">
+            <label for="project_name" class="block text-sm font-medium text-gray-700 mb-2">
+              Project Name
+            </label>
+            <input
+              v-model="newProject.project_name"
+              type="text"
+              id="project_name"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              placeholder="Enter project name"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label for="status" class="block text-sm font-medium text-gray-700 mb-2">
+              Status
+            </label>
+            <select
+              v-model="newProject.status"
+              id="status"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              required
+            >
+              <option value="">Select Status</option>
+              <option value="Ongoing">Ongoing</option>
+              <option value="Pending">Pending</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </div>
+            
+          <div class="mb-4">
+            <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
+              Description
+            </label>
+            <textarea
+              v-model="newProject.description"
+              id="description"
+              rows="3"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              placeholder="Enter project description"
+            ></textarea>
+          </div>
+            
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             <div>
-              <h1 class="text-2xl font-bold text-gray-800">Projects Management</h1>
-              <p class="text-gray-600">Manage all your projects from here</p>
+              <label for="start_date" class="block text-sm font-medium text-gray-700 mb-2">
+                Start Date
+              </label>
+              <input
+                v-model="newProject.start_date"
+                type="date"
+                id="start_date"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label for="end_date" class="block text-sm font-medium text-gray-700 mb-2">
+                End Date
+              </label>
+              <input
+                v-model="newProject.end_date"
+                type="date"
+                id="end_date"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label for="budget" class="block text-sm font-medium text-gray-700 mb-2">
+                Budget (RWF)
+              </label>
+              <input
+                v-model="newProject.budget"
+                type="number"
+                id="budget"
+                min="0"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                placeholder="Enter budget"
+              />
             </div>
           </div>
-        </div>
-      </div>
-
-      <!-- Content -->
-      <div class="p-6">
-        <!-- Success/Error Messages -->
-        <div v-if="successMessage" class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6">
-          {{ successMessage }}
-        </div>
-        
-        <div v-if="errorMessage" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
-          {{ errorMessage }}
-        </div>
-
-        <!-- Add New Project Form -->
-        <div class="bg-white rounded-xl shadow-md p-6 mb-6" data-aos="fade-up" data-aos-delay="100">
-          <h5 class="text-lg font-semibold text-gray-800 mb-4">Add New Project</h5>
-          <form @submit.prevent="handleAddProject">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-              <div>
-                <label for="project_name" class="block text-sm font-medium text-gray-700 mb-2">
-                  Project Name
-                </label>
-                <input
-                  v-model="newProject.project_name"
-                  type="text"
-                  id="project_name"
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                  placeholder="Enter project name"
-                  required
-                />
-              </div>
-              <div>
-                <label for="status" class="block text-sm font-medium text-gray-700 mb-2">
-                  Status
-                </label>
-                <select
-                  v-model="newProject.status"
-                  id="status"
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                  required
-                >
-                  <option value="">Select Status</option>
-                  <option value="Ongoing">Ongoing</option>
-                  <option value="Pending">Pending</option>
-                  <option value="Completed">Completed</option>
-                </select>
-              </div>
-            </div>
             
-            <div class="mb-4">
-              <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
-                Description
-              </label>
-              <textarea
-                v-model="newProject.description"
-                id="description"
-                rows="3"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                placeholder="Enter project description"
-              ></textarea>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-              <div>
-                <label for="start_date" class="block text-sm font-medium text-gray-700 mb-2">
-                  Start Date
-                </label>
-                <input
-                  v-model="newProject.start_date"
-                  type="date"
-                  id="start_date"
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                />
-              </div>
-              <div>
-                <label for="end_date" class="block text-sm font-medium text-gray-700 mb-2">
-                  End Date
-                </label>
-                <input
-                  v-model="newProject.end_date"
-                  type="date"
-                  id="end_date"
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                />
-              </div>
-              <div>
-                <label for="budget" class="block text-sm font-medium text-gray-700 mb-2">
-                  Budget (RWF)
-                </label>
-                <input
-                  v-model="newProject.budget"
-                  type="number"
-                  id="budget"
-                  min="0"
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                  placeholder="Enter budget"
-                />
-              </div>
-            </div>
-            
+          <div class="flex justify-end space-x-3">
+            <button
+              type="button"
+              @click="showAddProjectForm = false"
+              class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200"
+            >
+              Cancel
+            </button>
             <button
               type="submit"
               :disabled="addingProject"
@@ -256,11 +142,14 @@
                 Add Project
               </span>
             </button>
-          </form>
-        </div>
+          </div>
+        </form>
+      </div>
+    </div>
 
-        <!-- Projects List -->
-        <div class="bg-white rounded-xl shadow-md p-6" data-aos="fade-up" data-aos-delay="200">
+    <!-- Projects List -->
+    <div class="px-6 py-6">
+      <div class="bg-white rounded-xl shadow-md p-6" data-aos="fade-up" data-aos-delay="200">
           <h5 class="text-lg font-semibold text-gray-800 mb-4">All Projects</h5>
           
           <!-- Loading State -->
@@ -348,14 +237,14 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
+  </AdminLayout>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '~/stores/auth'
+import Swal from 'sweetalert2'
 
 definePageMeta({
   middleware: 'auth'
@@ -369,6 +258,7 @@ const addingProject = ref(false)
 const projects = ref([])
 const successMessage = ref('')
 const errorMessage = ref('')
+const showAddProjectForm = ref(false)
 const sidebarOpen = ref(false)
 
 const newProject = ref({

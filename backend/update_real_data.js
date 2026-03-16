@@ -1,5 +1,6 @@
 const mysql = require('mysql2/promise');
 require('dotenv').config();
+const { encrypt, hashPassword } = require('./utils/crypto');
 
 /**
  * Update GECO Database with Real Project and Partner Information
@@ -23,11 +24,19 @@ async function updateRealData() {
     console.log('✅ Connected to database');
 
     // Clear existing sample data
-    await connection.execute('DELETE FROM members');
-    await connection.execute('DELETE FROM beneficiaries');
+    await connection.execute('DELETE FROM admin_users');
+    await connection.execute('DELETE FROM people');
     await connection.execute('DELETE FROM projects');
     await connection.execute('DELETE FROM partners');
     console.log('🗑️ Cleared existing sample data');
+    
+    // Insert default admin user
+    const defaultAdminPassword = hashPassword('admin123'); // Change this in production
+    await connection.execute(
+      'INSERT INTO admin_users (email_encrypted, password_hash, name_encrypted, role) VALUES (?, ?, ?, ?)',
+      [encrypt('admin@gecorwanda.rw'), defaultAdminPassword, encrypt('System Administrator'), 'admin']
+    );
+    console.log('✅ Created default admin user: admin@gecorwanda.rw / admin123');
 
     // Insert real GECO projects
     const projects = [
@@ -108,74 +117,25 @@ async function updateRealData() {
       // Climate & Environment
       { name: 'Youth Climate Justice Fund', contact_person: 'Program Manager', email: 'info@youthclimatejustice.org', phone: '+250788123016', partnership_type: 'Climate/Environment' },
       { name: 'Clean Cooking Alliance', contact_person: 'Regional Director', email: 'info@cleancookingalliance.org', phone: '+250788123017', partnership_type: 'Climate/Environment' },
-      { name: 'SNV', contact_person: 'Country Director', email: 'rwanda@snv.org', phone: '+250788123018', partnership_type: 'Climate/Environment' },
-      { name: 'DelAgua', contact_person: 'Country Manager', email: 'rwanda@delagua.org', phone: '+250788123019', partnership_type: 'Climate/Environment' },
-      
-      // Private Sector
-      { name: 'MTN Rwanda', contact_person: 'Corporate Social Responsibility', email: 'csr@mtn.co.rw', phone: '+250788123020', partnership_type: 'Private Sector' },
-      { name: 'Airtel Rwanda', contact_person: 'CSR Manager', email: 'csr.rwanda@airtel.com', phone: '+250788123021', partnership_type: 'Private Sector' },
-      { name: 'Bralirwa', contact_person: 'CSR Director', email: 'info@bralirwa.rw', phone: '+250788123022', partnership_type: 'Private Sector' },
-      { name: 'UCB', contact_person: 'Medical Director', email: 'rwanda@ucb.com', phone: '+250788123023', partnership_type: 'Private Sector' },
-      
-      // Foundations
-      { name: 'BAND Foundation', contact_person: 'Program Officer', email: 'info@bandfoundation.org', phone: '+250788123024', partnership_type: 'Foundation' },
-      
-      // National Organizations
-      { name: 'Ligue Rwandaise contre l’Épilepsie', contact_person: 'President', email: 'info@ligue-epilepsie.rw', phone: '+250788123025', partnership_type: 'National Organization' },
-      { name: 'Women for Women Rwanda', contact_person: 'Country Director', email: 'rwanda@womenforwomen.org', phone: '+250788123026', partnership_type: 'National Organization' }
     ];
 
-    // Insert partners
+    // Insert partners with encrypted data
     for (const partner of partners) {
       await connection.execute(
-        'INSERT INTO partners (partner_name, contact_person, email, phone, partnership_type) VALUES (?, ?, ?, ?, ?)',
-        [partner.name, partner.contact_person, partner.email, partner.phone, partner.partnership_type]
+        'INSERT INTO partners (partner_name_encrypted, contact_person_encrypted, email_encrypted, phone_encrypted, partnership_type) VALUES (?, ?, ?, ?, ?)',
+        [encrypt(partner.name), encrypt(partner.contact_person), encrypt(partner.email), encrypt(partner.phone), partner.partnership_type]
       );
     }
-    console.log(`✅ Inserted ${partners.length} partners`);
+    console.log(`✅ Inserted ${partners.length} partners with encrypted data`);
 
-    // Insert sample beneficiaries (based on the hospital data provided)
-    const beneficiaries = [
-      // Sample beneficiaries from different districts
-      { first_name: 'Jean', last_name: 'Mukamana', phone_number: '+250788123101', idno_type: 'National ID', idno: '1199080012345681' },
-      { first_name: 'Marie', last_name: 'Uwimana', phone_number: '+250788123102', idno_type: 'National ID', idno: '1199080012345682' },
-      { first_name: 'Joseph', last_name: 'Niyonzima', phone_number: '+250788123103', idno_type: 'National ID', idno: '1199080012345683' },
-      { first_name: 'Grace', last_name: 'Mukeshimana', phone_number: '+250788123104', idno_type: 'National ID', idno: '1199080012345684' },
-      { first_name: 'Emmanuel', last_name: 'Hategekimana', phone_number: '+250788123105', idno_type: 'National ID', idno: '1199080012345685' }
-    ];
-
-    // Insert beneficiaries
-    for (const beneficiary of beneficiaries) {
-      await connection.execute(
-        'INSERT INTO beneficiaries (first_name, last_name, phone_number, idno_type, idno) VALUES (?, ?, ?, ?, ?)',
-        [beneficiary.first_name, beneficiary.last_name, beneficiary.phone_number, beneficiary.idno_type, beneficiary.idno]
-      );
-    }
-    console.log(`✅ Inserted ${beneficiaries.length} sample beneficiaries`);
-
-    // Insert sample members (GECO staff and volunteers)
-    const members = [
-      { first_name: 'Dr. Jean', last_name: 'Niyonzima', phone_number: '+250788123201', idno_type: 'National ID', idno: '1199080012345801', role: 'Executive Director' },
-      { first_name: 'Marie', last_name: 'Uwase', phone_number: '+250788123202', idno_type: 'National ID', idno: '1199080012345802', role: 'Program Manager' },
-      { first_name: 'Joseph', last_name: 'Munyaneza', phone_number: '+250788123203', idno_type: 'National ID', idno: '1199080012345803', role: 'Health Officer' },
-      { first_name: 'Grace', last_name: 'Mukandayisenga', phone_number: '+250788123204', idno_type: 'National ID', idno: '1199080012345804', role: 'Community Outreach Coordinator' },
-      { first_name: 'Emmanuel', last_name: 'Habimana', phone_number: '+250788123205', idno_type: 'National ID', idno: '1199080012345805', role: 'Research Officer' }
-    ];
-
-    // Insert members
-    for (const member of members) {
-      await connection.execute(
-        'INSERT INTO members (first_name, last_name, phone_number, idno_type, idno, role) VALUES (?, ?, ?, ?, ?, ?)',
-        [member.first_name, member.last_name, member.phone_number, member.idno_type, member.idno, member.role]
-      );
-    }
-    console.log(`✅ Inserted ${members.length} GECO members`);
+    // Remove hardcoded beneficiaries and members - they should be added through the admin interface
+    console.log('⚠️  Beneficiaries and members should be added through the admin interface');
 
     // Display summary
     const [projectCount] = await connection.execute('SELECT COUNT(*) as count FROM projects');
     const [partnerCount] = await connection.execute('SELECT COUNT(*) as count FROM partners');
-    const [beneficiaryCount] = await connection.execute('SELECT COUNT(*) as count FROM beneficiaries');
-    const [memberCount] = await connection.execute('SELECT COUNT(*) as count FROM members');
+    const [beneficiaryCount] = await connection.execute('SELECT COUNT(*) as count FROM people WHERE person_type = "beneficiary"');
+    const [memberCount] = await connection.execute('SELECT COUNT(*) as count FROM people WHERE person_type = "member"');
 
     console.log('\n📊 Database Update Summary:');
     console.log(`   • Projects: ${projectCount[0].count}`);

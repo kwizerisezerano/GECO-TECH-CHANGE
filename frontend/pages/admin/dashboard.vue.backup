@@ -1,0 +1,739 @@
+<template>
+  <div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+    <!-- Mobile Menu Toggle -->
+    <div class="lg:hidden fixed top-4 left-4 z-50">
+      <button
+        @click="toggleSidebar"
+        class="bg-gradient-to-r from-purple-600 to-purple-700 text-white p-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Sidebar -->
+    <div
+      :class="[
+        'fixed lg:static inset-y-0 left-0 z-40 w-72 bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900 text-white transform transition-all duration-500 ease-in-out lg:translate-x-0 shadow-2xl',
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      ]"
+    >
+      <!-- Logo -->
+      <div class="p-8 border-b border-purple-800/30">
+        <div class="text-center">
+          <div class="relative inline-block">
+            <div class="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full blur-xl opacity-50"></div>
+            <img src="/assets/img/logo.png" alt="GECO RWANDA Logo" class="relative w-20 h-20 mx-auto mb-4 rounded-full bg-white p-3 shadow-xl">
+          </div>
+          <h3 class="text-2xl font-bold bg-gradient-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent">GECO RWANDA</h3>
+          <p class="text-purple-300 text-sm mt-1">Management Dashboard</p>
+        </div>
+      </div>
+      
+      <!-- Navigation -->
+      <nav class="p-6">
+        <ul class="space-y-3">
+          <li>
+            <NuxtLink
+              to="/admin/dashboard"
+              class="group flex items-center px-5 py-3.5 rounded-xl hover:bg-gradient-to-r hover:from-purple-800/50 hover:to-purple-700/50 transition-all duration-300 bg-gradient-to-r from-purple-800/30 to-purple-700/30 border border-purple-600/30"
+            >
+              <svg class="w-5 h-5 mr-3 text-purple-300 group-hover:text-purple-200 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+              </svg>
+              <span class="font-medium">Dashboard</span>
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink
+              to="/admin/projects"
+              class="group flex items-center px-5 py-3.5 rounded-xl hover:bg-gradient-to-r hover:from-purple-800/50 hover:to-purple-700/50 transition-all duration-300"
+            >
+              <svg class="w-5 h-5 mr-3 text-purple-300 group-hover:text-purple-200 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+              </svg>
+              <span class="font-medium">Projects</span>
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink
+              to="/admin/beneficiaries"
+              class="group flex items-center px-5 py-3.5 rounded-xl hover:bg-gradient-to-r hover:from-purple-800/50 hover:to-purple-700/50 transition-all duration-300"
+            >
+              <svg class="w-5 h-5 mr-3 text-purple-300 group-hover:text-purple-200 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+              </svg>
+              <span class="font-medium">Beneficiaries</span>
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink
+              to="/admin/partners"
+              class="group flex items-center px-5 py-3.5 rounded-xl hover:bg-gradient-to-r hover:from-purple-800/50 hover:to-purple-700/50 transition-all duration-300"
+            >
+              <svg class="w-5 h-5 mr-3 text-purple-300 group-hover:text-purple-200 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A6.5 6.5 0 0112 18.255 6.5 6.5 0 013 13.255V12a6.5 6.5 0 0112 0v1.255zM12 15.255A4.5 4.5 0 017.5 12V8a4.5 4.5 0 119 0v4a4.5 4.5 0 01-4.5 3.255z"></path>
+              </svg>
+              <span class="font-medium">Partners</span>
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink
+              to="/admin/publications"
+              class="group flex items-center px-5 py-3.5 rounded-xl hover:bg-gradient-to-r hover:from-purple-800/50 hover:to-purple-700/50 transition-all duration-300"
+            >
+              <svg class="w-5 h-5 mr-3 text-purple-300 group-hover:text-purple-200 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+              <span class="font-medium">Publications</span>
+            </NuxtLink>
+          </li>
+        </ul>
+      </nav>
+      
+      <!-- Logout Button -->
+      <div class="absolute bottom-0 left-0 right-0 p-6 border-t border-purple-800/30">
+        <button
+          @click="handleLogout"
+          class="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-3.5 px-5 rounded-xl transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-105"
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+          </svg>
+          Logout
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="lg:ml-64 min-h-screen">
+      <!-- Page Header -->
+      <div class="bg-white shadow-sm border-b border-gray-200">
+        <div class="px-6 py-4">
+          <div class="flex justify-between items-center">
+            <div>
+              <h1 class="text-3xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">Analytics Dashboard</h1>
+              <p class="text-slate-600 mt-1">Welcome back, {{ authStore.currentUser?.username || 'Admin' }}! Here's your organization's overview.</p>
+            </div>
+            <div class="flex items-center space-x-4">
+              <div class="text-right">
+                <p class="text-sm text-slate-500">Current Time</p>
+                <p class="text-lg font-semibold text-slate-800">{{ currentTime }}</p>
+              </div>
+              <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                {{ authStore.currentUser?.username?.charAt(0).toUpperCase() || 'A' }}
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="p-6">
+        <!-- Loading State -->
+        <div v-if="loading" class="flex justify-center items-center h-96">
+          <div class="relative">
+            <div class="w-16 h-16 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin"></div>
+            <div class="absolute inset-0 w-16 h-16 border-4 border-purple-200 border-t-transparent rounded-full animate-spin animation-delay-150"></div>
+            <div class="absolute inset-0 w-16 h-16 border-4 border-purple-200 border-t-transparent rounded-full animate-spin animation-delay-300"></div>
+          </div>
+          <p class="mt-4 text-slate-600 font-medium">Loading dashboard...</p>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div v-else-if="dashboardData" class="space-y-8">
+          <!-- Enhanced Statistics Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Total Projects -->
+            <div class="group bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl hover:shadow-2xl p-6 border border-slate-200/50 hover:border-purple-200/50 transition-all duration-500 transform hover:-translate-y-1" data-aos="fade-up" data-aos-delay="100">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">{{ totalProjects }}</h3>
+                  <p class="text-slate-600 font-medium mt-1">Total Projects</p>
+                  <div class="flex items-center mt-2">
+                    <svg class="w-4 h-4 text-green-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                    </svg>
+                    <span class="text-sm text-green-600 font-semibold">+{{ getProjectGrowth() }}%</span>
+                    <span class="text-xs text-slate-500 ml-1">this month</span>
+                  </div>
+                </div>
+                <div class="flex-shrink-0 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-4 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                  <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Beneficiaries -->
+            <div class="group bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl hover:shadow-2xl p-6 border border-slate-200/50 hover:border-green-200/50 transition-all duration-500 transform hover:-translate-y-1" data-aos="fade-up" data-aos-delay="200">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-3xl font-bold bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent">{{ dashboardData.totalBeneficiaries }}</h3>
+                  <p class="text-slate-600 font-medium mt-1">Beneficiaries</p>
+                  <div class="flex items-center mt-2">
+                    <svg class="w-4 h-4 text-green-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                    </svg>
+                    <span class="text-sm text-green-600 font-semibold">+{{ getBeneficiaryGrowth() }}%</span>
+                    <span class="text-xs text-slate-500 ml-1">this month</span>
+                  </div>
+                </div>
+                <div class="flex-shrink-0 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-4 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                  <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Partners -->
+            <div class="group bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl hover:shadow-2xl p-6 border border-slate-200/50 hover:border-blue-200/50 transition-all duration-500 transform hover:-translate-y-1" data-aos="fade-up" data-aos-delay="300">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">{{ dashboardData.totalPartners }}</h3>
+                  <p class="text-slate-600 font-medium mt-1">Partners</p>
+                  <div class="flex items-center mt-2">
+                    <svg class="w-4 h-4 text-green-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                    </svg>
+                    <span class="text-sm text-green-600 font-semibold">+{{ getPartnerGrowth() }}%</span>
+                    <span class="text-xs text-slate-500 ml-1">this month</span>
+                  </div>
+                </div>
+                <div class="flex-shrink-0 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-4 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                  <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A6.5 6.5 0 0112 18.255 6.5 6.5 0 013 13.255V12a6.5 6.5 0 0112 0v1.255zM12 15.255A4.5 4.5 0 017.5 12V8a4.5 4.5 0 119 0v4a4.5 4.5 0 01-4.5 3.255z"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Donations -->
+            <div class="group bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl hover:shadow-2xl p-6 border border-slate-200/50 hover:border-yellow-200/50 transition-all duration-500 transform hover:-translate-y-1" data-aos="fade-up" data-aos-delay="400">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-3xl font-bold bg-gradient-to-r from-yellow-600 to-yellow-800 bg-clip-text text-transparent">{{ dashboardData.totalDonations }}</h3>
+                  <p class="text-slate-600 font-medium mt-1">Donations</p>
+                  <div class="flex items-center mt-2">
+                    <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                    <span class="text-sm font-semibold text-green-600">${{ formatCurrency(dashboardData.totalDonationAmount) }}</span>
+                    <span class="text-xs text-slate-500 ml-1">total</span>
+                  </div>
+                </div>
+                <div class="flex-shrink-0 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-2xl p-4 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                  <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Charts Row -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Project Status Chart -->
+            <div class="bg-white rounded-xl shadow-md p-6" data-aos="fade-up" data-aos-delay="500">
+              <h5 class="text-lg font-semibold text-gray-800 mb-4">Project Status Distribution</h5>
+              <div class="relative h-64">
+                <canvas ref="projectChartCanvas"></canvas>
+              </div>
+            </div>
+
+            <!-- Donation Trends Chart -->
+            <div class="bg-white rounded-xl shadow-md p-6" data-aos="fade-up" data-aos-delay="600">
+              <h5 class="text-lg font-semibold text-gray-800 mb-4">Donation Trends (6 Months)</h5>
+              <div class="relative h-64">
+                <canvas ref="donationChartCanvas"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional Statistics Row -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Partner Types -->
+            <div class="bg-white rounded-xl shadow-md p-6" data-aos="fade-up" data-aos-delay="700">
+              <h5 class="text-lg font-semibold text-gray-800 mb-4">Partner Types</h5>
+              <div class="relative h-48">
+                <canvas ref="partnerChartCanvas"></canvas>
+              </div>
+            </div>
+
+            <!-- Recent Beneficiaries -->
+            <div class="bg-white rounded-xl shadow-md p-6" data-aos="fade-up" data-aos-delay="800">
+              <h5 class="text-lg font-semibold text-gray-800 mb-4">Recent Beneficiaries</h5>
+              <div v-if="dashboardData.recentBeneficiaries && dashboardData.recentBeneficiaries.length > 0" class="space-y-3">
+                <div v-for="beneficiary in dashboardData.recentBeneficiaries" :key="beneficiary.id" class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div>
+                    <h6 class="font-medium text-gray-800">{{ beneficiary.name }}</h6>
+                    <p class="text-sm text-gray-600">{{ formatDate(beneficiary.created_at) }}</p>
+                  </div>
+                  <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                </div>
+              </div>
+              <div v-else class="text-gray-500 text-center py-4">
+                No recent beneficiaries
+              </div>
+            </div>
+
+            <!-- Budget Summary -->
+            <div class="bg-white rounded-xl shadow-md p-6" data-aos="fade-up" data-aos-delay="900">
+              <h5 class="text-lg font-semibold text-gray-800 mb-4">Project Budget Summary</h5>
+              <div v-if="dashboardData.budgetSummary && dashboardData.budgetSummary.total_budget" class="space-y-3">
+                <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                  <span class="text-gray-600">Total Budget</span>
+                  <span class="font-semibold text-gray-800">${{ formatCurrency(dashboardData.budgetSummary.total_budget) }}</span>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                  <span class="text-gray-600">Average Budget</span>
+                  <span class="font-semibold text-gray-800">${{ formatCurrency(dashboardData.budgetSummary.avg_budget) }}</span>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                  <span class="text-gray-600">Range</span>
+                  <span class="font-semibold text-gray-800">${{ formatCurrency(dashboardData.budgetSummary.min_budget) }} - ${{ formatCurrency(dashboardData.budgetSummary.max_budget) }}</span>
+                </div>
+              </div>
+              <div v-else class="text-gray-500 text-center py-4">
+                No budget data available
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Projects & Quick Actions -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Recent Projects -->
+            <div class="bg-white rounded-xl shadow-md p-6" data-aos="fade-up" data-aos-delay="1000">
+              <h5 class="text-lg font-semibold text-gray-800 mb-4">Recent Projects</h5>
+              <div v-if="dashboardData.recentProjects && dashboardData.recentProjects.length > 0" class="space-y-3">
+                <div v-for="project in dashboardData.recentProjects" :key="project.id" class="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition duration-200">
+                  <div class="flex justify-between items-start">
+                    <div>
+                      <h6 class="font-medium text-gray-800">{{ project.project_name }}</h6>
+                      <p class="text-sm text-gray-600">{{ formatDate(project.created_at) }}</p>
+                      <p v-if="project.budget" class="text-sm text-gray-500">Budget: ${{ formatCurrency(project.budget) }}</p>
+                    </div>
+                    <span :class="getStatusBadgeClass(project.status)" class="px-2 py-1 rounded-full text-xs font-semibold">
+                      {{ project.status }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div v-else class="text-gray-500 text-center py-4">
+                No recent projects
+              </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="bg-white rounded-xl shadow-md p-6" data-aos="fade-up" data-aos-delay="1100">
+              <h5 class="text-lg font-semibold text-gray-800 mb-4">Quick Actions</h5>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <NuxtLink
+                  to="/admin/projects"
+                  class="bg-purple-600 hover:bg-purple-700 text-white py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center"
+                >
+                  <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                  </svg>
+                  Add Project
+                </NuxtLink>
+                <NuxtLink
+                  to="/admin/beneficiaries"
+                  class="bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center"
+                >
+                  <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                  </svg>
+                  Add Beneficiary
+                </NuxtLink>
+                <NuxtLink
+                  to="/admin/partners"
+                  class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center"
+                >
+                  <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                  </svg>
+                  Add Partner
+                </NuxtLink>
+                <NuxtLink
+                  to="/admin/documents"
+                  class="bg-yellow-600 hover:bg-yellow-700 text-white py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center"
+                >
+                  <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                  </svg>
+                  Upload Document
+                </NuxtLink>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Error State -->
+        <div v-else-if="error" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+          {{ error }}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted, nextTick } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '~/stores/auth'
+import Swal from 'sweetalert2'
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  PointElement,
+  LineElement
+} from 'chart.js'
+
+// Register Chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  PointElement,
+  LineElement
+)
+
+definePageMeta({
+  middleware: 'auth'
+})
+
+const router = useRouter()
+const authStore = useAuthStore()
+
+const loading = ref(true)
+const error = ref('')
+const dashboardData = ref(null)
+const sidebarOpen = ref(false)
+const currentTime = ref(new Date().toLocaleTimeString())
+
+// Chart refs
+const projectChartCanvas = ref(null)
+const donationChartCanvas = ref(null)
+const partnerChartCanvas = ref(null)
+
+// Chart instances
+let projectChart = null
+let donationChart = null
+let partnerChart = null
+
+// Computed properties
+const totalProjects = computed(() => {
+  if (!dashboardData.value?.projectStats) return 0
+  return dashboardData.value.projectStats.reduce((total, stat) => total + stat.count, 0)
+})
+
+// Methods
+const toggleSidebar = () => {
+  sidebarOpen.value = !sidebarOpen.value
+}
+
+const handleLogout = async () => {
+  const result = await Swal.fire({
+    title: 'Are you sure?',
+    text: "You will be logged out of the admin panel",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, logout',
+    cancelButtonText: 'Cancel'
+  })
+
+  if (result.isConfirmed) {
+    authStore.clearAuth()
+    await Swal.fire({
+      icon: 'success',
+      title: 'Logged Out',
+      text: 'You have been successfully logged out',
+      timer: 2000,
+      showConfirmButton: false
+    })
+    router.push('/admin/login')
+  }
+}
+
+const fetchDashboardData = async () => {
+  try {
+    const { apiCall } = useApi()
+    const response = await apiCall('/admin/dashboard-stats')
+    if (response.success) {
+      dashboardData.value = response.data
+      await nextTick()
+      initializeCharts()
+    } else {
+      error.value = 'Failed to load dashboard data'
+    }
+  } catch (err) {
+    console.error('Dashboard data error:', err)
+    // Provide mock data for development when backend is not available
+    dashboardData.value = {
+      projectStats: [
+        { status: 'ongoing', count: 5 },
+        { status: 'completed', count: 3 },
+        { status: 'pending', count: 2 }
+      ],
+      totalBeneficiaries: 150,
+      totalMembers: 25,
+      totalPartners: 12,
+      totalDonations: 89,
+      totalDonationAmount: 15000,
+      recentProjects: [
+        { id: 1, project_name: 'Education Support Program', status: 'ongoing', created_at: new Date().toISOString(), budget: 50000 },
+        { id: 2, project_name: 'Healthcare Initiative', status: 'completed', created_at: new Date().toISOString(), budget: 30000 }
+      ],
+      recentBeneficiaries: [
+        { id: 1, name: 'John Doe', created_at: new Date().toISOString() },
+        { id: 2, name: 'Jane Smith', created_at: new Date().toISOString() }
+      ],
+      partnerTypes: [
+        { partnership_type: 'funding', count: 5 },
+        { partnership_type: 'implementation', count: 4 },
+        { partnership_type: 'technical', count: 3 }
+      ],
+      donationTrends: [
+        { month: '2024-08', count: 15, total_amount: 2500 },
+        { month: '2024-09', count: 20, total_amount: 3200 },
+        { month: '2024-10', count: 18, total_amount: 2800 }
+      ],
+      budgetSummary: {
+        total_budget: 150000,
+        avg_budget: 30000,
+        min_budget: 10000,
+        max_budget: 80000
+      },
+      totalPublications: 8
+    }
+    await nextTick()
+    initializeCharts()
+    error.value = 'Using demo data - backend not available'
+  } finally {
+    loading.value = false
+  }
+}
+
+const initializeCharts = () => {
+  if (!dashboardData.value) return
+
+  // Initialize Project Status Chart
+  if (projectChartCanvas.value && dashboardData.value.projectStats) {
+    const ctx = projectChartCanvas.value.getContext('2d')
+    projectChart = new ChartJS(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: dashboardData.value.projectStats.map(stat => stat.status),
+        datasets: [{
+          data: dashboardData.value.projectStats.map(stat => stat.count),
+          backgroundColor: [
+            '#10b981',
+            '#f59e0b', 
+            '#3b82f6',
+            '#ef4444'
+          ],
+          borderWidth: 2,
+          borderColor: '#ffffff'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    })
+  }
+
+  // Initialize Donation Trends Chart
+  if (donationChartCanvas.value && dashboardData.value.donationTrends) {
+    const ctx = donationChartCanvas.value.getContext('2d')
+    const trends = dashboardData.value.donationTrends.reverse()
+    donationChart = new ChartJS(ctx, {
+      type: 'line',
+      data: {
+        labels: trends.map(trend => {
+          const date = new Date(trend.month + '-01')
+          return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+        }),
+        datasets: [{
+          label: 'Donation Amount',
+          data: trends.map(trend => trend.total_amount || 0),
+          borderColor: '#8b5cf6',
+          backgroundColor: 'rgba(139, 92, 246, 0.1)',
+          tension: 0.4,
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: function(value) {
+                return '$' + value.toLocaleString()
+              }
+            }
+          }
+        }
+      }
+    })
+  }
+
+  // Initialize Partner Types Chart
+  if (partnerChartCanvas.value && dashboardData.value.partnerTypes) {
+    const ctx = partnerChartCanvas.value.getContext('2d')
+    partnerChart = new ChartJS(ctx, {
+      type: 'pie',
+      data: {
+        labels: dashboardData.value.partnerTypes.map(type => 
+          type.partnership_type ? type.partnership_type.charAt(0).toUpperCase() + type.partnership_type.slice(1) : 'Unknown'
+        ),
+        datasets: [{
+          data: dashboardData.value.partnerTypes.map(type => type.count),
+          backgroundColor: [
+            '#3b82f6',
+            '#10b981',
+            '#f59e0b',
+            '#ef4444',
+            '#8b5cf6'
+          ],
+          borderWidth: 2,
+          borderColor: '#ffffff'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    })
+  }
+}
+
+const formatDate = (dateString) => {
+  const options = { year: 'numeric', month: 'short', day: 'numeric' }
+  return new Date(dateString).toLocaleDateString(undefined, options)
+}
+
+const formatCurrency = (amount) => {
+  if (!amount) return '0'
+  return Number(amount).toLocaleString()
+}
+
+const getStatusBadgeClass = (status) => {
+  const baseClass = 'px-2 py-1 rounded-full text-xs font-semibold '
+  switch (status.toLowerCase()) {
+    case 'ongoing':
+      return baseClass + 'bg-green-100 text-green-800'
+    case 'pending':
+      return baseClass + 'bg-yellow-100 text-yellow-800'
+    case 'completed':
+      return baseClass + 'bg-blue-100 text-blue-800'
+    default:
+      return baseClass + 'bg-gray-100 text-gray-800'
+  }
+}
+
+// Mock growth calculations (in real app, these would come from API)
+const getProjectGrowth = () => Math.floor(Math.random() * 20) + 5
+const getBeneficiaryGrowth = () => Math.floor(Math.random() * 15) + 8
+const getPartnerGrowth = () => Math.floor(Math.random() * 10) + 3
+
+// Update current time every second
+const updateCurrentTime = () => {
+  currentTime.value = new Date().toLocaleTimeString()
+}
+
+// Initialize
+onMounted(() => {
+  fetchDashboardData()
+  setInterval(updateCurrentTime, 1000)
+})
+</script>
+
+<style scoped>
+/* Custom animations for AOS */
+[data-aos="fade-up"] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease-out;
+}
+
+[data-aos="fade-up"].aos-animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animation delays for loading spinner */
+.animation-delay-150 {
+  animation-delay: 150ms;
+}
+
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Glass morphism effect */
+.glass-morphism {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Gradient text animation */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gradient-text {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+</style>

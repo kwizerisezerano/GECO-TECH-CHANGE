@@ -22,7 +22,7 @@
       <!-- Logo -->
       <div class="p-6 border-b border-purple-700">
         <div class="text-center">
-          <img src="/img/logo.png" alt="GECO RWANDA Logo" class="w-16 h-16 mx-auto mb-3 rounded-full bg-white p-2">
+          <img src="/assets/img/logo.png" alt="GECO RWANDA Logo" class="w-16 h-16 mx-auto mb-3 rounded-full bg-white p-2">
           <h3 class="text-xl font-bold">GECO RWANDA</h3>
           <p class="text-purple-200 text-sm">Admin Panel</p>
         </div>

@@ -3,7 +3,7 @@ import { Server } from 'node:http';
 import { resolve, dirname, join } from 'node:path';
 import nodeCrypto from 'node:crypto';
 import { parentPort, threadId } from 'node:worker_threads';
-import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, createError, getQuery as getQuery$1, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, getRouterParam, getResponseStatusText } from 'file://D:/GECORWANDA/GECO-TECH-CHANGE/frontend/node_modules/h3/dist/index.mjs';
+import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, createError, getQuery as getQuery$1, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, getRouterParam, readRawBody, getResponseStatusText } from 'file://D:/GECORWANDA/GECO-TECH-CHANGE/frontend/node_modules/h3/dist/index.mjs';
 import { escapeHtml } from 'file://D:/GECORWANDA/GECO-TECH-CHANGE/frontend/node_modules/@vue/shared/dist/shared.cjs.js';
 import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file://D:/GECORWANDA/GECO-TECH-CHANGE/frontend/node_modules/vue-bundle-renderer/dist/runtime.mjs';
 import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL } from 'file://D:/GECORWANDA/GECO-TECH-CHANGE/frontend/node_modules/ufo/dist/index.mjs';
@@ -2593,10 +2593,12 @@ async function getIslandContext(event) {
 	};
 }
 
+const _lazy_DvvvmB = () => Promise.resolve().then(function () { return ____path_$1; });
 const _lazy_Lw3vY_ = () => Promise.resolve().then(function () { return renderer; });
 
 const handlers = [
   { route: '', handler: _ByUJzr, lazy: false, middleware: true, method: undefined },
+  { route: '/api/proxy/**:path', handler: _lazy_DvvvmB, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_error', handler: _lazy_Lw3vY_, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_island/**', handler: handler$1, lazy: false, middleware: false, method: undefined },
   { route: '/**', handler: _lazy_Lw3vY_, lazy: true, middleware: false, method: undefined }
@@ -2937,6 +2939,30 @@ const styles = {};
 const styles$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
   default: styles
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const ____path_ = defineEventHandler(async (event) => {
+  var _a;
+  const path = getRouterParam(event, "path");
+  const targetUrl = `http://localhost:3001/api/${path}`;
+  try {
+    const response = await $fetch(targetUrl, {
+      method: event.node.req.method,
+      headers: event.node.req.headers,
+      body: event.node.req.method !== "GET" && event.node.req.method !== "HEAD" ? await readRawBody(event) : void 0
+    });
+    return response;
+  } catch (error) {
+    throw createError({
+      statusCode: ((_a = error.response) == null ? void 0 : _a.status) || 500,
+      statusMessage: error.message || "Proxy error"
+    });
+  }
+});
+
+const ____path_$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: ____path_
 }, Symbol.toStringTag, { value: 'Module' }));
 
 function renderPayloadResponse(ssrContext) {

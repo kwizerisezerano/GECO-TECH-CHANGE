@@ -17,7 +17,7 @@ export const useAuthStore = defineStore('auth', {
       this.isAuthenticated = true
       
       // Store in localStorage for persistence
-      if (process.client) {
+      if (typeof window !== 'undefined') {
         localStorage.setItem('admin_user', JSON.stringify(user))
         localStorage.setItem('is_authenticated', 'true')
       }
@@ -28,7 +28,7 @@ export const useAuthStore = defineStore('auth', {
       this.isAuthenticated = false
       
       // Clear from localStorage
-      if (process.client) {
+      if (typeof window !== 'undefined') {
         localStorage.removeItem('admin_user')
         localStorage.removeItem('is_authenticated')
       }
@@ -36,13 +36,17 @@ export const useAuthStore = defineStore('auth', {
     
     // Initialize auth state from localStorage
     initAuth() {
-      if (process.client) {
+      if (typeof window !== 'undefined') {
         const user = localStorage.getItem('admin_user')
         const isAuthenticated = localStorage.getItem('is_authenticated')
         
         if (user && isAuthenticated === 'true') {
-          this.user = JSON.parse(user)
-          this.isAuthenticated = true
+          try {
+            this.user = JSON.parse(user)
+            this.isAuthenticated = true
+          } catch (e) {
+            this.clearAuth()
+          }
         }
       }
     }

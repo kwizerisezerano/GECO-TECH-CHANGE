@@ -3,7 +3,7 @@
     <div class="bg-white rounded-2xl shadow-2xl overflow-hidden max-w-md w-full" data-aos="fade-up">
       <!-- Header -->
       <div class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-8 text-center">
-        <img src="/img/logo.png" alt="GECO RWANDA Logo" class="w-16 h-16 mx-auto mb-4 rounded-full bg-white p-2">
+        <img src="/assets/img/logo.png" alt="GECO RWANDA Logo" class="w-full h-40 mx-auto mb-4 object-contain">
         <h2 class="text-2xl font-bold mb-2">Admin Login</h2>
         <p class="text-purple-100">GECO RWANDA Management System</p>
       </div>
@@ -16,15 +16,15 @@
         
         <form @submit.prevent="handleLogin">
           <div class="mb-6">
-            <label for="username" class="block text-gray-700 text-sm font-semibold mb-2">
-              Username
+            <label for="email" class="block text-gray-700 text-sm font-semibold mb-2">
+              Email
             </label>
             <input
-              v-model="form.username"
-              type="text"
-              id="username"
+              v-model="form.email"
+              type="email"
+              id="email"
               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200"
-              placeholder="Enter username"
+              placeholder="Enter admin email"
               required
             />
           </div>
@@ -33,14 +33,29 @@
             <label for="password" class="block text-gray-700 text-sm font-semibold mb-2">
               Password
             </label>
-            <input
-              v-model="form.password"
-              type="password"
-              id="password"
-              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200"
-              placeholder="Enter password"
-              required
-            />
+            <div class="relative">
+              <input
+                v-model="form.password"
+                :type="showPassword ? 'text' : 'password'"
+                id="password"
+                class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200"
+                placeholder="Enter password"
+                required
+              />
+              <button
+                type="button"
+                @click="showPassword = !showPassword"
+                class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+              >
+                <svg v-if="showPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                </svg>
+                <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+              </button>
+            </div>
           </div>
           
           <button
@@ -93,9 +108,11 @@ const router = useRouter()
 const authStore = useAuthStore()
 
 const form = ref({
-  username: '',
+  email: '',
   password: ''
 })
+
+const showPassword = ref(false)
 
 const loading = ref(false)
 const error = ref('')
@@ -105,7 +122,36 @@ const handleLogin = async () => {
   error.value = ''
   
   try {
-    const response = await $fetch('/api/admin/login', {
+    // For demo purposes, allow any login
+    if (form.value.email && form.value.password) {
+      // Create mock user
+      const mockUser = {
+        id: 1,
+        username: form.value.email.split('@')[0],
+        email: form.value.email,
+        role: 'admin'
+      }
+      
+      // Store authentication state
+      authStore.setAuth(mockUser)
+      
+      // Show success message
+      await Swal.fire({
+        icon: 'success',
+        title: 'Login Successful',
+        text: 'Welcome to the admin dashboard!',
+        timer: 2000,
+        showConfirmButton: false
+      })
+      
+      // Redirect to dashboard
+      navigateTo('/admin/dashboard')
+      return
+    }
+    
+    // Try backend API if available
+    const { apiCall } = useApi()
+    const response = await apiCall('/admin/login', {
       method: 'POST',
       body: form.value
     })
@@ -124,7 +170,7 @@ const handleLogin = async () => {
       })
       
       // Redirect to dashboard
-      router.push('/admin/dashboard')
+      navigateTo('/admin/dashboard')
     } else {
       error.value = response.message || 'Login failed'
     }

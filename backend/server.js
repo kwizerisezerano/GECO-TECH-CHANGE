@@ -43,7 +43,7 @@ async function initDB() {
 // API Routes
 app.get('/api/stats', async (req, res) => {
   try {
-    const [beneficiaries] = await db.execute('SELECT COUNT(*) as count FROM beneficiaries');
+    const [beneficiaries] = await db.execute('SELECT COUNT(*) as count FROM people WHERE person_type = ?', ['beneficiary']);
     const [projects] = await db.execute('SELECT COUNT(*) as count FROM projects WHERE status = ?', ['ongoing']);
     const [partners] = await db.execute('SELECT COUNT(*) as count FROM partners');
     const [donations] = await db.execute('SELECT COUNT(*) as count FROM donation WHERE payment_status = ?', ['success']);
@@ -72,7 +72,7 @@ app.get('/api/projects', async (req, res) => {
 
 app.get('/api/beneficiaries', async (req, res) => {
   try {
-    const [beneficiaries] = await db.execute('SELECT * FROM beneficiaries ORDER BY created_at DESC');
+    const [beneficiaries] = await db.execute('SELECT * FROM people WHERE person_type = ? ORDER BY created_at DESC', ['beneficiary']);
     res.json(beneficiaries);
   } catch (error) {
     console.error('Error fetching beneficiaries:', error);

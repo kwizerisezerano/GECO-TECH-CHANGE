@@ -174,11 +174,11 @@ onUnmounted(() => {
 
 .logo-image {
   height: 100%;
-  width: auto;
+  width: 100%;
+  max-width: none;
   transition: all var(--transition);
   display: block;
   object-fit: contain;
-  max-width: 200px;
   vertical-align: middle;
   background: transparent !important;
   border: none !important;
