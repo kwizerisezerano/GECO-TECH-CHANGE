@@ -6,6 +6,7 @@ require('dotenv').config();
 
 // Import API routes
 const projectsRouter = require('./api/projects');
+const adminRouter = require('./api/admin');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // API Routes
 app.use('/api/projects', projectsRouter);
+app.use('/api/admin', adminRouter);
 
 // Database connection
 const dbConfig = {

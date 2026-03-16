@@ -13,5 +13,9 @@ export default defineNuxtConfig({
   devServer: {
     port: 3002
   },
+  plugins: [
+    '~/plugins/auth.client.js',
+    '~/plugins/sweetalert.client.js'
+  ],
   compatibilityDate: '2026-03-05'
 })

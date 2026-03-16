@@ -8,14 +8,14 @@
         <nav class="nav" :class="{ active: isMobileMenuOpen }">
           <ul class="nav-list">
             <li><NuxtLink to="/" class="nav-link" @click="closeMobileMenu">Home</NuxtLink></li>
-            <li><NuxtLink to="/#about" class="nav-link" @click="closeMobileMenu">About</NuxtLink></li>
-            <li><NuxtLink to="/#services" class="nav-link" @click="closeMobileMenu">Services</NuxtLink></li>
-            <li><NuxtLink to="/#stats" class="nav-link" @click="closeMobileMenu">Impact</NuxtLink></li>
-            <li><NuxtLink to="/projects" class="nav-link" @click="closeMobileMenu">Manage Projects</NuxtLink></li>
-            <li><NuxtLink to="/#projects" class="nav-link" @click="closeMobileMenu">Projects</NuxtLink></li>
-            <li><NuxtLink to="/#partners" class="nav-link" @click="closeMobileMenu">Partners</NuxtLink></li>
-            <li><NuxtLink to="/#portfolio" class="nav-link" @click="closeMobileMenu">Stories</NuxtLink></li>
-            <li><NuxtLink to="/#contact" class="nav-link" @click="closeMobileMenu">Contact</NuxtLink></li>
+            <li><a href="/#about" class="nav-link" @click="scrollToSection('about')">About</a></li>
+            <li><a href="/#services" class="nav-link" @click="scrollToSection('services')">Services</a></li>
+            <li><a href="/#stats" class="nav-link" @click="scrollToSection('stats')">Impact</a></li>
+            <li v-if="authStore.isAuthenticated"><NuxtLink to="/admin/projects" class="nav-link" @click="closeMobileMenu">Manage Projects</NuxtLink></li>
+            <li><a href="/#projects" class="nav-link" @click="scrollToSection('projects')">Projects</a></li>
+            <li><a href="/#partners" class="nav-link" @click="scrollToSection('partners')">Partners</a></li>
+            <li><a href="/#portfolio" class="nav-link" @click="scrollToSection('portfolio')">Stories</a></li>
+            <li><a href="/#contact" class="nav-link" @click="scrollToSection('contact')">Contact</a></li>
           </ul>
         </nav>
 
@@ -31,8 +31,10 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { useAuthStore } from '~/stores/auth'
 
 const route = useRoute()
+const authStore = useAuthStore()
 
 const isMobileMenuOpen = ref(false)
 const activeSection = ref('hero')
@@ -43,6 +45,27 @@ const toggleMobileMenu = () => {
 
 const closeMobileMenu = () => {
   isMobileMenuOpen.value = false
+}
+
+const scrollToSection = (sectionId) => {
+  closeMobileMenu()
+  
+  // If we're not on the home page, navigate to home first
+  if (route.path !== '/') {
+    window.location.href = `/#${sectionId}`
+    return
+  }
+  
+  // If we're on the home page, scroll to the section
+  setTimeout(() => {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }
+  }, 100)
 }
 
 const updateActiveSection = () => {

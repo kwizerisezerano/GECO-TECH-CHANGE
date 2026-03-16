@@ -336,16 +336,25 @@
                 <h3>{{ project.project_name }}</h3>
                 <p>{{ project.description }}</p>
                 <div class="project-meta">
-                  <div class="project-budget">${{ project.budget?.toLocaleString() }}</div>
-                  <div class="project-status" :class="project.status">
-                    {{ project.status.charAt(0).toUpperCase() + project.status.slice(1) }}
-                  </div>
+                  <div class="project-budget">RWF {{ Number(project.budget || 0).toLocaleString() }}</div>
                 </div>
                 <div class="project-dates">
-                  <span class="project-duration">{{ formatDate(project.start_date) }} - {{ formatDate(project.end_date) }}</span>
+                  <div><strong>Start:</strong> {{ formatDate(project.start_date) }}</div>
+                  <div><strong>End:</strong> {{ formatDate(project.end_date) }}</div>
+                </div>
+                <div class="project-status" :class="project.status.toLowerCase()">
+                  {{ project.status }}
                 </div>
               </div>
             </div>
+          </div>
+          
+          <div class="projects-cta">
+            <h3>Support Our Mission</h3>
+            <p>Partner with us to expand epilepsy care and support services across Rwanda</p>
+            <a href="#contact" class="btn btn-primary">
+              Support Our Work
+            </a>
           </div>
         </div>
       </section>
@@ -964,7 +973,7 @@ onMounted(async () => {
     const partnersData = await $fetch(`${useRuntimeConfig().public.apiBase}/partners`)
     partners.value = partnersData || []
   } catch (error) {
-    console.error('Error fetching data:', error)
+    console.error('Data fetch error:', error)
   }
 })
 
@@ -1230,14 +1239,13 @@ const submitForm = async () => {
 }
 
 .projects-showcase .project-status {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
+  display: inline-block;
+  margin-top: 1rem;
 }
 
 .projects-showcase .project-status.ongoing {
