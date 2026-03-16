@@ -781,7 +781,7 @@
               <div class="member-info">
                 <h4>NYIRAHABINEZA Emerite</h4>
                 <p class="member-name">Team Member</p>
-                <p class="member-phone">+2507888507589</p>
+                <p class="member-phone">+250782099385</p>
                 <div class="member-social">
                   <a href="https://x.com/geco_rwanda" target="_blank" class="social-link">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -816,7 +816,7 @@
               <div class="member-info">
                 <h4>GECO Advisor</h4>
                 <p class="member-name">NIYIKIZA Jackson</p>
-                <p class="member-phone">+2507888557821</p>
+                <p class="member-phone">+250788474827</p>
                 <div class="member-social">
                   <a href="https://x.com/geco_rwanda" target="_blank" class="social-link">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
