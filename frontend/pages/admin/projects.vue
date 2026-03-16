@@ -542,13 +542,13 @@ const getStatusBadgeClass = (status) => {
   const baseClass = 'px-3 py-1 rounded-full text-xs font-semibold '
   switch (status.toLowerCase()) {
     case 'ongoing':
-      return baseClass + 'bg-green-100 text-green-800'
+      return baseClass + 'bg-purple-600 text-white'
     case 'pending':
-      return baseClass + 'bg-yellow-100 text-yellow-800'
+      return baseClass + 'bg-purple-400 text-white'
     case 'completed':
-      return baseClass + 'bg-blue-100 text-blue-800'
+      return baseClass + 'bg-purple-800 text-white'
     default:
-      return baseClass + 'bg-gray-100 text-gray-800'
+      return baseClass + 'bg-purple-300 text-white'
   }
 }
 

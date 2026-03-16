@@ -448,22 +448,7 @@
           <div class="testimonials-grid">
             <div class="testimonial-card">
               <div class="testimonial-avatar">
-                <img src="/assets/img/testimonials/testimonials-2.png" alt="Humanity & Inclusion Partner" />
-              </div>
-              <div class="testimonial-content">
-                <div class="testimonial-text">
-                  <p>"Our partnership with GECO has been transformative. Together, we've trained 67 health professionals and strengthened epilepsy care across Rwanda. GECO's community-based approach perfectly complements our expertise in disability inclusion."</p>
-                </div>
-                <div class="testimonial-author">
-                  <h4>Humanity & Inclusion</h4>
-                  <p class="author-role">International NGO Partner</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="testimonial-card">
-              <div class="testimonial-avatar">
-                <img src="/assets/img/testimonials/testimonials-1.png" alt="Ministry of Health Partner" />
+                <img src="/assets/img/testimonials/testimonials-1.jpg" alt="Ministry of Health Partner" />
               </div>
               <div class="testimonial-content">
                 <div class="testimonial-text">
@@ -478,7 +463,22 @@
 
             <div class="testimonial-card">
               <div class="testimonial-avatar">
-                <img src="/assets/img/testimonials/testimonials-3.png" alt="Clean Cooking Alliance Partner" />
+                <img src="/assets/img/testimonials/testimonials-2.jpg" alt="Humanity & Inclusion Partner" />
+              </div>
+              <div class="testimonial-content">
+                <div class="testimonial-text">
+                  <p>"Our partnership with GECO has been transformative. Together, we've trained 67 health professionals and strengthened epilepsy care across Rwanda. GECO's community-based approach perfectly complements our expertise in disability inclusion."</p>
+                </div>
+                <div class="testimonial-author">
+                  <h4>Humanity & Inclusion</h4>
+                  <p class="author-role">International NGO Partner</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-avatar">
+                <img src="/assets/img/testimonials/testimonials-3.jpg" alt="Clean Cooking Alliance Partner" />
               </div>
               <div class="testimonial-content">
                 <div class="testimonial-text">
@@ -487,6 +487,51 @@
                 <div class="testimonial-author">
                   <h4>Clean Cooking Alliance</h4>
                   <p class="author-role">Environmental Partner</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-avatar">
+                <img src="/assets/img/testimonials/testimonials-4.PNG" alt="Healthcare Professional" />
+              </div>
+              <div class="testimonial-content">
+                <div class="testimonial-text">
+                  <p>"As a healthcare provider, I've seen firsthand how GECO's training programs have improved our ability to diagnose and treat epilepsy effectively. Their support has been invaluable to our medical team."</p>
+                </div>
+                <div class="testimonial-author">
+                  <h4>Healthcare Professional</h4>
+                  <p class="author-role">Medical Advisor</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-avatar">
+                <img src="/assets/img/testimonials/testimonials-5.PNG" alt="Community Leader" />
+              </div>
+              <div class="testimonial-content">
+                <div class="testimonial-text">
+                  <p>"GECO has brought hope to families affected by epilepsy. Their community outreach programs have reduced stigma and improved access to care in our region."</p>
+                </div>
+                <div class="testimonial-author">
+                  <h4>Community Leader</h4>
+                  <p class="author-role">Local Advisor</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-avatar">
+                <img src="/assets/img/testimonials/testimonials-6.PNG" alt="Beneficiary Family" />
+              </div>
+              <div class="testimonial-content">
+                <div class="testimonial-text">
+                  <p>"Thanks to GECO's support, my child can now access proper epilepsy treatment and live a normal life. We are forever grateful for their compassionate care."</p>
+                </div>
+                <div class="testimonial-author">
+                  <h4>Beneficiary Family</h4>
+                  <p class="author-role">Community Member</p>
                 </div>
               </div>
             </div>
@@ -515,7 +560,7 @@
             <!-- Legal Representative -->
             <div class="team-member">
               <div class="member-image">
-                <img src="/assets/img/team/team-1.png" alt="MUHAWENIMANA Evariste" />
+                <img src="/assets/img/team/team-1.jpg" alt="MUHAWENIMANA Evariste" />
               </div>
               <div class="member-info">
                 <h4>Legal Representative</h4>
@@ -551,7 +596,7 @@
             <!-- Deputy Legal Representative -->
             <div class="team-member">
               <div class="member-image">
-                <img src="/assets/img/team/team-3.png" alt="Habanzintwari Theogene" />
+                <img src="/assets/img/team/team-3.jpg" alt="Habanzintwari Theogene" />
               </div>
               <div class="member-info">
                 <h4>Deputy Legal Representative</h4>
@@ -587,12 +632,12 @@
             <!-- GECO Executive Secretary -->
             <div class="team-member">
               <div class="member-image">
-                <img src="/assets/img/team/team-6.png" alt="Nshokeyinka B.Light" />
+                <img src="/assets/img/team/team-6.PNG" alt="Nshokeyinka B.Light" />
               </div>
               <div class="member-info">
                 <h4>GECO Executive Secretary</h4>
                 <p class="member-name">Nshokeyinka B.Light</p>
-                <p class="member-phone">0788219039</p>
+                <p class="member-phone">0788507589</p>
                 <div class="member-social">
                   <a href="https://x.com/geco_rwanda" target="_blank" class="social-link">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -623,12 +668,12 @@
             <!-- GECO General Secretary -->
             <div class="team-member">
               <div class="member-image">
-                <img src="/assets/img/team/team-2.png" alt="Nshavujabandi Jean" />
+                <img src="/assets/img/team/team-2.jpg" alt="Nshavujabandi Jean" />
               </div>
               <div class="member-info">
                 <h4>GECO General Secretary</h4>
                 <p class="member-name">Nshavujabandi Jean</p>
-                <p class="member-phone">0788836616</p>
+                <p class="member-phone">0788557821</p>
                 <div class="member-social">
                   <a href="https://x.com/geco_rwanda" target="_blank" class="social-link">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -659,12 +704,12 @@
             <!-- GECO Treasurer -->
             <div class="team-member">
               <div class="member-image">
-                <img src="/assets/img/team/team-7.png" alt="Barankunda Gaspard" />
+                <img src="/assets/img/team/team-7.jpg" alt="Barankunda Gaspard" />
               </div>
               <div class="member-info">
                 <h4>GECO Treasurer</h4>
                 <p class="member-name">Barankunda Gaspard</p>
-                <p class="member-phone">0788415920</p>
+                <p class="member-phone">0788507589</p>
                 <div class="member-social">
                   <a href="https://x.com/geco_rwanda" target="_blank" class="social-link">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -695,12 +740,83 @@
             <!-- GECO Advisor -->
             <div class="team-member">
               <div class="member-image">
-                <img src="/assets/img/team/team-8.png" alt="Benimana Philippe" />
+                <img src="/assets/img/team/team-8.jpg" alt="Benimana Philippe" />
               </div>
               <div class="member-info">
                 <h4>GECO Advisor</h4>
                 <p class="member-name">Benimana Philippe</p>
                 <p class="member-phone">0788265713</p>
+                <div class="member-social">
+                  <a href="https://x.com/geco_rwanda" target="_blank" class="social-link">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.86-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633 3.982-4.633h1.54L8.81 5.896l3.94 5.354h-2.54l-2.93-3.814L3.34 15.25H.897l5.39-6.282L0 .75h5.063l3.219 4.228L3.34 15.25h2.54l2.93-3.814 3.38 4.228h2.54zm-2.618 13.095h1.339L3.492 2.25H2.098l7.884 11.595z"/>
+                    </svg>
+                  </a>
+                  <a href="https://web.facebook.com/search/top?q=GECO%20RWANDA" target="_blank" class="social-link">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                    </svg>
+                  </a>
+                  <a href="https://www.instagram.com/gecorwanda/" target="_blank" class="social-link">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                      <rect x="2" y="2" width="12" height="12" rx="3"/>
+                      <circle cx="8" cy="8" r="3"/>
+                      <circle cx="12" cy="4" r="1"/>
+                    </svg>
+                  </a>
+                  <a href="#" class="social-link">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.518v7.225h2.425zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248 0-.709-.52-1.248-1.342-1.248C2.4 3.934 1.9 4.478 1.9 5.234c0 .694.521 1.248 1.342 1.248h.016zm4.908 8.212V9.35c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.838h2.425V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.139 1.679h.037v-.767H6.325c.04.678 0 7.225 0 7.225h2.425zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248 0-.709-.52-1.248-1.342-1.248C5.4 3.934 4.8 4.478 4.8 5.234c0 .694.521 1.248 1.342 1.248h.016z"/>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Additional Team Members -->
+            <div class="team-member">
+              <div class="member-image">
+                <img src="/assets/img/team/team-4.PNG" alt="Team Member 4" />
+              </div>
+              <div class="member-info">
+                <h4>GECO Advisor</h4>
+                <p class="member-name">Team Member</p>
+                <p class="member-phone">0788507589</p>
+                <div class="member-social">
+                  <a href="https://x.com/geco_rwanda" target="_blank" class="social-link">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.86-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633 3.982-4.633h1.54L8.81 5.896l3.94 5.354h-2.54l-2.93-3.814L3.34 15.25H.897l5.39-6.282L0 .75h5.063l3.219 4.228L3.34 15.25h2.54l2.93-3.814 3.38 4.228h2.54zm-2.618 13.095h1.339L3.492 2.25H2.098l7.884 11.595z"/>
+                    </svg>
+                  </a>
+                  <a href="https://web.facebook.com/search/top?q=GECO%20RWANDA" target="_blank" class="social-link">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                    </svg>
+                  </a>
+                  <a href="https://www.instagram.com/gecorwanda/" target="_blank" class="social-link">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                      <rect x="2" y="2" width="12" height="12" rx="3"/>
+                      <circle cx="8" cy="8" r="3"/>
+                      <circle cx="12" cy="4" r="1"/>
+                    </svg>
+                  </a>
+                  <a href="#" class="social-link">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.518v7.225h2.425zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248 0-.709-.52-1.248-1.342-1.248C2.4 3.934 1.9 4.478 1.9 5.234c0 .694.521 1.248 1.342 1.248h.016zm4.908 8.212V9.35c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.838h2.425V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.139 1.679h.037v-.767H6.325c.04.678 0 7.225 0 7.225h2.425zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248 0-.709-.52-1.248-1.342-1.248C5.4 3.934 4.8 4.478 4.8 5.234c0 .694.521 1.248 1.342 1.248h.016z"/>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="team-member">
+              <div class="member-image">
+                <img src="/assets/img/team/team-5.PNG" alt="Team Member 5" />
+              </div>
+              <div class="member-info">
+                <h4>GECO Advisor</h4>
+                <p class="member-name">Team Member</p>
+                <p class="member-phone">0788557821</p>
                 <div class="member-social">
                   <a href="https://x.com/geco_rwanda" target="_blank" class="social-link">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -1249,17 +1365,17 @@ const submitForm = async () => {
 }
 
 .projects-showcase .project-status.ongoing {
-  background: #10b981;
+  background: var(--gradient-primary);
   color: white;
 }
 
 .projects-showcase .project-status.planning {
-  background: #f59e0b;
+  background: #a855f7;
   color: white;
 }
 
 .projects-showcase .project-status.completed {
-  background: #6b7280;
+  background: #7c3aed;
   color: white;
 }
 
@@ -1317,17 +1433,17 @@ const submitForm = async () => {
 }
 
 .projects-showcase .project-status.ongoing {
-  background: #10b981;
+  background: var(--gradient-primary);
   color: white;
 }
 
 .projects-showcase .project-status.planning {
-  background: #f59e0b;
+  background: #a855f7;
   color: white;
 }
 
 .projects-showcase .project-status.completed {
-  background: #6b7280;
+  background: #7c3aed;
   color: white;
 }
 
