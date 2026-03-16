@@ -565,7 +565,7 @@
               <div class="member-info">
                 <h4>Legal Representative</h4>
                 <p class="member-name">MUHAWENIMANA Evariste</p>
-                <p class="member-phone">0788507589</p>
+                <p class="member-phone">+2507888507589</p>
                 <div class="member-social">
                   <a href="https://x.com/geco_rwanda" target="_blank" class="social-link">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -601,7 +601,7 @@
               <div class="member-info">
                 <h4>Deputy Legal Representative</h4>
                 <p class="member-name">Habanzintwari Theogene</p>
-                <p class="member-phone">0788557821</p>
+                <p class="member-phone">+250788557821</p>
                 <div class="member-social">
                   <a href="https://x.com/geco_rwanda" target="_blank" class="social-link">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -637,7 +637,7 @@
               <div class="member-info">
                 <h4>GECO Executive Secretary</h4>
                 <p class="member-name">Nshokeyinka B.Light</p>
-                <p class="member-phone">0788219039</p>
+                <p class="member-phone">+250788219039</p>
                 <div class="member-social">
                   <a href="https://x.com/geco_rwanda" target="_blank" class="social-link">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -673,7 +673,7 @@
               <div class="member-info">
                 <h4>GECO General Secretary</h4>
                 <p class="member-name">Nshavujabandi Jean</p>
-                <p class="member-phone">0788557821</p>
+                <p class="member-phone">+250788836616</p>
                 <div class="member-social">
                   <a href="https://x.com/geco_rwanda" target="_blank" class="social-link">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -709,7 +709,7 @@
               <div class="member-info">
                 <h4>GECO Treasurer</h4>
                 <p class="member-name">Barankunda Gaspard</p>
-                <p class="member-phone">0788415920</p>
+                <p class="member-phone">+250788415920</p>
                 <div class="member-social">
                   <a href="https://x.com/geco_rwanda" target="_blank" class="social-link">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -781,7 +781,7 @@
               <div class="member-info">
                 <h4>NYIRAHABINEZA Emerite</h4>
                 <p class="member-name">Team Member</p>
-                <p class="member-phone">0788507589</p>
+                <p class="member-phone">+2507888507589</p>
                 <div class="member-social">
                   <a href="https://x.com/geco_rwanda" target="_blank" class="social-link">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -816,7 +816,7 @@
               <div class="member-info">
                 <h4>GECO Advisor</h4>
                 <p class="member-name">NIYIKIZA Jackson</p>
-                <p class="member-phone">0788557821</p>
+                <p class="member-phone">+2507888557821</p>
                 <div class="member-social">
                   <a href="https://x.com/geco_rwanda" target="_blank" class="social-link">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
