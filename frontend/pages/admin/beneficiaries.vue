@@ -271,10 +271,69 @@ const closeEditModal = () => {
 }
 
 const addBeneficiary = async () => {
+  // Validation
+  if (!formData.value.name.trim()) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Name is required'
+    })
+    return
+  }
+  
+  // Name validation - only letters and spaces
+  const nameRegex = /^[a-zA-Z\s]+$/
+  if (!nameRegex.test(formData.value.name.trim())) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Name can only contain letters and spaces'
+    })
+    return
+  }
+  
+  // Phone number validation - 10 to 17 digits
+  const phoneRegex = /^\d{10,17}$/
+  const cleanPhone = formData.value.phone_number.replace(/\D/g, '') // Remove non-digits
+  if (!phoneRegex.test(cleanPhone)) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Phone number must be between 10 and 17 digits'
+    })
+    return
+  }
+  
+  // ID number validation - exactly 16 digits
+  const idnoRegex = /^\d{16}$/
+  const cleanIdno = formData.value.idno.replace(/\D/g, '') // Remove non-digits
+  if (!idnoRegex.test(cleanIdno)) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'ID number must be exactly 16 digits'
+    })
+    return
+  }
+  
+  // Required fields validation
+  if (!formData.value.idno_type) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Please select ID type'
+    })
+    return
+  }
+  
   try {
     const response = await $fetch('http://localhost:3001/api/admin/beneficiaries', {
       method: 'POST',
-      body: formData.value
+      body: {
+        ...formData.value,
+        phone_number: cleanPhone,
+        idno: cleanIdno
+      }
     })
     
     if (response.success) {
@@ -299,10 +358,69 @@ const addBeneficiary = async () => {
 }
 
 const updateBeneficiary = async () => {
+  // Validation
+  if (!editFormData.value.name.trim()) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Name is required'
+    })
+    return
+  }
+  
+  // Name validation - only letters and spaces
+  const nameRegex = /^[a-zA-Z\s]+$/
+  if (!nameRegex.test(editFormData.value.name.trim())) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Name can only contain letters and spaces'
+    })
+    return
+  }
+  
+  // Phone number validation - 10 to 17 digits
+  const phoneRegex = /^\d{10,17}$/
+  const cleanPhone = editFormData.value.phone_number.replace(/\D/g, '') // Remove non-digits
+  if (!phoneRegex.test(cleanPhone)) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Phone number must be between 10 and 17 digits'
+    })
+    return
+  }
+  
+  // ID number validation - exactly 16 digits
+  const idnoRegex = /^\d{16}$/
+  const cleanIdno = editFormData.value.idno.replace(/\D/g, '') // Remove non-digits
+  if (!idnoRegex.test(cleanIdno)) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'ID number must be exactly 16 digits'
+    })
+    return
+  }
+  
+  // Required fields validation
+  if (!editFormData.value.idno_type) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Please select ID type'
+    })
+    return
+  }
+  
   try {
     const response = await $fetch(`http://localhost:3001/api/admin/beneficiaries/${editingBeneficiary.value.id}`, {
       method: 'PUT',
-      body: editFormData.value
+      body: {
+        ...editFormData.value,
+        phone_number: cleanPhone,
+        idno: cleanIdno
+      }
     })
     
     if (response.success) {
@@ -317,7 +435,7 @@ const updateBeneficiary = async () => {
       await fetchBeneficiaries()
     }
   } catch (error) {
-    console.error('Error updating beneficiary:', error)
+    console.error('Update beneficiary error:', error)
     await Swal.fire({
       icon: 'error',
       title: 'Error',

@@ -361,10 +361,105 @@ const handleAddProject = async () => {
   console.log('handleAddProject called')
   console.log('newProject.value:', newProject.value)
   
-  // Basic validation
-  if (!newProject.value.project_name || !newProject.value.status) {
-    errorMessage.value = 'Please fill in all required fields'
+  // Comprehensive validation
+  if (!newProject.value.project_name?.trim()) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Project name is required'
+    })
     return
+  }
+  
+  // Project name validation - only letters and spaces
+  const projectNameRegex = /^[a-zA-Z\s]+$/
+  if (!projectNameRegex.test(newProject.value.project_name.trim())) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Project name can only contain letters and spaces'
+    })
+    return
+  }
+  
+  if (!newProject.value.status) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Please select a project status'
+    })
+    return
+  }
+  
+  // Description validation (optional but if provided, should be valid)
+  if (newProject.value.description && newProject.value.description.length > 1000) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Description must be less than 1000 characters'
+    })
+    return
+  }
+  
+  // Budget validation (optional but if provided, should be valid)
+  if (newProject.value.budget) {
+    const budget = parseFloat(newProject.value.budget)
+    if (isNaN(budget) || budget <= 0) {
+      await Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: 'Budget must be a positive number'
+      })
+      return
+    }
+    
+    if (budget > 999999999) {
+      await Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: 'Budget amount is too large'
+      })
+      return
+    }
+  }
+  
+  // Currency validation
+  if (!newProject.value.currency) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Please select a currency'
+    })
+    return
+  }
+  
+  // Date validation
+  if (newProject.value.start_date && newProject.value.end_date) {
+    const startDate = new Date(newProject.value.start_date)
+    const endDate = new Date(newProject.value.end_date)
+    
+    if (startDate >= endDate) {
+      await Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: 'End date must be after start date'
+      })
+      return
+    }
+    
+    // Check if dates are reasonable (not too far in the past or future)
+    const today = new Date()
+    const maxPastDate = new Date(today.getFullYear() - 10, today.getMonth(), today.getDate())
+    const maxFutureDate = new Date(today.getFullYear() + 20, today.getMonth(), today.getDate())
+    
+    if (startDate < maxPastDate || endDate > maxFutureDate) {
+      await Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: 'Project dates must be within reasonable range (past 10 years to next 20 years)'
+      })
+      return
+    }
   }
   
   addingProject.value = true
@@ -375,7 +470,10 @@ const handleAddProject = async () => {
     console.log('Sending API request...')
     const response = await $fetch('http://localhost:3001/api/admin/projects', {
       method: 'POST',
-      body: newProject.value
+      body: {
+        ...newProject.value,
+        budget: newProject.value.budget ? parseFloat(newProject.value.budget) : null
+      }
     })
     
     console.log('API response:', response)
@@ -415,36 +513,22 @@ const handleAddProject = async () => {
       showAddProjectForm.value = false
     } else {
       errorMessage.value = response.message || 'Failed to add project'
+      await Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: response.message || 'Failed to add project'
+      })
     }
   } catch (error) {
     console.error('Add project error:', error)
-    console.error('Error status:', error.status)
-    console.error('Error data:', error.data)
-    console.error('Error message:', error.message)
-    
-    // Show error with SweetAlert for better visibility
-    let errorMessage = 'Failed to add project'
-    
-    if (error.data?.message) {
-      errorMessage = error.data.message
-    } else if (error.status === 409) {
-      errorMessage = 'A project with this name already exists. Please choose a different name.'
-    } else if (error.status === 500) {
-      errorMessage = 'Server error. Please try again.'
-    } else if (error.message) {
-      errorMessage = `Failed to add project: ${error.message}`
-    }
+    errorMessage.value = 'Failed to add project. Please try again.'
     
     // Show SweetAlert error
-    Swal.fire({
+    await Swal.fire({
       icon: 'error',
       title: 'Error',
-      text: errorMessage,
-      confirmButtonColor: '#3085d6'
+      text: 'Failed to add project. Please try again.'
     })
-    
-    // Also set inline error message
-    errorMessage.value = `❌ ${errorMessage}`
   } finally {
     addingProject.value = false
   }
@@ -785,6 +869,92 @@ const editSingleField = async (project, fieldName) => {
 }
 
 const updateProject = async (projectId, data) => {
+  // Validation for edited data
+  if (data.project_name) {
+    if (!data.project_name.trim()) {
+      await Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: 'Project name is required'
+      })
+      return
+    }
+    
+    // Project name validation - only letters and spaces
+    const projectNameRegex = /^[a-zA-Z\s]+$/
+    if (!projectNameRegex.test(data.project_name.trim())) {
+      await Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: 'Project name can only contain letters and spaces'
+      })
+      return
+    }
+  }
+  
+  // Budget validation
+  if (data.budget) {
+    const budget = parseFloat(data.budget)
+    if (isNaN(budget) || budget <= 0) {
+      await Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: 'Budget must be a positive number'
+      })
+      return
+    }
+    
+    if (budget > 999999999) {
+      await Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: 'Budget amount is too large'
+      })
+      return
+    }
+    
+    data.budget = budget // Convert to number
+  }
+  
+  // Date validation
+  if (data.start_date && data.end_date) {
+    const startDate = new Date(data.start_date)
+    const endDate = new Date(data.end_date)
+    
+    if (startDate >= endDate) {
+      await Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: 'End date must be after start date'
+      })
+      return
+    }
+    
+    // Check if dates are reasonable
+    const today = new Date()
+    const maxPastDate = new Date(today.getFullYear() - 10, today.getMonth(), today.getDate())
+    const maxFutureDate = new Date(today.getFullYear() + 20, today.getMonth(), today.getDate())
+    
+    if (startDate < maxPastDate || endDate > maxFutureDate) {
+      await Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: 'Project dates must be within reasonable range (past 10 years to next 20 years)'
+      })
+      return
+    }
+  }
+  
+  // Description validation
+  if (data.description && data.description.length > 1000) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Description must be less than 1000 characters'
+    })
+    return
+  }
+  
   try {
     const response = await $fetch(`http://localhost:3001/api/admin/projects/${projectId}`, {
       method: 'PUT',

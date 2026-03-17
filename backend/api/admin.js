@@ -195,6 +195,37 @@ router.get('/dashboard-stats', async (req, res) => {
       WHERE budget IS NOT NULL
     `);
     
+    // Budget summary by currency
+    const [projectsByCurrency] = await db.execute(`
+      SELECT currency, budget
+      FROM projects 
+      WHERE budget IS NOT NULL AND currency IS NOT NULL
+    `);
+    
+    // Group budgets by currency
+    const budgetByCurrency = {};
+    projectsByCurrency.forEach(project => {
+      const currency = project.currency || 'RWF';
+      if (!budgetByCurrency[currency]) {
+        budgetByCurrency[currency] = {
+          total: 0,
+          count: 0,
+          min: project.budget,
+          max: project.budget
+        };
+      }
+      
+      budgetByCurrency[currency].total += project.budget;
+      budgetByCurrency[currency].count++;
+      budgetByCurrency[currency].min = Math.min(budgetByCurrency[currency].min, project.budget);
+      budgetByCurrency[currency].max = Math.max(budgetByCurrency[currency].max, project.budget);
+    });
+    
+    // Calculate averages for each currency
+    Object.keys(budgetByCurrency).forEach(currency => {
+      budgetByCurrency[currency].average = budgetByCurrency[currency].total / budgetByCurrency[currency].count;
+    });
+    
     // Publications count
     const [publications] = await db.execute('SELECT COUNT(*) as count FROM pdf_files');
     
@@ -219,6 +250,7 @@ router.get('/dashboard-stats', async (req, res) => {
         partnerTypes,
         donationTrends,
         budgetSummary: budgetSummary[0],
+        budgetByCurrency,
         totalPublications: publications[0].count
       }
     });
@@ -382,6 +414,141 @@ router.delete('/projects/:id', async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to delete project'
+    });
+  }
+});
+
+// Get users
+router.get('/users', async (req, res) => {
+  try {
+    const [users] = await db.execute(`
+      SELECT id, name_encrypted, email_encrypted, role, last_login, created_at 
+      FROM admin_users 
+      ORDER BY created_at DESC
+    `);
+    
+    // Decrypt sensitive data
+    const decryptedUsers = users.map(user => ({
+      id: user.id,
+      name: decrypt(user.name_encrypted),
+      email: decrypt(user.email_encrypted),
+      role: user.role,
+      last_login: user.last_login,
+      created_at: user.created_at
+    }));
+    
+    res.json({
+      success: true,
+      data: decryptedUsers
+    });
+  } catch (error) {
+    console.error('Get users error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch users'
+    });
+  }
+});
+
+// Add new user
+router.post('/users', async (req, res) => {
+  try {
+    const { name, email, password, role, status } = req.body;
+    
+    // Hash password
+    const hashedPassword = hashPassword(password);
+    
+    const [result] = await db.execute(`
+      INSERT INTO admin_users (name_encrypted, email_encrypted, password_hash, role, created_at) 
+      VALUES (?, ?, ?, ?, NOW())
+    `, [encrypt(name), encrypt(email), hashedPassword, role]);
+    
+    res.json({
+      success: true,
+      message: 'User added successfully',
+      userId: result.insertId
+    });
+  } catch (error) {
+    console.error('Add user error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to add user'
+    });
+  }
+});
+
+// Update user
+router.put('/users/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, email, password, role, status } = req.body;
+    
+    let updateQuery, updateValues;
+    
+    if (password) {
+      // Update with new password
+      const hashedPassword = hashPassword(password);
+      updateQuery = `
+        UPDATE admin_users 
+        SET name_encrypted = ?, email_encrypted = ?, password_hash = ?, role = ?
+        WHERE id = ?
+      `;
+      updateValues = [encrypt(name), encrypt(email), hashedPassword, role, id];
+    } else {
+      // Update without changing password
+      updateQuery = `
+        UPDATE admin_users 
+        SET name_encrypted = ?, email_encrypted = ?, role = ?
+        WHERE id = ?
+      `;
+      updateValues = [encrypt(name), encrypt(email), role, id];
+    }
+    
+    const [result] = await db.execute(updateQuery, updateValues);
+    
+    if (result.affectedRows > 0) {
+      res.json({
+        success: true,
+        message: 'User updated successfully'
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+  } catch (error) {
+    console.error('Update user error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to update user'
+    });
+  }
+});
+
+// Delete user
+router.delete('/users/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const [result] = await db.execute('DELETE FROM admin_users WHERE id = ?', [id]);
+    
+    if (result.affectedRows > 0) {
+      res.json({
+        success: true,
+        message: 'User deleted successfully'
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+  } catch (error) {
+    console.error('Delete user error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to delete user'
     });
   }
 });

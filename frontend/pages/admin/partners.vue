@@ -336,10 +336,97 @@ const closeModal = () => {
 }
 
 const addPartner = async () => {
+  // Validation
+  if (!formData.value.partner_name.trim()) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Organization name is required'
+    })
+    return
+  }
+  
+  // Organization name validation - only letters and spaces
+  const orgNameRegex = /^[a-zA-Z\s]+$/
+  if (!orgNameRegex.test(formData.value.partner_name.trim())) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Organization name can only contain letters and spaces'
+    })
+    return
+  }
+  
+  // Contact person validation - only letters and spaces
+  if (!formData.value.contact_person.trim()) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Contact person name is required'
+    })
+    return
+  }
+  
+  const nameRegex = /^[a-zA-Z\s]+$/
+  if (!nameRegex.test(formData.value.contact_person.trim())) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Contact person name can only contain letters and spaces'
+    })
+    return
+  }
+  
+  // Email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (!emailRegex.test(formData.value.email.trim())) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Please enter a valid email address'
+    })
+    return
+  }
+  
+  // Phone number validation - 10 to 17 digits
+  const phoneRegex = /^\d{10,17}$/
+  const cleanPhone = formData.value.phone.replace(/\D/g, '') // Remove non-digits
+  if (!phoneRegex.test(cleanPhone)) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Phone number must be between 10 and 17 digits'
+    })
+    return
+  }
+  
+  // Partnership type validation
+  if (!formData.value.partnership_type) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Please select partnership type'
+    })
+    return
+  }
+  
+  // Description validation (optional but if provided, should be valid)
+  if (formData.value.description && formData.value.description.length > 1000) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Description must be less than 1000 characters'
+    })
+    return
+  }
+  
   try {
     const response = await $fetch('http://localhost:3001/api/admin/partners', {
       method: 'POST',
-      body: formData.value
+      body: {
+        ...formData.value,
+        phone: cleanPhone
+      }
     })
     
     if (response.success) {
@@ -352,7 +439,8 @@ const addPartner = async () => {
       fetchPartners()
     }
   } catch (error) {
-    Swal.fire({
+    console.error('Add partner error:', error)
+    await Swal.fire({
       icon: 'error',
       title: 'Error',
       text: 'Failed to add partner'
@@ -361,10 +449,97 @@ const addPartner = async () => {
 }
 
 const updatePartner = async () => {
+  // Validation
+  if (!formData.value.partner_name.trim()) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Organization name is required'
+    })
+    return
+  }
+  
+  // Organization name validation - only letters and spaces
+  const orgNameRegex = /^[a-zA-Z\s]+$/
+  if (!orgNameRegex.test(formData.value.partner_name.trim())) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Organization name can only contain letters and spaces'
+    })
+    return
+  }
+  
+  // Contact person validation - only letters and spaces
+  if (!formData.value.contact_person.trim()) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Contact person name is required'
+    })
+    return
+  }
+  
+  const nameRegex = /^[a-zA-Z\s]+$/
+  if (!nameRegex.test(formData.value.contact_person.trim())) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Contact person name can only contain letters and spaces'
+    })
+    return
+  }
+  
+  // Email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (!emailRegex.test(formData.value.email.trim())) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Please enter a valid email address'
+    })
+    return
+  }
+  
+  // Phone number validation - 10 to 17 digits
+  const phoneRegex = /^\d{10,17}$/
+  const cleanPhone = formData.value.phone.replace(/\D/g, '') // Remove non-digits
+  if (!phoneRegex.test(cleanPhone)) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Phone number must be between 10 and 17 digits'
+    })
+    return
+  }
+  
+  // Partnership type validation
+  if (!formData.value.partnership_type) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Please select partnership type'
+    })
+    return
+  }
+  
+  // Description validation (optional but if provided, should be valid)
+  if (formData.value.description && formData.value.description.length > 1000) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Description must be less than 1000 characters'
+    })
+    return
+  }
+  
   try {
     const response = await $fetch(`http://localhost:3001/api/admin/partners/${editingPartner.value.id}`, {
       method: 'PUT',
-      body: formData.value
+      body: {
+        ...formData.value,
+        phone: cleanPhone
+      }
     })
     
     if (response.success) {
@@ -377,7 +552,8 @@ const updatePartner = async () => {
       fetchPartners()
     }
   } catch (error) {
-    Swal.fire({
+    console.error('Update partner error:', error)
+    await Swal.fire({
       icon: 'error',
       title: 'Error',
       text: 'Failed to update partner'

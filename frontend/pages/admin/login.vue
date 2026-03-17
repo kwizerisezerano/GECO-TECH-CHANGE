@@ -122,71 +122,62 @@ const handleLogin = async () => {
   error.value = ''
   
   try {
-    // For demo purposes, allow any login
-    if (form.value.email && form.value.password) {
-      // Create mock user
-      const mockUser = {
-        id: 1,
-        username: form.value.email.split('@')[0],
-        email: form.value.email,
-        role: 'admin'
-      }
-      
-      // Store authentication state
-      authStore.setAuth(mockUser)
-      
-      // Show success message
-      await Swal.fire({
-        icon: 'success',
-        title: 'Login Successful',
-        text: 'Welcome to the admin dashboard!',
-        timer: 2000,
-        showConfirmButton: false
-      })
-      
-      // Redirect to dashboard
-      navigateTo('/admin/dashboard')
+    // Validate form inputs
+    if (!form.value.email || !form.value.password) {
+      error.value = 'Please enter both email and password'
       return
     }
     
-    // Try backend API if available
-    const { apiCall } = useApi()
-    const response = await apiCall('/admin/login', {
-      method: 'POST',
-      body: form.value
-    })
-    
-    if (response.success) {
-      // Store authentication state
-      authStore.setAuth(response.user)
-      
-      // Show success message
-      await Swal.fire({
-        icon: 'success',
-        title: 'Login Successful',
-        text: 'Welcome to the admin dashboard!',
-        timer: 2000,
-        showConfirmButton: false
+    // Try backend API first
+    try {
+      const response = await $fetch('http://localhost:3001/api/admin/login', {
+        method: 'POST',
+        body: form.value
       })
       
-      // Redirect to dashboard
-      navigateTo('/admin/dashboard')
-    } else {
-      error.value = response.message || 'Login failed'
+      if (response.success) {
+        // Store authentication state
+        authStore.setAuth(response.user)
+        
+        // Show success message
+        await Swal.fire({
+          icon: 'success',
+          title: 'Login Successful',
+          text: 'Welcome to the admin dashboard!',
+          timer: 2000,
+          showConfirmButton: false
+        })
+        
+        // Redirect to dashboard
+        navigateTo('/admin/dashboard')
+        return
+      } else {
+        error.value = response.message || 'Invalid email or password'
+      }
+    } catch (apiError) {
+      console.error('API login error:', apiError)
+      
+      // Check if it's an authentication error (401) or server error
+      if (apiError.response && apiError.response.status === 401) {
+        error.value = 'Invalid email or password'
+      } else if (apiError.response && apiError.response.status === 400) {
+        error.value = apiError.response.data?.message || 'Invalid email or password'
+      } else {
+        error.value = 'Login server is not available. Please contact administrator.'
+      }
     }
   } catch (err) {
     console.error('Login error:', err)
-    error.value = 'Server error. Please try again.'
+    error.value = 'Login failed. Please try again.'
   } finally {
     loading.value = false
   }
 }
 
-// Check if already logged in
+// Check if already logged in and redirect to login if needed
 onMounted(() => {
-  if (authStore.isAuthenticated) {
-    router.push('/admin/dashboard')
-  }
+  // Clear any existing auth state to force login
+  authStore.clearAuth()
 })
 </script>
 

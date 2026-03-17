@@ -6,7 +6,7 @@
         <div class="flex justify-between items-center">
           <div>
             <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
-            <p class="text-gray-600">Welcome back, {{ authStore.currentUser?.username || 'Admin' }}!</p>
+            <p class="text-gray-600">Welcome back, {{ authStore.currentUser?.name || authStore.currentUser?.email?.split('@')[0] || 'Admin' }}!</p>
           </div>
           <div class="flex items-center space-x-4">
             <button
@@ -18,13 +18,22 @@
               </svg>
               Add Notification
             </button>
+            <button
+              @click="forceLogout"
+              class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg flex items-center text-sm"
+            >
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+              </svg>
+              Force Logout
+            </button>
             <Notifications />
             <div class="text-right hidden sm:block">
               <p class="text-sm text-gray-500">Current Time</p>
               <p class="text-lg font-semibold text-gray-900">{{ currentTime }}</p>
             </div>
             <div class="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-semibold">
-              {{ authStore.currentUser?.username?.charAt(0).toUpperCase() || 'A' }}
+              {{ (authStore.currentUser?.name || authStore.currentUser?.email?.split('@')[0] || 'Admin').charAt(0).toUpperCase() }}
             </div>
           </div>
         </div>
@@ -117,7 +126,7 @@
                   <p class="text-3xl font-bold text-gray-900 mt-2">{{ dashboardData.totalDonations }}</p>
                   <div class="flex items-center mt-2">
                     <div class="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-                    <span class="text-sm font-medium text-green-600">${{ formatCurrency(dashboardData.totalDonationAmount) }}</span>
+                    <span class="text-sm font-medium text-green-600">{{ formatCurrency(dashboardData.totalDonationAmount, 'RWF') }}</span>
                     <span class="text-xs text-gray-500 ml-1">total</span>
                   </div>
                 </div>
@@ -162,13 +171,13 @@
                 Add Partner
               </NuxtLink>
               <NuxtLink
-                to="/admin/publications"
-                class="bg-yellow-600 hover:bg-yellow-700 text-white py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center font-medium"
+                to="/admin/members"
+                class="bg-purple-600 hover:bg-purple-700 text-white py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center font-medium"
               >
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                 </svg>
-                Add Publication
+                Add Member
               </NuxtLink>
             </div>
           </div>
@@ -233,26 +242,37 @@
             </div>
           </div>
 
-          <!-- Budget Summary -->
+          <!-- Budget Summary by Currency -->
           <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h5 class="text-lg font-semibold text-gray-900 mb-4">Budget Summary</h5>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div class="text-center p-4 bg-gray-50 rounded-lg">
-                <p class="text-sm text-gray-600 mb-1">Total Budget</p>
-                <p class="text-2xl font-bold text-gray-900">${{ formatCurrency(dashboardData.budgetSummary?.total_budget) }}</p>
+            <h5 class="text-lg font-semibold text-gray-900 mb-4">Budget Summary by Currency</h5>
+            <div v-if="Object.keys(dashboardData.budgetByCurrency || {}).length > 0" class="space-y-4">
+              <div v-for="(summary, currency) in dashboardData.budgetByCurrency" :key="currency" class="border border-gray-200 rounded-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                  <h6 class="text-md font-semibold text-gray-800">{{ currency }} Projects</h6>
+                  <span class="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded">{{ summary.count }} projects</span>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  <div class="text-center">
+                    <p class="text-xs text-gray-600 mb-1">Total</p>
+                    <p class="text-lg font-bold text-gray-900">{{ formatCurrency(summary.total, currency) }}</p>
+                  </div>
+                  <div class="text-center">
+                    <p class="text-xs text-gray-600 mb-1">Average</p>
+                    <p class="text-lg font-bold text-gray-900">{{ formatCurrency(summary.average, currency) }}</p>
+                  </div>
+                  <div class="text-center">
+                    <p class="text-xs text-gray-600 mb-1">Minimum</p>
+                    <p class="text-lg font-bold text-gray-900">{{ formatCurrency(summary.min, currency) }}</p>
+                  </div>
+                  <div class="text-center">
+                    <p class="text-xs text-gray-600 mb-1">Maximum</p>
+                    <p class="text-lg font-bold text-gray-900">{{ formatCurrency(summary.max, currency) }}</p>
+                  </div>
+                </div>
               </div>
-              <div class="text-center p-4 bg-gray-50 rounded-lg">
-                <p class="text-sm text-gray-600 mb-1">Average Budget</p>
-                <p class="text-2xl font-bold text-gray-900">${{ formatCurrency(dashboardData.budgetSummary?.avg_budget) }}</p>
-              </div>
-              <div class="text-center p-4 bg-gray-50 rounded-lg">
-                <p class="text-sm text-gray-600 mb-1">Min Budget</p>
-                <p class="text-2xl font-bold text-gray-900">${{ formatCurrency(dashboardData.budgetSummary?.min_budget) }}</p>
-              </div>
-              <div class="text-center p-4 bg-gray-50 rounded-lg">
-                <p class="text-sm text-gray-600 mb-1">Max Budget</p>
-                <p class="text-2xl font-bold text-gray-900">${{ formatCurrency(dashboardData.budgetSummary?.max_budget) }}</p>
-              </div>
+            </div>
+            <div v-else class="text-center py-8 text-gray-500">
+              <p>No budget data available</p>
             </div>
           </div>
         </div>
@@ -603,6 +623,30 @@ const addNotification = async () => {
   }
 }
 
+// Force logout function for testing
+const forceLogout = async () => {
+  const result = await Swal.fire({
+    title: 'Force Logout?',
+    text: "This will clear your authentication and redirect to login page.",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, force logout',
+    cancelButtonText: 'Cancel'
+  })
+
+  if (result.isConfirmed) {
+    authStore.clearAuth()
+    await Swal.fire({
+      icon: 'success',
+      title: 'Logged Out',
+      text: 'Authentication cleared successfully',
+      timer: 2000,
+      showConfirmButton: false
+    })
+    await navigateTo('/admin/login')
+  }
+}
+
 // Dashboard methods
 
 const fetchDashboardData = async () => {
@@ -611,16 +655,14 @@ const fetchDashboardData = async () => {
     error.value = ''
     
     // Try to get real data from backend
-    const { apiCall } = useApi()
-    const response = await apiCall('/admin/dashboard-stats')
+    const response = await $fetch('http://localhost:3001/api/admin/dashboard-stats')
     
-    if (response && response.success) {
+    if (response.success) {
       dashboardData.value = response.data
-      console.log('Dashboard data loaded successfully:', response.data)
     } else {
-      console.warn('API response unsuccessful, using demo data')
-      setDemoData()
+      throw new Error(response.message || 'Failed to load dashboard data')
     }
+    
   } catch (err) {
     console.error('Dashboard data error:', err)
     error.value = 'Failed to load dashboard data. Please try again.'
@@ -633,6 +675,59 @@ const fetchDashboardData = async () => {
 
 const setDemoData = () => {
   console.log('Using demo data for dashboard')
+  
+  const projects = [
+    { 
+      id: 1, 
+      project_name: 'Education Support Program', 
+      status: 'ongoing', 
+      created_at: new Date().toISOString(), 
+      budget: 50000,
+      currency: 'RWF'
+    },
+    { 
+      id: 2, 
+      project_name: 'Healthcare Initiative', 
+      status: 'completed', 
+      created_at: new Date(Date.now() - 86400000).toISOString(), 
+      budget: 30000,
+      currency: 'USD'
+    },
+    { 
+      id: 3, 
+      project_name: 'Community Outreach', 
+      status: 'pending', 
+      created_at: new Date(Date.now() - 172800000).toISOString(), 
+      budget: 25000,
+      currency: 'EUR'
+    }
+  ]
+  
+  // Calculate budget summary by currency
+  const budgetByCurrency = {}
+  
+  projects.forEach(project => {
+    const currency = project.currency || 'RWF'
+    if (!budgetByCurrency[currency]) {
+      budgetByCurrency[currency] = {
+        total: 0,
+        count: 0,
+        min: project.budget,
+        max: project.budget
+      }
+    }
+    
+    budgetByCurrency[currency].total += project.budget
+    budgetByCurrency[currency].count++
+    budgetByCurrency[currency].min = Math.min(budgetByCurrency[currency].min, project.budget)
+    budgetByCurrency[currency].max = Math.max(budgetByCurrency[currency].max, project.budget)
+  })
+  
+  // Calculate averages
+  Object.keys(budgetByCurrency).forEach(currency => {
+    budgetByCurrency[currency].average = budgetByCurrency[currency].total / budgetByCurrency[currency].count
+  })
+  
   dashboardData.value = {
     projectStats: [
       { status: 'ongoing', count: 5 },
@@ -644,32 +739,7 @@ const setDemoData = () => {
     totalPartners: 12,
     totalDonations: 89,
     totalDonationAmount: 15000,
-    recentProjects: [
-      { 
-        id: 1, 
-        project_name: 'Education Support Program', 
-        status: 'ongoing', 
-        created_at: new Date().toISOString(), 
-        budget: 50000,
-        currency: 'RWF'
-      },
-      { 
-        id: 2, 
-        project_name: 'Healthcare Initiative', 
-        status: 'completed', 
-        created_at: new Date(Date.now() - 86400000).toISOString(), 
-        budget: 30000,
-        currency: 'USD'
-      },
-      { 
-        id: 3, 
-        project_name: 'Community Outreach', 
-        status: 'pending', 
-        created_at: new Date(Date.now() - 172800000).toISOString(), 
-        budget: 25000,
-        currency: 'EUR'
-      }
-    ],
+    recentProjects: projects,
     recentBeneficiaries: [
       { 
         id: 1, 
@@ -703,6 +773,7 @@ const setDemoData = () => {
       min_budget: 10000,
       max_budget: 80000
     },
+    budgetByCurrency,
     totalPublications: 8
   }
 }

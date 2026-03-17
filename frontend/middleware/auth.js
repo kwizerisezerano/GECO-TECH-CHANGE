@@ -5,8 +5,22 @@ export default defineNuxtRouteMiddleware((to, from) => {
   authStore.initAuth()
   
   // Check if user is authenticated
-  if (!authStore.isAuthenticated) {
+  if (!authStore.isAuthenticated || !authStore.currentUser) {
+    // Clear any invalid auth state
+    authStore.clearAuth()
     // Redirect to login page
+    return navigateTo('/admin/login')
+  }
+  
+  // Additional validation - check if user data is valid
+  try {
+    const user = authStore.currentUser
+    if (!user || !user.email) {
+      authStore.clearAuth()
+      return navigateTo('/admin/login')
+    }
+  } catch (error) {
+    authStore.clearAuth()
     return navigateTo('/admin/login')
   }
 })

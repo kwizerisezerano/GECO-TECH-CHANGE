@@ -105,75 +105,20 @@
           </li>
           <li>
             <NuxtLink
-              to="/admin/publications"
+              to="/admin/users"
               class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-200"
-              :class="$route.path.includes('/admin/publications') 
+              :class="$route.path.includes('/admin/users') 
                 ? 'bg-indigo-50 text-indigo-700 border-l-4 border-indigo-600' 
                 : 'text-gray-700 hover:bg-gray-100'"
             >
               <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
               </svg>
-              Publications
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink
-              to="/admin/donations"
-              class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-200"
-              :class="$route.path.includes('/admin/donations') 
-                ? 'bg-indigo-50 text-indigo-700 border-l-4 border-indigo-600' 
-                : 'text-gray-700 hover:bg-gray-100'"
-            >
-              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-              </svg>
-              Donations
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink
-              to="/admin/members"
-              class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-200"
-              :class="$route.path.includes('/admin/members') 
-                ? 'bg-indigo-50 text-indigo-700 border-l-4 border-indigo-600' 
-                : 'text-gray-700 hover:bg-gray-100'"
-            >
-              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-              </svg>
-              Members
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink
-              to="/admin/documents"
-              class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-200"
-              :class="$route.path.includes('/admin/documents') 
-                ? 'bg-indigo-50 text-indigo-700 border-l-4 border-indigo-600' 
-                : 'text-gray-700 hover:bg-gray-100'"
-            >
-              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-              </svg>
-              Documents
+              Users
             </NuxtLink>
           </li>
         </ul>
       </nav>
-      
-      <!-- Logout Button -->
-      <div class="px-4 pb-4">
-        <button
-          @click="handleLogout"
-          class="w-full bg-red-50 hover:bg-red-100 text-red-600 py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center font-medium"
-        >
-          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-          </svg>
-          Logout
-        </button>
-      </div>
     </div>
 
     <!-- Main Content -->
