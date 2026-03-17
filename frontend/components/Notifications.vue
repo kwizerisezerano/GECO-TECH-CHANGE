@@ -3,7 +3,7 @@
     <!-- Notification Bell -->
     <button
       @click="toggleNotifications"
-      class="relative p-2 text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-lg"
+      class="relative p-2 text-gray-600 hover:text-gray-900 rounded-lg"
     >
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
@@ -79,9 +79,7 @@
                     <p class="text-sm font-medium text-gray-900">
                       {{ notification.title }}
                     </p>
-                    <p class="text-sm text-gray-600 mt-1">
-                      {{ notification.message }}
-                    </p>
+                    <p class="text-sm text-gray-600 mt-1" v-html="notification.message"></p>
                     <p class="text-xs text-gray-500 mt-1">
                       {{ formatTime(notification.created_at) }}
                     </p>
@@ -102,6 +100,15 @@
                       >
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                      </button>
+                      <button
+                        @click="editNotification(notification)"
+                        class="text-gray-400 hover:text-blue-600 transition-colors"
+                        title="Edit"
+                      >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                         </svg>
                       </button>
                       <button
@@ -133,6 +140,98 @@
       </div>
     </div>
 
+    <!-- Edit Notification Modal -->
+    <div v-if="showEditModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div class="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-semibold">Edit Notification</h3>
+          <button @click="closeEditModal" class="text-gray-400 hover:text-gray-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+        
+        <form @submit.prevent="updateNotification">
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+              <input
+                v-model="editForm.title"
+                type="text"
+                required
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                placeholder="Enter notification title"
+              />
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Message (Rich Text Supported)</label>
+              
+              <!-- Rich Text Editor Toolbar -->
+              <div class="border border-gray-300 rounded-t-md bg-gray-50 p-2 flex flex-wrap gap-1">
+                <button type="button" @click="formatEditText('bold')" class="px-2 py-1 text-sm border rounded hover:bg-gray-200 font-bold">B</button>
+                <button type="button" @click="formatEditText('italic')" class="px-2 py-1 text-sm border rounded hover:bg-gray-200 italic">I</button>
+                <button type="button" @click="formatEditText('underline')" class="px-2 py-1 text-sm border rounded hover:bg-gray-200 underline">U</button>
+                <div class="border-l mx-1"></div>
+                <button type="button" @click="formatEditText('insertUnorderedList')" class="px-2 py-1 text-sm border rounded hover:bg-gray-200">• List</button>
+                <button type="button" @click="formatEditText('insertOrderedList')" class="px-2 py-1 text-sm border rounded hover:bg-gray-200">1. List</button>
+                <div class="border-l mx-1"></div>
+                <button type="button" @click="insertEditText('🌍')" class="px-2 py-1 text-sm border rounded hover:bg-gray-200">🌍</button>
+                <button type="button" @click="insertEditText('📩')" class="px-2 py-1 text-sm border rounded hover:bg-gray-200">📩</button>
+                <button type="button" @click="insertEditText('📧')" class="px-2 py-1 text-sm border rounded hover:bg-gray-200">📧</button>
+                <button type="button" @click="insertEditText('✅')" class="px-2 py-1 text-sm border rounded hover:bg-gray-200">✅</button>
+                <button type="button" @click="insertEditText('💡')" class="px-2 py-1 text-sm border rounded hover:bg-gray-200">💡</button>
+              </div>
+              
+              <!-- Rich Text Editor -->
+              <div 
+                ref="editMessageEditor"
+                contenteditable="true"
+                @input="updateEditMessage"
+                class="rich-editor w-full px-3 py-2 border border-gray-300 rounded-b-md focus:outline-none focus:ring-2 focus:ring-indigo-500 min-h-[300px] max-h-[400px] overflow-y-auto"
+                style="white-space: pre-wrap;"
+                placeholder="Enter your message here... Rich text formatting supported!"
+              ></div>
+              
+              <!-- Hidden input to store the HTML content -->
+              <input type="hidden" v-model="editForm.message" required />
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Type</label>
+              <select
+                v-model="editForm.type"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                <option value="info">Info</option>
+                <option value="success">Success</option>
+                <option value="warning">Warning</option>
+                <option value="error">Error</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="flex justify-end space-x-3 mt-6">
+            <button
+              type="button"
+              @click="closeEditModal"
+              class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              :disabled="!editForm.title || !editForm.message || updating"
+              class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {{ updating ? 'Updating...' : 'Update Notification' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <!-- Overlay for mobile -->
     <div
       v-if="showNotifications"
@@ -143,13 +242,25 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import Swal from 'sweetalert2'
 
 const showNotifications = ref(false)
 const notifications = ref([])
 const unreadCount = ref(0)
 const loading = ref(true)
 let pollInterval = null
+
+// Edit notification variables
+const showEditModal = ref(false)
+const updating = ref(false)
+const editingNotificationId = ref(null)
+const editForm = ref({
+  title: '',
+  message: '',
+  type: 'info'
+})
+const editMessageEditor = ref(null)
 
 const toggleNotifications = () => {
   showNotifications.value = !showNotifications.value
@@ -243,6 +354,211 @@ const clearAll = async () => {
     )
   } catch (error) {
     console.error('Error clearing all notifications:', error)
+  }
+}
+
+// Edit notification functions
+const editNotification = (notification) => {
+  editingNotificationId.value = notification.id
+  editForm.value = {
+    title: notification.title,
+    message: notification.message,
+    type: notification.type
+  }
+  showEditModal.value = true
+  
+  // Initialize editor after modal is shown
+  nextTick(() => {
+    if (editMessageEditor.value) {
+      editMessageEditor.value.innerHTML = notification.message
+      editMessageEditor.value.focus()
+    }
+  })
+}
+
+const closeEditModal = () => {
+  showEditModal.value = false
+  editingNotificationId.value = null
+  editForm.value = {
+    title: '',
+    message: '',
+    type: 'info'
+  }
+}
+
+const formatEditText = (command) => {
+  const selection = window.getSelection()
+  if (selection.rangeCount > 0) {
+    const range = selection.getRangeAt(0)
+    const selectedText = range.toString()
+    
+    if (command === 'bold') {
+      document.execCommand('bold', false, null)
+    } else if (command === 'italic') {
+      document.execCommand('italic', false, null)
+    } else if (command === 'underline') {
+      document.execCommand('underline', false, null)
+    } else if (command === 'insertUnorderedList') {
+      // Get current line
+      const parentElement = range.startContainer.parentElement
+      
+      // Check if we're already in a list
+      if (parentElement.tagName === 'LI') {
+        // Remove list formatting
+        const li = parentElement
+        const ul = li.parentElement
+        const text = li.textContent
+        const p = document.createElement('p')
+        p.textContent = text
+        ul.replaceChild(p, li)
+        
+        // If UL is empty, remove it
+        if (ul.children.length === 0) {
+          ul.remove()
+        }
+      } else {
+        // Add bullet point
+        const bulletPoint = document.createElement('li')
+        bulletPoint.textContent = selectedText || '• '
+        
+        if (selectedText) {
+          range.deleteContents()
+          range.insertNode(bulletPoint)
+        } else {
+          const ul = document.createElement('ul')
+          ul.appendChild(bulletPoint)
+          range.insertNode(ul)
+        }
+        
+        // Move cursor to end of list item
+        const newRange = document.createRange()
+        newRange.selectNodeContents(bulletPoint)
+        newRange.collapse(false)
+        selection.removeAllRanges()
+        selection.addRange(newRange)
+      }
+    } else if (command === 'insertOrderedList') {
+      // Get current line
+      const parentElement = range.startContainer.parentElement
+      
+      // Check if we're already in a numbered list
+      if (parentElement.tagName === 'LI' && parentElement.parentElement.tagName === 'OL') {
+        // Remove list formatting
+        const li = parentElement
+        const ol = li.parentElement
+        const text = li.textContent
+        const p = document.createElement('p')
+        p.textContent = text
+        ol.replaceChild(p, li)
+        
+        // If OL is empty, remove it
+        if (ol.children.length === 0) {
+          ol.remove()
+        }
+      } else {
+        // Add numbered list
+        const listItem = document.createElement('li')
+        listItem.textContent = selectedText || '1. '
+        
+        if (selectedText) {
+          range.deleteContents()
+          const ol = document.createElement('ol')
+          ol.appendChild(listItem)
+          range.insertNode(ol)
+        } else {
+          const ol = document.createElement('ol')
+          ol.appendChild(listItem)
+          range.insertNode(ol)
+        }
+        
+        // Move cursor to end of list item
+        const newRange = document.createRange()
+        newRange.selectNodeContents(listItem)
+        newRange.collapse(false)
+        selection.removeAllRanges()
+        selection.addRange(newRange)
+      }
+    }
+  }
+  updateEditMessage()
+  editMessageEditor.value?.focus()
+}
+
+const insertEditText = (text) => {
+  const selection = window.getSelection()
+  if (selection.rangeCount > 0) {
+    const range = selection.getRangeAt(0)
+    range.deleteContents()
+    const textNode = document.createTextNode(text)
+    range.insertNode(textNode)
+    
+    // Move cursor after inserted text
+    const newRange = document.createRange()
+    newRange.setStartAfter(textNode)
+    newRange.collapse(true)
+    selection.removeAllRanges()
+    selection.addRange(newRange)
+  } else {
+    // Insert at the end
+    const textNode = document.createTextNode(text)
+    editMessageEditor.value.appendChild(textNode)
+    
+    // Move cursor to end
+    const range = document.createRange()
+    range.selectNodeContents(textNode)
+    range.collapse(false)
+    const selection = window.getSelection()
+    selection.removeAllRanges()
+    selection.addRange(range)
+  }
+  updateEditMessage()
+  editMessageEditor.value?.focus()
+}
+
+const updateEditMessage = () => {
+  if (editMessageEditor.value) {
+    editForm.value.message = editMessageEditor.value.innerHTML
+  }
+}
+
+const updateNotification = async () => {
+  if (!editForm.value.title || !editForm.value.message) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Please fill in both title and message fields'
+    })
+    return
+  }
+
+  updating.value = true
+  
+  try {
+    const response = await $fetch(`http://localhost:3001/api/admin/notifications/${editingNotificationId.value}`, {
+      method: 'PUT',
+      body: editForm.value
+    })
+    
+    if (response.success) {
+      await Swal.fire({
+        icon: 'success',
+        title: '✅ Updated!',
+        text: 'Notification updated successfully!',
+        timer: 2000,
+        showConfirmButton: false
+      })
+      await fetchNotifications()
+      closeEditModal()
+    }
+  } catch (error) {
+    console.error('Update notification error:', error)
+    await Swal.fire({
+      icon: 'error',
+      title: '❌ Error',
+      text: 'Failed to update notification'
+    })
+  } finally {
+    updating.value = false
   }
 }
 

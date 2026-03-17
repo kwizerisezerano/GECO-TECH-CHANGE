@@ -8,6 +8,9 @@
             <h1 class="text-2xl font-bold text-gray-800">Beneficiaries Management</h1>
             <p class="text-gray-600">Manage all beneficiaries from here</p>
           </div>
+          <div class="flex items-center space-x-4">
+            <Notifications />
+          </div>
         </div>
       </div>
     </div>
@@ -195,6 +198,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '~/stores/auth'
 import Swal from 'sweetalert2'
+import Notifications from '~/components/Notifications.vue'
 
 definePageMeta({
   middleware: 'auth'

@@ -289,13 +289,55 @@ router.post('/projects', async (req, res) => {
 router.put('/projects/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { project_name, status, description, start_date, end_date, budget } = req.body;
+    const { project_name, status, description, start_date, end_date, budget, currency } = req.body;
     
-    const [result] = await db.execute(`
-      UPDATE projects 
-      SET project_name = ?, status = ?, description = ?, start_date = ?, end_date = ?, budget = ?
-      WHERE id = ?
-    `, [project_name, status, description, start_date, end_date, budget, id]);
+    // Build dynamic update query based on provided fields
+    const updateFields = [];
+    const updateValues = [];
+    
+    if (project_name !== undefined) {
+      updateFields.push('project_name = ?');
+      updateValues.push(project_name);
+    }
+    if (status !== undefined) {
+      updateFields.push('status = ?');
+      updateValues.push(status);
+    }
+    if (description !== undefined) {
+      updateFields.push('description = ?');
+      updateValues.push(description);
+    }
+    if (start_date !== undefined) {
+      updateFields.push('start_date = ?');
+      updateValues.push(start_date);
+    }
+    if (end_date !== undefined) {
+      updateFields.push('end_date = ?');
+      updateValues.push(end_date);
+    }
+    if (budget !== undefined) {
+      updateFields.push('budget = ?');
+      updateValues.push(budget);
+    }
+    if (currency !== undefined) {
+      updateFields.push('currency = ?');
+      updateValues.push(currency);
+    }
+    
+    // If no fields provided, return error
+    if (updateFields.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'No fields to update provided'
+      });
+    }
+    
+    // Add id to values
+    updateValues.push(id);
+    
+    const updateQuery = `UPDATE projects SET ${updateFields.join(', ')} WHERE id = ?`;
+    
+    const [result] = await db.execute(updateQuery, updateValues);
     
     if (result.affectedRows > 0) {
       res.json({
@@ -824,10 +866,14 @@ router.post('/notifications', async (req, res) => {
   try {
     const { title, message, type, related_entity_type, related_entity_id } = req.body;
     
+    // Convert undefined to null for MySQL compatibility
+    const cleanRelatedEntityType = related_entity_type !== undefined ? related_entity_type : null;
+    const cleanRelatedEntityId = related_entity_id !== undefined ? related_entity_id : null;
+    
     const [result] = await db.execute(`
       INSERT INTO notifications (title, message, type, related_entity_type, related_entity_id) 
       VALUES (?, ?, ?, ?, ?)
-    `, [title, message, type || 'info', related_entity_type, related_entity_id]);
+    `, [title, message, type || 'info', cleanRelatedEntityType, cleanRelatedEntityId]);
     
     res.json({
       success: true,
@@ -837,8 +883,8 @@ router.post('/notifications', async (req, res) => {
         title,
         message,
         type: type || 'info',
-        related_entity_type,
-        related_entity_id
+        related_entity_type: cleanRelatedEntityType,
+        related_entity_id: cleanRelatedEntityId
       }
     });
   } catch (error) {
@@ -846,6 +892,64 @@ router.post('/notifications', async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to create notification'
+    });
+  }
+});
+
+// Update notification
+router.put('/notifications/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, message, type } = req.body;
+    
+    // Build dynamic update query based on provided fields
+    const updateFields = [];
+    const updateValues = [];
+    
+    if (title !== undefined) {
+      updateFields.push('title = ?');
+      updateValues.push(title);
+    }
+    if (message !== undefined) {
+      updateFields.push('message = ?');
+      updateValues.push(message);
+    }
+    if (type !== undefined) {
+      updateFields.push('type = ?');
+      updateValues.push(type);
+    }
+    
+    // If no fields provided, return error
+    if (updateFields.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'No fields to update provided'
+      });
+    }
+    
+    // Add id to values
+    updateValues.push(id);
+    
+    const updateQuery = `UPDATE notifications SET ${updateFields.join(', ')} WHERE id = ?`;
+    
+    const [result] = await db.execute(updateQuery, updateValues);
+    
+    if (result.affectedRows > 0) {
+      res.json({
+        success: true,
+        message: 'Notification updated successfully'
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: 'Notification not found'
+      });
+    }
+  } catch (error) {
+    console.error('Update notification error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to update notification'
     });
   }
 });

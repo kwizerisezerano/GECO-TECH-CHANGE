@@ -10,7 +10,7 @@
           </div>
           <div class="flex items-center space-x-4">
             <button
-              @click="showAddNotificationModal = true"
+              @click="openAddNotificationModal"
               class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg flex items-center text-sm"
             >
               <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -182,13 +182,16 @@
                 <div v-for="project in dashboardData.recentProjects?.slice(0, 3)" :key="project.id" class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
                   <div class="flex-1">
                     <h6 class="font-medium text-gray-900">{{ project.project_name }}</h6>
-                    <p class="text-sm text-gray-500">{{ formatDate(project.created_at) }}</p>
+                    <p class="text-sm text-gray-500">{{ formatShortDate(project.created_at) }} <span class="text-xs text-gray-400">({{ formatRelativeDate(project.created_at) }})</span></p>
                   </div>
                   <div class="flex items-center space-x-2">
                     <span :class="getStatusBadgeClass(project.status)">
                       {{ project.status }}
                     </span>
-                    <span class="text-sm font-semibold text-gray-600">${{ formatCurrency(project.budget) }}</span>
+                    <span class="text-sm font-semibold text-gray-600">
+                      {{ formatCurrency(project.budget, project.currency) }}
+                      <span class="text-xs bg-gray-100 px-2 py-1 rounded ml-1">{{ project.currency || 'RWF' }}</span>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -266,9 +269,17 @@
       </div>
 
     <!-- Add Notification Modal -->
-    <div v-if="showAddNotificationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div class="bg-white rounded-lg p-6 w-full max-w-md">
-        <h3 class="text-lg font-semibold mb-4">Add New Notification</h3>
+    <div v-if="showAddNotificationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div class="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-semibold">Add New Notification</h3>
+          <button @click="showAddNotificationModal = false" class="text-gray-400 hover:text-gray-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+        
         <form @submit.prevent="addNotification">
           <div class="space-y-4">
             <div>
@@ -283,14 +294,36 @@
             </div>
             
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
-              <textarea
-                v-model="notificationForm.message"
-                required
-                rows="3"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                placeholder="Enter notification message"
-              ></textarea>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Message (Rich Text Supported)</label>
+              
+              <!-- Rich Text Editor Toolbar -->
+              <div class="border border-gray-300 rounded-t-md bg-gray-50 p-2 flex flex-wrap gap-1">
+                <button type="button" @click="formatText('bold')" class="px-2 py-1 text-sm border rounded hover:bg-gray-200 font-bold">B</button>
+                <button type="button" @click="formatText('italic')" class="px-2 py-1 text-sm border rounded hover:bg-gray-200 italic">I</button>
+                <button type="button" @click="formatText('underline')" class="px-2 py-1 text-sm border rounded hover:bg-gray-200 underline">U</button>
+                <div class="border-l mx-1"></div>
+                <button type="button" @click="formatText('insertUnorderedList')" class="px-2 py-1 text-sm border rounded hover:bg-gray-200">• List</button>
+                <button type="button" @click="formatText('insertOrderedList')" class="px-2 py-1 text-sm border rounded hover:bg-gray-200">1. List</button>
+                <div class="border-l mx-1"></div>
+                <button type="button" @click="insertText('🌍')" class="px-2 py-1 text-sm border rounded hover:bg-gray-200">🌍</button>
+                <button type="button" @click="insertText('📩')" class="px-2 py-1 text-sm border rounded hover:bg-gray-200">📩</button>
+                <button type="button" @click="insertText('📧')" class="px-2 py-1 text-sm border rounded hover:bg-gray-200">📧</button>
+                <button type="button" @click="insertText('✅')" class="px-2 py-1 text-sm border rounded hover:bg-gray-200">✅</button>
+                <button type="button" @click="insertText('💡')" class="px-2 py-1 text-sm border rounded hover:bg-gray-200">💡</button>
+              </div>
+              
+              <!-- Rich Text Editor -->
+              <div 
+                ref="messageEditor"
+                contenteditable="true"
+                @input="updateMessage"
+                class="rich-editor w-full px-3 py-2 border border-gray-300 rounded-b-md focus:outline-none focus:ring-2 focus:ring-indigo-500 min-h-[300px] max-h-[400px] overflow-y-auto"
+                style="white-space: pre-wrap;"
+                placeholder="Enter your message here... Rich text formatting supported!"
+              ></div>
+              
+              <!-- Hidden input to store the HTML content -->
+              <input type="hidden" v-model="notificationForm.message" required />
             </div>
             
             <div>
@@ -307,10 +340,10 @@
             </div>
           </div>
           
-          <div class="mt-6 flex justify-end space-x-3">
+          <div class="flex justify-end space-x-3 mt-6">
             <button
               type="button"
-              @click="closeAddNotificationModal"
+              @click="showAddNotificationModal = false"
               class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
             >
               Cancel
@@ -330,7 +363,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, nextTick } from 'vue'
 import { useAuthStore } from '~/stores/auth'
 import Swal from 'sweetalert2'
 import Notifications from '~/components/Notifications.vue'
@@ -352,6 +385,147 @@ const notificationForm = ref({
   type: 'info'
 })
 
+// Rich text editor ref
+const messageEditor = ref(null)
+
+// Rich text editor functions
+const formatText = (command) => {
+  const selection = window.getSelection()
+  if (selection.rangeCount > 0) {
+    const range = selection.getRangeAt(0)
+    const selectedText = range.toString()
+    
+    if (command === 'bold') {
+      document.execCommand('bold', false, null)
+    } else if (command === 'italic') {
+      document.execCommand('italic', false, null)
+    } else if (command === 'underline') {
+      document.execCommand('underline', false, null)
+    } else if (command === 'insertUnorderedList') {
+      // Get current line
+      const parentElement = range.startContainer.parentElement
+      const textContent = parentElement.textContent || ''
+      
+      // Check if we're already in a list
+      if (parentElement.tagName === 'LI') {
+        // Remove list formatting
+        const li = parentElement
+        const ul = li.parentElement
+        const text = li.textContent
+        const p = document.createElement('p')
+        p.textContent = text
+        ul.replaceChild(p, li)
+        
+        // If UL is empty, remove it
+        if (ul.children.length === 0) {
+          ul.remove()
+        }
+      } else {
+        // Add bullet point
+        const bulletPoint = document.createElement('li')
+        bulletPoint.textContent = selectedText || '• '
+        
+        if (selectedText) {
+          range.deleteContents()
+          range.insertNode(bulletPoint)
+        } else {
+          const ul = document.createElement('ul')
+          ul.appendChild(bulletPoint)
+          range.insertNode(ul)
+        }
+        
+        // Move cursor to end of list item
+        const newRange = document.createRange()
+        newRange.selectNodeContents(bulletPoint)
+        newRange.collapse(false)
+        selection.removeAllRanges()
+        selection.addRange(newRange)
+      }
+    } else if (command === 'insertOrderedList') {
+      // Get current line
+      const parentElement = range.startContainer.parentElement
+      const textContent = parentElement.textContent || ''
+      
+      // Check if we're already in a numbered list
+      if (parentElement.tagName === 'LI' && parentElement.parentElement.tagName === 'OL') {
+        // Remove list formatting
+        const li = parentElement
+        const ol = li.parentElement
+        const text = li.textContent
+        const p = document.createElement('p')
+        p.textContent = text
+        ol.replaceChild(p, li)
+        
+        // If OL is empty, remove it
+        if (ol.children.length === 0) {
+          ol.remove()
+        }
+      } else {
+        // Add numbered list
+        const listItem = document.createElement('li')
+        listItem.textContent = selectedText || '1. '
+        
+        if (selectedText) {
+          range.deleteContents()
+          const ol = document.createElement('ol')
+          ol.appendChild(listItem)
+          range.insertNode(ol)
+        } else {
+          const ol = document.createElement('ol')
+          ol.appendChild(listItem)
+          range.insertNode(ol)
+        }
+        
+        // Move cursor to end of list item
+        const newRange = document.createRange()
+        newRange.selectNodeContents(listItem)
+        newRange.collapse(false)
+        selection.removeAllRanges()
+        selection.addRange(newRange)
+      }
+    }
+  }
+  updateMessage()
+  messageEditor.value?.focus()
+}
+
+const insertText = (text) => {
+  const selection = window.getSelection()
+  if (selection.rangeCount > 0) {
+    const range = selection.getRangeAt(0)
+    range.deleteContents()
+    const textNode = document.createTextNode(text)
+    range.insertNode(textNode)
+    
+    // Move cursor after inserted text
+    const newRange = document.createRange()
+    newRange.setStartAfter(textNode)
+    newRange.collapse(true)
+    selection.removeAllRanges()
+    selection.addRange(newRange)
+  } else {
+    // Insert at the end
+    const textNode = document.createTextNode(text)
+    messageEditor.value.appendChild(textNode)
+    
+    // Move cursor to end
+    const range = document.createRange()
+    range.selectNodeContents(textNode)
+    range.collapse(false)
+    const selection = window.getSelection()
+    selection.removeAllRanges()
+    selection.addRange(range)
+  }
+  updateMessage()
+  messageEditor.value?.focus()
+}
+
+const updateMessage = () => {
+  if (messageEditor.value) {
+    notificationForm.value.message = messageEditor.value.innerHTML
+  }
+}
+
 // Computed properties
 const totalProjects = computed(() => {
   return dashboardData.value?.projectStats?.reduce((total, stat) => total + stat.count, 0) || 0
@@ -360,6 +534,23 @@ const totalProjects = computed(() => {
 // Methods
 
 // Notification methods
+const openAddNotificationModal = () => {
+  showAddNotificationModal.value = true
+  // Reset form
+  notificationForm.value = {
+    title: '',
+    message: '',
+    type: 'info'
+  }
+  // Initialize editor after modal is shown
+  nextTick(() => {
+    if (messageEditor.value) {
+      messageEditor.value.innerHTML = ''
+      messageEditor.value.focus()
+    }
+  })
+}
+
 const closeAddNotificationModal = () => {
   showAddNotificationModal.value = false
   notificationForm.value = {
@@ -459,21 +650,24 @@ const setDemoData = () => {
         project_name: 'Education Support Program', 
         status: 'ongoing', 
         created_at: new Date().toISOString(), 
-        budget: 50000 
+        budget: 50000,
+        currency: 'RWF'
       },
       { 
         id: 2, 
         project_name: 'Healthcare Initiative', 
         status: 'completed', 
         created_at: new Date(Date.now() - 86400000).toISOString(), 
-        budget: 30000 
+        budget: 30000,
+        currency: 'USD'
       },
       { 
         id: 3, 
         project_name: 'Community Outreach', 
         status: 'pending', 
         created_at: new Date(Date.now() - 172800000).toISOString(), 
-        budget: 25000 
+        budget: 25000,
+        currency: 'EUR'
       }
     ],
     recentBeneficiaries: [
@@ -514,13 +708,105 @@ const setDemoData = () => {
 }
 
 const formatDate = (dateString) => {
-  const options = { year: 'numeric', month: 'short', day: 'numeric' }
-  return new Date(dateString).toLocaleDateString(undefined, options)
+  if (!dateString) return 'Not set'
+  
+  const date = new Date(dateString)
+  
+  // Check if date is valid
+  if (isNaN(date.getTime())) return 'Invalid date'
+  
+  // Format: "January 15, 2024"
+  const options = { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric'
+  }
+  
+  return date.toLocaleDateString('en-US', options)
 }
 
-const formatCurrency = (amount) => {
-  if (!amount) return '0'
-  return Number(amount).toLocaleString()
+const formatShortDate = (dateString) => {
+  if (!dateString) return 'Not set'
+  
+  const date = new Date(dateString)
+  
+  // Check if date is valid
+  if (isNaN(date.getTime())) return 'Invalid date'
+  
+  // Format: "Jan 15, 2024"
+  const options = { 
+    year: 'numeric', 
+    month: 'short', 
+    day: 'numeric'
+  }
+  
+  return date.toLocaleDateString('en-US', options)
+}
+
+const formatRelativeDate = (dateString) => {
+  if (!dateString) return 'Not set'
+  
+  const date = new Date(dateString)
+  const now = new Date()
+  
+  // Debug: Log the values to see what's happening
+  console.log('Dashboard - Date string:', dateString)
+  console.log('Dashboard - Parsed date:', date)
+  console.log('Dashboard - Current time:', now)
+  console.log('Dashboard - Date time:', date.getTime())
+  console.log('Dashboard - Current time:', now.getTime())
+  
+  // Check if date is valid
+  if (isNaN(date.getTime())) return 'Invalid date'
+  
+  // Calculate difference without absolute value
+  const diffTime = now - date
+  const diffDays = Math.floor(Math.abs(diffTime) / (1000 * 60 * 60 * 24))
+  
+  console.log('Dashboard - Time difference (ms):', diffTime)
+  console.log('Dashboard - Days difference:', diffDays)
+  console.log('Dashboard - Is past date:', diffTime > 0)
+  
+  if (diffDays === 0) {
+    return 'Today'
+  } else if (diffDays === 1) {
+    return diffTime > 0 ? 'Yesterday' : 'Tomorrow'
+  } else if (diffDays < 7) {
+    return diffTime > 0 ? `${diffDays} days ago` : `In ${diffDays} days`
+  } else if (diffDays < 30) {
+    const weeks = Math.floor(diffDays / 7)
+    return diffTime > 0 ? `${weeks} week${weeks > 1 ? 's' : ''} ago` : `In ${weeks} week${weeks > 1 ? 's' : ''}`
+  } else if (diffDays < 365) {
+    const months = Math.floor(diffDays / 30)
+    return diffTime > 0 ? `${months} month${months > 1 ? 's' : ''} ago` : `In ${months} month${months > 1 ? 's' : ''}`
+  } else {
+    const years = Math.floor(diffTime / 31536000000)
+    return diffTime > 0 ? `${years} year${years > 1 ? 's' : ''} ago` : `In ${years} year${years > 1 ? 's' : ''}`
+  }
+}
+
+const formatCurrency = (amount, currency = 'RWF') => {
+  if (!amount || amount === 0) return `${currency} 0`
+  
+  // Convert to number if it's a string
+  const numAmount = typeof amount === 'string' ? parseFloat(amount) : amount
+  
+  // Format based on currency
+  if (currency === 'RWF') {
+    // Rwanda Franc - no decimals, comma separators
+    return new Intl.NumberFormat('en-RW', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(numAmount).replace(/RWF/i, `${currency} `)
+  } else {
+    // Other currencies - standard formatting
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: currency,
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(numAmount)
+  }
 }
 
 const getStatusBadgeClass = (status) => {
@@ -579,6 +865,29 @@ onMounted(() => {
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 3px;
+}
+
+/* Rich Text Editor Styles */
+.rich-editor ul {
+  list-style-type: disc;
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+
+.rich-editor ol {
+  list-style-type: decimal;
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+
+.rich-editor li {
+  margin-bottom: 5px;
+  line-height: 1.5;
+}
+
+.rich-editor p {
+  margin-bottom: 10px;
+  line-height: 1.5;
 }
 
 ::-webkit-scrollbar-thumb {

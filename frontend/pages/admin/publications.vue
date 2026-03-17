@@ -8,6 +8,9 @@
               <h1 class="text-2xl font-bold text-gray-800">Publications Management</h1>
               <p class="text-gray-600">Manage all publications and documents from here</p>
             </div>
+            <div class="flex items-center space-x-4">
+              <Notifications />
+            </div>
           </div>
         </div>
       </div>
@@ -162,6 +165,8 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import AdminLayout from '~/components/AdminLayout.vue'
+import Notifications from '~/components/Notifications.vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '~/stores/auth'
 import Swal from 'sweetalert2'

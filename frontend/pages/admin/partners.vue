@@ -6,43 +6,46 @@
         <div class="flex justify-between items-center">
           <div>
             <h1 class="text-2xl font-bold text-gray-800">Partners Management</h1>
-            <p class="text-gray-600">Manage all partner organizations from here</p>
+            <p class="text-gray-600">Manage all partners from here</p>
           </div>
+          <div class="flex items-center space-x-4">
+            <Notifications />
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Content -->
-      <div class="p-6">
-        <!-- Loading State -->
-        <div v-if="loading" class="flex justify-center items-center h-64">
-          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+    <!-- Content -->
+    <div class="p-6">
+      <!-- Loading State -->
+      <div v-if="loading" class="flex justify-center items-center h-64">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+      </div>
+
+      <!-- Partners List -->
+      <div v-else-if="partners && partners.length > 0" class="space-y-4">
+        <!-- Add Partner Button -->
+        <div class="flex justify-end mb-4">
+          <button
+            @click="openAddModal"
+            class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg flex items-center"
+          >
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            </svg>
+            Add Partner
+          </button>
         </div>
-
-        <!-- Partners List -->
-        <div v-else-if="partners && partners.length > 0" class="space-y-4">
-          <!-- Add Partner Button -->
-          <div class="flex justify-end mb-4">
-            <button
-              @click="openAddModal"
-              class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg flex items-center"
-            >
-              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-              </svg>
-              Add Partner
-            </button>
-          </div>
-          
-          <div class="bg-white rounded-xl shadow-md overflow-hidden">
-            <div class="overflow-x-auto">
-              <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                  <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      ID
-                    </th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+        
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    ID
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Organization Name
                     </th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -225,6 +228,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '~/stores/auth'
 import Swal from 'sweetalert2'
+import Notifications from '~/components/Notifications.vue'
 
 definePageMeta({
   middleware: 'auth'

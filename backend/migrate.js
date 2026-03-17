@@ -55,11 +55,13 @@ CREATE TABLE projects (
     description TEXT,
     start_date DATE,
     end_date DATE,
-    budget DECIMAL(15,2),
+    budget DECIMAL(15,2) COMMENT 'Budget amount in RWF (Rwanda Francs)',
+    currency VARCHAR(3) DEFAULT 'RWF' COMMENT 'Currency code (RWF, USD, EUR, etc.)',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_status (status),
-    INDEX idx_project_name (project_name)
+    INDEX idx_project_name (project_name),
+    INDEX idx_currency (currency)
 );
 
 -- Partners table (with encrypted fields)
