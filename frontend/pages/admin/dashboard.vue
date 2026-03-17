@@ -9,6 +9,16 @@
             <p class="text-gray-600">Welcome back, {{ authStore.currentUser?.username || 'Admin' }}!</p>
           </div>
           <div class="flex items-center space-x-4">
+            <button
+              @click="showAddNotificationModal = true"
+              class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg flex items-center text-sm"
+            >
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+              </svg>
+              Add Notification
+            </button>
+            <Notifications />
             <div class="text-right hidden sm:block">
               <p class="text-sm text-gray-500">Current Time</p>
               <p class="text-lg font-semibold text-gray-900">{{ currentTime }}</p>
@@ -254,6 +264,68 @@
           </div>
         </div>
       </div>
+
+    <!-- Add Notification Modal -->
+    <div v-if="showAddNotificationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white rounded-lg p-6 w-full max-w-md">
+        <h3 class="text-lg font-semibold mb-4">Add New Notification</h3>
+        <form @submit.prevent="addNotification">
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+              <input
+                v-model="notificationForm.title"
+                type="text"
+                required
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                placeholder="Enter notification title"
+              />
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+              <textarea
+                v-model="notificationForm.message"
+                required
+                rows="3"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                placeholder="Enter notification message"
+              ></textarea>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Type</label>
+              <select
+                v-model="notificationForm.type"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                <option value="info">Info</option>
+                <option value="success">Success</option>
+                <option value="warning">Warning</option>
+                <option value="error">Error</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="mt-6 flex justify-end space-x-3">
+            <button
+              type="button"
+              @click="closeAddNotificationModal"
+              class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              :disabled="!notificationForm.title || !notificationForm.message || addingNotification"
+              class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {{ addingNotification ? 'Adding...' : 'Add Notification' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </AdminLayout>
 </template>
 
@@ -261,6 +333,7 @@
 import { ref, onMounted, computed } from 'vue'
 import { useAuthStore } from '~/stores/auth'
 import Swal from 'sweetalert2'
+import Notifications from '~/components/Notifications.vue'
 
 definePageMeta({
   middleware: 'auth'
@@ -271,6 +344,13 @@ const loading = ref(true)
 const error = ref('')
 const dashboardData = ref(null)
 const currentTime = ref(new Date().toLocaleTimeString())
+const showAddNotificationModal = ref(false)
+const addingNotification = ref(false)
+const notificationForm = ref({
+  title: '',
+  message: '',
+  type: 'info'
+})
 
 // Computed properties
 const totalProjects = computed(() => {
@@ -278,6 +358,61 @@ const totalProjects = computed(() => {
 })
 
 // Methods
+
+// Notification methods
+const closeAddNotificationModal = () => {
+  showAddNotificationModal.value = false
+  notificationForm.value = {
+    title: '',
+    message: '',
+    type: 'info'
+  }
+}
+
+const addNotification = async () => {
+  if (!notificationForm.value.title || !notificationForm.value.message) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Please fill in both title and message fields'
+    })
+    return
+  }
+
+  addingNotification.value = true
+  
+  try {
+    const response = await $fetch('http://localhost:3001/api/admin/notifications', {
+      method: 'POST',
+      body: notificationForm.value
+    })
+    
+    if (response.success) {
+      await Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Notification added successfully',
+        timer: 2000,
+        showConfirmButton: false
+      })
+      
+      closeAddNotificationModal()
+      // Refresh notifications in the Notifications component
+      window.dispatchEvent(new CustomEvent('refresh-notifications'))
+    }
+  } catch (error) {
+    console.error('Add notification error:', error)
+    await Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Failed to add notification'
+    })
+  } finally {
+    addingNotification.value = false
+  }
+}
+
+// Dashboard methods
 
 const fetchDashboardData = async () => {
   try {

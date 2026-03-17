@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <AdminLayout>
     <!-- Mobile Menu Toggle -->
     <div class="lg:hidden fixed top-4 left-4 z-50">
       <button
@@ -330,7 +330,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </AdminLayout>
 </template>
 
 <script setup>

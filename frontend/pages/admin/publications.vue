@@ -1,110 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <!-- Mobile Menu Toggle -->
-    <div class="lg:hidden fixed top-4 left-4 z-50">
-      <button
-        @click="toggleSidebar"
-        class="bg-purple-600 text-white p-3 rounded-lg shadow-lg hover:bg-purple-700 transition duration-200"
-      >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
-      </button>
-    </div>
-
-    <!-- Sidebar -->
-    <div
-      :class="[
-        'fixed lg:static inset-y-0 left-0 z-40 w-64 bg-gradient-to-b from-purple-600 to-purple-800 text-white transform transition-transform duration-300 ease-in-out lg:translate-x-0',
-        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      ]"
-    >
-      <!-- Logo -->
-      <div class="p-6 border-b border-purple-700">
-        <div class="text-center">
-          <img src="/assets/img/logo.png" alt="GECO RWANDA Logo" class="w-16 h-16 mx-auto mb-3 rounded-full bg-white p-2">
-          <h3 class="text-xl font-bold">GECO RWANDA</h3>
-          <p class="text-purple-200 text-sm">Admin Panel</p>
-        </div>
-      </div>
-      
-      <!-- Navigation -->
-      <nav class="p-4">
-        <ul class="space-y-2">
-          <li>
-            <NuxtLink
-              to="/admin/dashboard"
-              class="flex items-center px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200"
-            >
-              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-              </svg>
-              Dashboard
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink
-              to="/admin/projects"
-              class="flex items-center px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200"
-            >
-              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
-              </svg>
-              Projects Management
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink
-              to="/admin/beneficiaries"
-              class="flex items-center px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200"
-            >
-              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-              </svg>
-              Beneficiaries
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink
-              to="/admin/partners"
-              class="flex items-center px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200"
-            >
-              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A6.5 6.5 0 0112 18.255 6.5 6.5 0 013 13.255V12a6.5 6.5 0 0112 0v1.255zM12 15.255A4.5 4.5 0 017.5 12V8a4.5 4.5 0 119 0v4a4.5 4.5 0 01-4.5 3.255z"></path>
-              </svg>
-              Partners
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink
-              to="/admin/publications"
-              class="flex items-center px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-200 bg-purple-700"
-            >
-              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-              </svg>
-              Publications
-            </NuxtLink>
-          </li>
-        </ul>
-      </nav>
-      
-      <!-- Logout Button -->
-      <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-purple-700">
-        <button
-          @click="handleLogout"
-          class="w-full bg-purple-900 hover:bg-purple-950 text-white py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center"
-        >
-          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-          </svg>
-          Logout
-        </button>
-      </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="lg:ml-64 min-h-screen">
+  <AdminLayout>
       <!-- Page Header -->
       <div class="bg-white shadow-sm border-b border-gray-200">
         <div class="px-6 py-4">
@@ -128,15 +23,15 @@
         <div v-else-if="publications && publications.length > 0" class="space-y-4">
           <!-- Upload Publication Button -->
           <div class="flex justify-end mb-4">
-            <NuxtLink
-              to="/admin/documents"
+            <button
+              @click="showUploadModal = true"
               class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg flex items-center"
             >
               <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
               </svg>
               Upload New Publication
-            </NuxtLink>
+            </button>
           </div>
           
           <div class="bg-white rounded-xl shadow-md overflow-hidden">
@@ -217,8 +112,52 @@
           </NuxtLink>
         </div>
       </div>
+
+    <!-- Upload Publication Modal -->
+    <div v-if="showUploadModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white rounded-lg p-6 w-full max-w-md">
+        <h3 class="text-lg font-semibold mb-4">Upload New Publication</h3>
+        <form @submit.prevent="uploadPublication">
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Select PDF File</label>
+              <input
+                type="file"
+                ref="fileInput"
+                accept=".pdf"
+                required
+                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100"
+                @change="handleFileSelect"
+              />
+              <p class="text-xs text-gray-500 mt-1">Only PDF files are allowed (Max 10MB)</p>
+            </div>
+            
+            <div v-if="selectedFile" class="text-sm text-gray-600">
+              <p>Selected file: <strong>{{ selectedFile.name }}</strong></p>
+              <p>File size: {{ formatFileSize(selectedFile.size) }}</p>
+            </div>
+          </div>
+          
+          <div class="mt-6 flex justify-end space-x-3">
+            <button
+              type="button"
+              @click="closeUploadModal"
+              class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              :disabled="!selectedFile || uploading"
+              class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {{ uploading ? 'Uploading...' : 'Upload' }}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
+  </AdminLayout>
 </template>
 
 <script setup>
@@ -237,6 +176,9 @@ const authStore = useAuthStore()
 const loading = ref(true)
 const publications = ref([])
 const sidebarOpen = ref(false)
+const showUploadModal = ref(false)
+const selectedFile = ref(null)
+const uploading = ref(false)
 
 // Methods
 const toggleSidebar = () => {
@@ -268,7 +210,7 @@ const handleLogout = async () => {
 
 const fetchPublications = async () => {
   try {
-    const response = await $fetch('/api/admin/publications')
+    const response = await $fetch('http://localhost:3001/api/admin/publications')
     if (response.success) {
       publications.value = response.data
     }
@@ -310,7 +252,7 @@ const deletePublication = async (publication) => {
   
   if (result.isConfirmed) {
     try {
-      const response = await $fetch(`/api/admin/publications/${publication.id}`, {
+      const response = await $fetch(`http://localhost:3001/api/admin/publications/${publication.id}`, {
         method: 'DELETE'
       })
       
@@ -329,6 +271,92 @@ const deletePublication = async (publication) => {
         text: 'Failed to delete publication'
       })
     }
+  }
+}
+
+// Upload methods
+const handleFileSelect = (event) => {
+  const file = event.target.files[0]
+  if (file) {
+    // Check file size (10MB limit)
+    if (file.size > 10 * 1024 * 1024) {
+      Swal.fire({
+        icon: 'error',
+        title: 'File too large',
+        text: 'Please select a file smaller than 10MB'
+      })
+      event.target.value = ''
+      selectedFile.value = null
+      return
+    }
+    
+    // Check file type
+    if (file.type !== 'application/pdf') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid file type',
+        text: 'Please select a PDF file'
+      })
+      event.target.value = ''
+      selectedFile.value = null
+      return
+    }
+    
+    selectedFile.value = file
+  }
+}
+
+const closeUploadModal = () => {
+  showUploadModal.value = false
+  selectedFile.value = null
+  uploading.value = false
+  if (document.querySelector('input[type="file"]')) {
+    document.querySelector('input[type="file"]').value = ''
+  }
+}
+
+const uploadPublication = async () => {
+  if (!selectedFile.value) {
+    Swal.fire({
+      icon: 'error',
+      title: 'No file selected',
+      text: 'Please select a file to upload'
+    })
+    return
+  }
+
+  uploading.value = true
+  
+  try {
+    const formData = new FormData()
+    formData.append('file', selectedFile.value)
+    
+    const response = await $fetch('http://localhost:3001/api/admin/publications', {
+      method: 'POST',
+      body: formData
+    })
+    
+    if (response.success) {
+      await Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Publication uploaded successfully',
+        timer: 2000,
+        showConfirmButton: false
+      })
+      
+      closeUploadModal()
+      fetchPublications()
+    }
+  } catch (error) {
+    console.error('Upload error:', error)
+    await Swal.fire({
+      icon: 'error',
+      title: 'Upload Failed',
+      text: 'Failed to upload publication. Please try again.'
+    })
+  } finally {
+    uploading.value = false
   }
 }
 

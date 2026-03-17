@@ -149,77 +149,40 @@
 
     <!-- Projects List -->
     <div class="px-6 py-6">
-      <div class="bg-white rounded-xl shadow-md p-6" data-aos="fade-up" data-aos-delay="200">
-          <h5 class="text-lg font-semibold text-gray-800 mb-4">All Projects</h5>
-          
-          <!-- Loading State -->
-          <div v-if="loading" class="flex justify-center items-center h-32">
-            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+      <div class="bg-white rounded-xl shadow-md p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h5 class="text-lg font-semibold text-gray-800">All Projects</h5>
+          <div class="text-sm text-gray-600">
+            Showing {{ paginatedProjects.length }} of {{ projects.length }} projects
           </div>
-          
-          <!-- Projects Grid -->
-          <div v-else-if="projects && projects.length > 0" class="space-y-4">
-            <div
-              v-for="project in projects"
-              :key="project.id"
-              class="border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition duration-300"
-            >
-              <!-- Project Header -->
-              <div class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-4 relative z-5">
-                <div class="flex justify-between items-start">
-                  <h6 class="text-lg font-semibold">{{ project.project_name }}</h6>
-                  <span :class="getStatusBadgeClass(project.status)" class="px-3 py-1 rounded-full text-xs font-semibold z-20 relative">
-                    {{ project.status }}
+        </div>
+        
+        <!-- Loading -->
+        <div v-if="loading" class="text-center py-8">
+          <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          <p class="mt-2 text-gray-600">Loading projects...</p>
+        </div>
+        
+        <!-- Projects List -->
+        <div v-else-if="paginatedProjects && paginatedProjects.length > 0">
+          <div class="space-y-3">
+            <div v-for="(project, index) in paginatedProjects" :key="project.id || index" 
+                 class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h6 class="font-semibold text-lg">{{ project.project_name || 'Unknown Project' }}</h6>
+                  <p class="text-gray-600 text-sm mt-1">{{ project.description || 'No description' }}</p>
+                  <div class="flex gap-4 mt-2 text-sm text-gray-500">
+                    <span v-if="project.start_date">📅 {{ project.start_date }}</span>
+                    <span v-if="project.budget">💰 RWF {{ project.budget }}</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs">
+                    {{ project.status || 'Unknown' }}
                   </span>
-                </div>
-              </div>
-              
-              <!-- Project Body -->
-              <div class="p-4">
-                <div v-if="project.description" class="mb-3">
-                  <p class="text-gray-700">{{ project.description }}</p>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
-                  <div v-if="project.start_date">
-                    <p class="text-sm text-gray-600">Start Date</p>
-                    <p class="font-medium">{{ formatDate(project.start_date) }}</p>
-                  </div>
-                  <div v-if="project.end_date">
-                    <p class="text-sm text-gray-600">End Date</p>
-                    <p class="font-medium">{{ formatDate(project.end_date) }}</p>
-                  </div>
-                  <div v-if="project.budget">
-                    <p class="text-sm text-gray-600">Budget</p>
-                    <p class="font-medium">RWF {{ Number(project.budget).toLocaleString() }}</p>
-                  </div>
-                </div>
-                
-                <div class="mb-3">
-                  <p class="text-sm text-gray-600">Created</p>
-                  <p class="font-medium">{{ formatDateTime(project.created_at) }}</p>
-                </div>
-              </div>
-              
-              <!-- Project Actions -->
-              <div class="bg-gray-50 px-4 py-3 border-t border-gray-200">
-                <div class="flex space-x-2">
-                  <button
-                    @click="editProject(project)"
-                    class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center"
-                  >
-                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                    </svg>
-                    Update
-                  </button>
-                  <button
-                    @click="deleteProject(project.id)"
-                    class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center"
-                  >
-                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                    </svg>
+                  <button @click="deleteProject(project.id)" 
+                          class="text-red-600 hover:text-red-800 text-sm">
                     Delete
                   </button>
                 </div>
@@ -227,21 +190,54 @@
             </div>
           </div>
           
-          <!-- Empty State -->
-          <div v-else class="text-center py-12">
-            <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-            </svg>
-            <h5 class="text-lg font-medium text-gray-900 mb-2">No projects found</h5>
-            <p class="text-gray-600">Start by adding your first project above.</p>
+          <!-- Pagination Controls -->
+          <div v-if="totalPages > 1" class="flex justify-center items-center mt-6 space-x-2">
+            <!-- Previous Button -->
+            <button 
+              @click="currentPage = Math.max(1, currentPage - 1)"
+              :disabled="currentPage === 1"
+              class="px-3 py-1 border border-gray-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100"
+            >
+              Previous
+            </button>
+            
+            <!-- Page Numbers -->
+            <button 
+              v-for="page in totalPages" 
+              :key="page"
+              @click="currentPage = page"
+              :class="[
+                'px-3 py-1 border rounded text-sm',
+                currentPage === page 
+                  ? 'bg-blue-500 text-white border-blue-500' 
+                  : 'border-gray-300 hover:bg-gray-100'
+              ]"
+            >
+              {{ page }}
+            </button>
+            
+            <!-- Next Button -->
+            <button 
+              @click="currentPage = Math.min(totalPages, currentPage + 1)"
+              :disabled="currentPage === totalPages"
+              class="px-3 py-1 border border-gray-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100"
+            >
+              Next
+            </button>
           </div>
         </div>
+        
+        <!-- No Projects -->
+        <div v-else class="text-center py-8">
+          <p class="text-gray-500">No projects found. Add your first project above.</p>
+        </div>
       </div>
+    </div>
   </AdminLayout>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '~/stores/auth'
 import Swal from 'sweetalert2'
@@ -259,6 +255,18 @@ const projects = ref([])
 const successMessage = ref('')
 const errorMessage = ref('')
 const showAddProjectForm = ref(false)
+
+// Pagination
+const currentPage = ref(1)
+const itemsPerPage = 5
+
+// Computed properties for pagination
+const totalPages = computed(() => Math.ceil(projects.value.length / itemsPerPage))
+const paginatedProjects = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage
+  const end = start + itemsPerPage
+  return projects.value.slice(start, end)
+})
 const sidebarOpen = ref(false)
 
 const newProject = ref({
@@ -300,11 +308,20 @@ const handleLogout = async () => {
 
 const fetchProjects = async () => {
   try {
-    const response = await $fetch('/api/admin/projects')
+    console.log('Fetching projects...')
+    loading.value = true
+    errorMessage.value = ''
+    
+    const response = await $fetch('http://localhost:3001/api/admin/projects')
+    console.log('Projects response:', response)
+    
     if (response.success) {
       projects.value = response.data
+      console.log('Projects loaded:', projects.value.length, 'projects')
+      console.log('Projects data:', projects.value)
     } else {
       errorMessage.value = 'Failed to load projects'
+      console.error('Failed to load projects:', response)
     }
   } catch (err) {
     console.error('Projects fetch error:', err)
@@ -315,18 +332,39 @@ const fetchProjects = async () => {
 }
 
 const handleAddProject = async () => {
+  console.log('handleAddProject called')
+  console.log('newProject.value:', newProject.value)
+  
+  // Basic validation
+  if (!newProject.value.project_name || !newProject.value.status) {
+    errorMessage.value = 'Please fill in all required fields'
+    return
+  }
+  
   addingProject.value = true
   errorMessage.value = ''
   successMessage.value = ''
   
   try {
-    const response = await $fetch('/api/admin/projects', {
+    console.log('Sending API request...')
+    const response = await $fetch('http://localhost:3001/api/admin/projects', {
       method: 'POST',
       body: newProject.value
     })
     
+    console.log('API response:', response)
+    
     if (response.success) {
-      successMessage.value = 'Project added successfully!'
+      successMessage.value = '✅ Project added successfully!'
+      
+      // Show SweetAlert success
+      await Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Project added successfully!',
+        timer: 2000,
+        showConfirmButton: false
+      })
       
       // Reset form
       newProject.value = {
@@ -345,67 +383,71 @@ const handleAddProject = async () => {
       setTimeout(() => {
         successMessage.value = ''
       }, 3000)
+      
+      // Hide form after successful addition
+      showAddProjectForm.value = false
     } else {
       errorMessage.value = response.message || 'Failed to add project'
     }
-  } catch (err) {
-    console.error('Add project error:', err)
-    errorMessage.value = 'Server error. Please try again.'
+  } catch (error) {
+    console.error('Add project error:', error)
+    console.error('Error status:', error.status)
+    console.error('Error data:', error.data)
+    console.error('Error message:', error.message)
+    
+    // Show error with SweetAlert for better visibility
+    let errorMessage = 'Failed to add project'
+    
+    if (error.data?.message) {
+      errorMessage = error.data.message
+    } else if (error.status === 409) {
+      errorMessage = 'A project with this name already exists. Please choose a different name.'
+    } else if (error.status === 500) {
+      errorMessage = 'Server error. Please try again.'
+    } else if (error.message) {
+      errorMessage = `Failed to add project: ${error.message}`
+    }
+    
+    // Show SweetAlert error
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: errorMessage,
+      confirmButtonColor: '#3085d6'
+    })
+    
+    // Also set inline error message
+    errorMessage.value = `❌ ${errorMessage}`
   } finally {
     addingProject.value = false
   }
 }
 
 const editProject = (project) => {
-  // For now, we'll just show an alert. In a real app, you'd open an edit modal or navigate to edit page
-  Swal.fire({
-    title: 'Edit Project',
-    text: `Edit functionality for "${project.project_name}" would be implemented here.`,
-    icon: 'info'
-  })
+  // Simple non-blocking alert
+  alert(`Edit functionality for "${project.project_name}" would be implemented here.`)
 }
 
 const deleteProject = async (projectId) => {
-  const result = await Swal.fire({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonText: 'Yes, delete it!',
-    cancelButtonText: 'No, cancel!'
-  })
-
-  if (result.isConfirmed) {
+  // Simple confirm dialog
+  if (confirm('Are you sure you want to delete this project? This action cannot be undone.')) {
     try {
-      const response = await $fetch(`/api/admin/projects/${projectId}`, {
+      const response = await $fetch(`http://localhost:3001/api/admin/projects/${projectId}`, {
         method: 'DELETE'
       })
       
       if (response.success) {
-        await Swal.fire({
-          icon: 'success',
-          title: 'Deleted!',
-          text: 'The project has been deleted.',
-          timer: 2000,
-          showConfirmButton: false
-        })
-        
-        // Refresh projects list
+        successMessage.value = '✅ Project deleted successfully!'
         await fetchProjects()
-      } else {
-        await Swal.fire({
-          icon: 'error',
-          title: 'Failed!',
-          text: 'There was a problem deleting the project.',
-        })
+        
+        // Clear success message after 3 seconds
+        setTimeout(() => {
+          successMessage.value = ''
+        }, 3000)
       }
-    } catch (err) {
-      console.error('Delete project error:', err)
-      await Swal.fire({
-        icon: 'error',
-        title: 'Failed!',
-        text: 'There was a problem deleting the project.',
-      })
+    } catch (error) {
+      console.error('Delete project error:', error)
+      errorMessage.value = '❌ Failed to delete project. Please try again.'
     }
   }
 }

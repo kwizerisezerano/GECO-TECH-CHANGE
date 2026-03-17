@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg-gray-50 flex">
     <!-- Mobile Menu Toggle -->
     <div class="lg:hidden fixed top-4 left-4 z-50">
       <button
@@ -15,8 +15,8 @@
     <!-- Sidebar -->
     <div
       :class="[
-        'fixed lg:static inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out lg:translate-x-0',
-        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        'fixed lg:relative inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out flex-shrink-0',
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
       ]"
     >
       <!-- Logo -->
@@ -103,6 +103,48 @@
               Publications
             </NuxtLink>
           </li>
+          <li>
+            <NuxtLink
+              to="/admin/donations"
+              class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-200"
+              :class="$route.path.includes('/admin/donations') 
+                ? 'bg-indigo-50 text-indigo-700 border-l-4 border-indigo-600' 
+                : 'text-gray-700 hover:bg-gray-100'"
+            >
+              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+              </svg>
+              Donations
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink
+              to="/admin/members"
+              class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-200"
+              :class="$route.path.includes('/admin/members') 
+                ? 'bg-indigo-50 text-indigo-700 border-l-4 border-indigo-600' 
+                : 'text-gray-700 hover:bg-gray-100'"
+            >
+              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+              </svg>
+              Members
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink
+              to="/admin/documents"
+              class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-200"
+              :class="$route.path.includes('/admin/documents') 
+                ? 'bg-indigo-50 text-indigo-700 border-l-4 border-indigo-600' 
+                : 'text-gray-700 hover:bg-gray-100'"
+            >
+              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+              </svg>
+              Documents
+            </NuxtLink>
+          </li>
         </ul>
       </nav>
       
@@ -121,14 +163,23 @@
     </div>
 
     <!-- Main Content -->
-    <div class="lg:ml-64 min-h-screen">
-      <slot />
+    <div class="flex-1 min-h-screen overflow-auto">
+      <!-- Mobile overlay when sidebar is open -->
+      <div 
+        v-if="sidebarOpen" 
+        class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-30"
+        @click="toggleSidebar"
+      ></div>
+      
+      <div class="lg:pl-0">
+        <slot />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '~/stores/auth'
 

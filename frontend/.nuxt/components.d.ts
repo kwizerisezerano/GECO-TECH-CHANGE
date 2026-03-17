@@ -17,6 +17,7 @@ type LazyComponent<T> = DefineComponent<HydrationStrategies, {}, {}, {}, {}, {},
 export const AdminLayout: typeof import("../components/AdminLayout.vue")['default']
 export const Footer: typeof import("../components/Footer.vue")['default']
 export const Header: typeof import("../components/Header.vue")['default']
+export const Notifications: typeof import("../components/Notifications.vue")['default']
 export const PortfolioSection: typeof import("../components/PortfolioSection.vue")['default']
 export const NuxtWelcome: typeof import("../node_modules/nuxt/dist/app/components/welcome.vue")['default']
 export const NuxtLayout: typeof import("../node_modules/nuxt/dist/app/components/nuxt-layout")['default']
@@ -44,6 +45,7 @@ export const NuxtIsland: typeof import("../node_modules/nuxt/dist/app/components
 export const LazyAdminLayout: LazyComponent<typeof import("../components/AdminLayout.vue")['default']>
 export const LazyFooter: LazyComponent<typeof import("../components/Footer.vue")['default']>
 export const LazyHeader: LazyComponent<typeof import("../components/Header.vue")['default']>
+export const LazyNotifications: LazyComponent<typeof import("../components/Notifications.vue")['default']>
 export const LazyPortfolioSection: LazyComponent<typeof import("../components/PortfolioSection.vue")['default']>
 export const LazyNuxtWelcome: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/welcome.vue")['default']>
 export const LazyNuxtLayout: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-layout")['default']>

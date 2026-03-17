@@ -21,6 +21,7 @@ USE gecorwanda;
 
 -- Drop existing tables to recreate them (for clean migration)
 SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS notifications;
 DROP TABLE IF EXISTS pdf_files;
 DROP TABLE IF EXISTS donation;
 DROP TABLE IF EXISTS partners;
@@ -116,6 +117,22 @@ CREATE TABLE admin_users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_login TIMESTAMP NULL,
     INDEX idx_email_encrypted (email_encrypted(255))
+);
+
+-- Notifications table
+CREATE TABLE notifications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    type ENUM('info', 'success', 'warning', 'error') DEFAULT 'info',
+    related_entity_type VARCHAR(50), -- 'beneficiary', 'partner', 'project', 'donation', etc.
+    related_entity_id INT,
+    is_read BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_is_read (is_read),
+    INDEX idx_type (type),
+    INDEX idx_related_entity (related_entity_type, related_entity_id),
+    INDEX idx_created_at (created_at)
 );
 
 -- Insert some default data for testing

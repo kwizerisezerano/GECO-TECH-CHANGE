@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <AdminLayout>
     <!-- Mobile Menu Toggle -->
     <div class="lg:hidden fixed top-4 left-4 z-50">
       <button
@@ -217,7 +217,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </AdminLayout>
 </template>
 
 <script setup>
@@ -266,7 +266,7 @@ const handleLogout = async () => {
 
 const fetchDonations = async () => {
   try {
-    const response = await $fetch('/api/admin/donations')
+    const response = await $fetch('http://localhost:3001/api/admin/donations')
     if (response.success) {
       donations.value = response.data
     }

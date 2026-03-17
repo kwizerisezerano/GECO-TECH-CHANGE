@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const mysql = require('mysql2/promise');
+const multer = require('multer');
+const path = require('path');
 const { hashPassword, comparePassword, decrypt, encrypt } = require('../utils/crypto');
 
 // Database connection
@@ -23,6 +25,35 @@ async function initDB() {
 }
 
 initDB();
+
+// Configure multer for file uploads
+const storage = multer.memoryStorage();
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 10 * 1024 * 1024 // 10MB limit
+  },
+  fileFilter: (req, file, cb) => {
+    // Allow PDF files only
+    if (file.mimetype === 'application/pdf') {
+      cb(null, true);
+    } else {
+      cb(new Error('Only PDF files are allowed'), false);
+    }
+  }
+});
+
+// Helper function to create notifications
+async function createNotification(title, message, type = 'info', relatedEntityType = null, relatedEntityId = null) {
+  try {
+    await db.execute(`
+      INSERT INTO notifications (title, message, type, related_entity_type, related_entity_id) 
+      VALUES (?, ?, ?, ?, ?)
+    `, [title, message, type, relatedEntityType, relatedEntityId]);
+  } catch (error) {
+    console.error('Failed to create notification:', error);
+  }
+}
 
 // Admin login endpoint
 router.post('/login', async (req, res) => {
@@ -238,10 +269,19 @@ router.post('/projects', async (req, res) => {
     });
   } catch (error) {
     console.error('Add project error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Failed to add project'
-    });
+    
+    // Handle duplicate entry error
+    if (error.code === 'ER_DUP_ENTRY' || error.errno === 1062) {
+      res.status(409).json({
+        success: false,
+        message: 'A project with this name already exists. Please choose a different name.'
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: 'Failed to add project'
+      });
+    }
   }
 });
 
@@ -446,6 +486,15 @@ router.post('/partners', async (req, res) => {
       partnership_type
     ]);
     
+    // Create notification
+    await createNotification(
+      'New Partner Added',
+      `Partner "${partner_name}" has been successfully added to the system.`,
+      'success',
+      'partner',
+      result.insertId
+    );
+    
     res.json({
       success: true,
       message: 'Partner added successfully',
@@ -533,14 +582,34 @@ router.post('/beneficiaries', async (req, res) => {
     const { name, phone_number, idno_type, idno } = req.body;
     
     const [result] = await db.execute(`
-      INSERT INTO people (name_encrypted, phone_number_encrypted, idno_type, idno_encrypted, person_type, created_at) 
-      VALUES (?, ?, ?, ?, 'beneficiary', NOW())
-    `, [encrypt(name), encrypt(phone_number), idno_type, encrypt(idno)]);
+      INSERT INTO people (name_encrypted, phone_number_encrypted, idno_type, idno_encrypted, person_type) 
+      VALUES (?, ?, ?, ?, 'beneficiary')
+    `, [
+      encrypt(name),
+      encrypt(phone_number),
+      idno_type,
+      encrypt(idno)
+    ]);
+    
+    // Create notification
+    await createNotification(
+      'New Beneficiary Added',
+      `Beneficiary "${name}" has been successfully added to the system.`,
+      'success',
+      'beneficiary',
+      result.insertId
+    );
     
     res.json({
       success: true,
       message: 'Beneficiary added successfully',
-      beneficiaryId: result.insertId
+      data: {
+        id: result.insertId,
+        name,
+        phone_number,
+        idno_type,
+        idno
+      }
     });
   } catch (error) {
     console.error('Add beneficiary error:', error);
@@ -561,9 +630,24 @@ router.put('/beneficiaries/:id', async (req, res) => {
       UPDATE people 
       SET name_encrypted = ?, phone_number_encrypted = ?, idno_type = ?, idno_encrypted = ?
       WHERE id = ? AND person_type = 'beneficiary'
-    `, [encrypt(name), encrypt(phone_number), idno_type, encrypt(idno), id]);
+    `, [
+      encrypt(name),
+      encrypt(phone_number),
+      idno_type,
+      encrypt(idno),
+      id
+    ]);
     
     if (result.affectedRows > 0) {
+      // Create notification
+      await createNotification(
+        'Beneficiary Updated',
+        `Beneficiary "${name}" information has been updated.`,
+        'info',
+        'beneficiary',
+        parseInt(id)
+      );
+      
       res.json({
         success: true,
         message: 'Beneficiary updated successfully'
@@ -588,9 +672,28 @@ router.delete('/beneficiaries/:id', async (req, res) => {
   try {
     const { id } = req.params;
     
+    // Get beneficiary info before deletion for notification
+    const [beneficiaryData] = await db.execute(`
+      SELECT name_encrypted FROM people WHERE id = ? AND person_type = 'beneficiary'
+    `, [id]);
+    
     const [result] = await db.execute('DELETE FROM people WHERE id = ? AND person_type = \'beneficiary\'', [id]);
     
     if (result.affectedRows > 0) {
+      // Create notification
+      let beneficiaryName = 'Unknown';
+      if (beneficiaryData.length > 0) {
+        beneficiaryName = decrypt(beneficiaryData[0].name_encrypted);
+      }
+      
+      await createNotification(
+        'Beneficiary Deleted',
+        `Beneficiary "${beneficiaryName}" has been removed from the system.`,
+        'warning',
+        'beneficiary',
+        parseInt(id)
+      );
+      
       res.json({
         success: true,
         message: 'Beneficiary deleted successfully'
@@ -693,6 +796,134 @@ router.delete('/members/:id', async (req, res) => {
   }
 });
 
+// Get notifications
+router.get('/notifications', async (req, res) => {
+  try {
+    const [notifications] = await db.execute(`
+      SELECT id, title, message, type, related_entity_type, related_entity_id, is_read, created_at 
+      FROM notifications 
+      ORDER BY created_at DESC
+      LIMIT 50
+    `);
+    
+    res.json({
+      success: true,
+      data: notifications
+    });
+  } catch (error) {
+    console.error('Get notifications error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch notifications'
+    });
+  }
+});
+
+// Add notification
+router.post('/notifications', async (req, res) => {
+  try {
+    const { title, message, type, related_entity_type, related_entity_id } = req.body;
+    
+    const [result] = await db.execute(`
+      INSERT INTO notifications (title, message, type, related_entity_type, related_entity_id) 
+      VALUES (?, ?, ?, ?, ?)
+    `, [title, message, type || 'info', related_entity_type, related_entity_id]);
+    
+    res.json({
+      success: true,
+      message: 'Notification created successfully',
+      data: {
+        id: result.insertId,
+        title,
+        message,
+        type: type || 'info',
+        related_entity_type,
+        related_entity_id
+      }
+    });
+  } catch (error) {
+    console.error('Add notification error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to create notification'
+    });
+  }
+});
+
+// Mark notification as read
+router.put('/notifications/:id/read', async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const [result] = await db.execute('UPDATE notifications SET is_read = TRUE WHERE id = ?', [id]);
+    
+    if (result.affectedRows > 0) {
+      res.json({
+        success: true,
+        message: 'Notification marked as read'
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: 'Notification not found'
+      });
+    }
+  } catch (error) {
+    console.error('Mark notification as read error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to mark notification as read'
+    });
+  }
+});
+
+// Delete notification
+router.delete('/notifications/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const [result] = await db.execute('DELETE FROM notifications WHERE id = ?', [id]);
+    
+    if (result.affectedRows > 0) {
+      res.json({
+        success: true,
+        message: 'Notification deleted successfully'
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: 'Notification not found'
+      });
+    }
+  } catch (error) {
+    console.error('Delete notification error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to delete notification'
+    });
+  }
+});
+
+// Get unread notifications count
+router.get('/notifications/unread/count', async (req, res) => {
+  try {
+    const [result] = await db.execute('SELECT COUNT(*) as count FROM notifications WHERE is_read = FALSE');
+    
+    res.json({
+      success: true,
+      data: {
+        unread_count: result[0].count
+      }
+    });
+  } catch (error) {
+    console.error('Get unread notifications count error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to get unread notifications count'
+    });
+  }
+});
+
 // Get publications
 router.get('/publications', async (req, res) => {
   try {
@@ -711,6 +942,131 @@ router.get('/publications', async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to fetch publications'
+    });
+  }
+});
+
+// Upload publication
+router.post('/publications', upload.single('file'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: 'No file uploaded'
+      });
+    }
+
+    const { originalname, buffer, size, mimetype } = req.file;
+    const file_type = originalname;
+
+    // Insert file into database
+    const [result] = await db.execute(`
+      INSERT INTO pdf_files (file_name, file_data, file_type, file_size) 
+      VALUES (?, ?, ?, ?)
+    `, [originalname, buffer, file_type, size]);
+
+    // Create notification
+    await createNotification(
+      'New Publication Uploaded',
+      `Publication "${originalname}" has been successfully uploaded.`,
+      'success',
+      'publication',
+      result.insertId
+    );
+
+    res.json({
+      success: true,
+      message: 'Publication uploaded successfully',
+      data: {
+        id: result.insertId,
+        file_name: originalname,
+        file_type: file_type,
+        file_size: size
+      }
+    });
+  } catch (error) {
+    console.error('Upload publication error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to upload publication'
+    });
+  }
+});
+
+// Download publication
+router.get('/publications/:id/download', async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const [publication] = await db.execute(`
+      SELECT file_name, file_data, file_type 
+      FROM pdf_files 
+      WHERE id = ?
+    `, [id]);
+    
+    if (publication.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'Publication not found'
+      });
+    }
+
+    const file = publication[0];
+    
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename="${file.file_name}"`);
+    res.send(file.file_data);
+  } catch (error) {
+    console.error('Download publication error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to download publication'
+    });
+  }
+});
+
+// Delete publication
+router.delete('/publications/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Get publication info before deletion for notification
+    const [publicationData] = await db.execute(`
+      SELECT file_name FROM pdf_files WHERE id = ?
+    `, [id]);
+    
+    const [result] = await db.execute('DELETE FROM pdf_files WHERE id = ?', [id]);
+    
+    if (result.affectedRows > 0) {
+      // Create notification
+      let fileName = 'Unknown';
+      if (publicationData.length > 0) {
+        fileName = publicationData[0].file_name;
+      }
+      
+      await createNotification(
+        'Publication Deleted',
+        `Publication "${fileName}" has been removed from the system.`,
+        'warning',
+        'publication',
+        parseInt(id)
+      );
+      
+      res.json({
+        success: true,
+        message: 'Publication deleted successfully'
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: 'Publication not found'
+      });
+    }
+  } catch (error) {
+    console.error('Delete publication error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to delete publication'
     });
   }
 });
