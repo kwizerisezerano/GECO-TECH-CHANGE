@@ -2,13 +2,13 @@
   <AdminLayout>
       <!-- Page Header -->
       <div class="bg-white shadow-sm border-b border-gray-200">
-        <div class="px-6 py-4">
-          <div class="flex justify-between items-center">
+        <div class="px-4 sm:px-6 py-4">
+          <div class="flex flex-wrap gap-3 items-center justify-between">
             <div>
-              <h1 class="text-2xl font-bold text-gray-800">Publications Management</h1>
-              <p class="text-gray-600">Manage all publications and documents from here</p>
+              <h1 class="text-xl sm:text-2xl font-bold text-gray-800">Publications Management</h1>
+              <p class="text-gray-600 text-sm">Manage all publications and documents from here</p>
             </div>
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center gap-2">
               <Notifications />
             </div>
           </div>
@@ -16,7 +16,7 @@
       </div>
 
       <!-- Content -->
-      <div class="p-6">
+      <div class="p-4 sm:p-6">
         <!-- Loading State -->
         <div v-if="loading" class="flex justify-center items-center h-64">
           <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>

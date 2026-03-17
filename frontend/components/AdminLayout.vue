@@ -1,12 +1,12 @@
 <template>
   <div class="min-h-screen bg-gray-50 flex">
     <!-- Mobile Menu Toggle -->
-    <div class="lg:hidden fixed top-4 left-4 z-50">
+    <div class="lg:hidden fixed top-3 left-3 z-50">
       <button
         @click="toggleSidebar"
-        class="bg-indigo-600 text-white p-3 rounded-lg shadow-lg hover:bg-indigo-700 transition-colors duration-200"
+        class="bg-indigo-600 text-white p-2.5 rounded-lg shadow-lg hover:bg-indigo-700 transition-colors duration-200"
       >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
       </button>
@@ -130,7 +130,9 @@
         @click="toggleSidebar"
       ></div>
       
-      <div class="lg:pl-0">
+      <div class="lg:pl-0 pt-0">
+        <!-- Spacer for mobile toggle button -->
+        <div class="lg:hidden h-14"></div>
         <slot />
       </div>
     </div>

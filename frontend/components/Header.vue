@@ -6,6 +6,12 @@
         </NuxtLink>
 
         <nav class="nav" :class="{ active: isMobileMenuOpen }">
+          <!-- Close button inside menu -->
+          <button class="nav-close" @click="closeMobileMenu">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
           <ul class="nav-list">
             <li><NuxtLink to="/" class="nav-link" @click="closeMobileMenu">Home</NuxtLink></li>
             <li><a href="/#about" class="nav-link" @click="scrollToSection('about')">About</a></li>
@@ -18,6 +24,9 @@
             <li v-if="!authStore.isAuthenticated"><NuxtLink to="/admin/login" class="nav-link" @click="closeMobileMenu">Admin Login</NuxtLink></li>
           </ul>
         </nav>
+
+        <!-- Full-page overlay -->
+        <div class="nav-overlay" :class="{ active: isMobileMenuOpen }" @click="closeMobileMenu"></div>
 
         <div class="header-actions">
           <VisitorNotifications />
@@ -347,6 +356,14 @@ onUnmounted(() => {
   width: 28px;
 }
 
+.nav-overlay {
+  display: none;
+}
+
+.nav-close {
+  display: none;
+}
+
 /* Mobile Responsive */
 @media (max-width: 1024px) {
   .header-content {
@@ -372,16 +389,33 @@ onUnmounted(() => {
   .header-actions {
     gap: var(--space-2);
   }
+
+  /* Full-page overlay */
+  .nav-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9998;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .nav-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
   
   .nav {
     position: fixed;
     top: 0;
     right: -100%;
-    width: 100%;
-    max-width: 100%;
+    width: 80%;
+    max-width: 320px;
     height: 100vh;
     background: white;
-    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.15);
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.25);
     transition: right 0.3s ease;
     z-index: 9999;
     overflow-y: auto;
@@ -390,11 +424,33 @@ onUnmounted(() => {
   .nav.active {
     right: 0;
   }
+
+  /* Close button inside nav */
+  .nav-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    background: #f3f4f6;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #374151;
+    transition: background 0.2s;
+  }
+
+  .nav-close:hover {
+    background: #e5e7eb;
+  }
   
   .nav-list {
     display: flex;
     flex-direction: column;
-    padding: 80px var(--space-4) var(--space-4);
+    padding: 72px var(--space-4) var(--space-4);
     gap: 0;
     background: white;
     min-height: 100vh;

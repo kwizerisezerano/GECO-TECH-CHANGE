@@ -2,21 +2,21 @@
   <AdminLayout>
     <!-- Page Header -->
     <div class="bg-white shadow-sm border-b border-gray-200">
-      <div class="px-6 py-4">
-        <div class="flex justify-between items-center">
+      <div class="px-4 sm:px-6 py-4">
+        <div class="flex flex-wrap gap-3 items-center justify-between">
           <div>
-            <h1 class="text-2xl font-bold text-gray-800">Members Management</h1>
-            <p class="text-gray-600">Manage all team members from here</p>
+            <h1 class="text-xl sm:text-2xl font-bold text-gray-800">Members Management</h1>
+            <p class="text-gray-600 text-sm">Manage all team members from here</p>
           </div>
-          <div class="flex items-center space-x-4">
+          <div class="flex items-center gap-2">
             <button
               @click="openAddMemberModal"
-              class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg flex items-center text-sm font-medium"
+              class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded-lg flex items-center text-sm font-medium"
             >
-              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-4 h-4 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
               </svg>
-              Add Member
+              <span class="hidden sm:inline">Add Member</span>
             </button>
             <Notifications />
           </div>
@@ -25,7 +25,7 @@
     </div>
 
     <!-- Content -->
-    <div class="p-6">
+    <div class="p-4 sm:p-6">
         <!-- Loading State -->
         <div v-if="loading" class="flex justify-center items-center h-64">
           <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>

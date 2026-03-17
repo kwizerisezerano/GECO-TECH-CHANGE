@@ -116,7 +116,7 @@ const handleDonation = async () => {
 
 .upload-container {
   max-width: 500px;
-  margin: 100px auto;
+  margin: 40px auto;
   padding: 40px 30px;
   background: var(--surface-color);
   border-radius: 15px;
@@ -290,12 +290,12 @@ const handleDonation = async () => {
 /* Responsive Design */
 @media (max-width: 768px) {
   .upload-container {
-    margin: 50px 20px;
-    padding: 30px 20px;
+    margin: 30px 16px;
+    padding: 24px 16px;
   }
   
   .upload-container h3 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
   
   .form-control {
@@ -306,6 +306,17 @@ const handleDonation = async () => {
   .btn-upload {
     padding: 12px 20px;
     font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-section {
+    padding: 60px 0 40px;
+  }
+  
+  .upload-container {
+    margin: 20px 12px;
+    padding: 20px 14px;
   }
 }
 </style>

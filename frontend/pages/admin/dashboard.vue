@@ -2,37 +2,37 @@
   <AdminLayout>
     <!-- Page Header -->
     <div class="bg-white border-b border-gray-200">
-      <div class="px-6 py-4">
-        <div class="flex justify-between items-center">
-          <div>
-            <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
-            <p class="text-gray-600">Welcome back, {{ authStore.currentUser?.name || authStore.currentUser?.email?.split('@')[0] || 'Admin' }}!</p>
+      <div class="px-4 sm:px-6 py-4">
+        <div class="flex flex-wrap gap-3 items-center justify-between">
+          <div class="min-w-0">
+            <h1 class="text-xl sm:text-2xl font-bold text-gray-900 truncate">Dashboard</h1>
+            <p class="text-gray-600 text-sm">Welcome back, {{ authStore.currentUser?.name || authStore.currentUser?.email?.split('@')[0] || 'Admin' }}!</p>
           </div>
-          <div class="flex items-center space-x-4">
+          <div class="flex flex-wrap items-center gap-2">
             <button
               @click="openAddNotificationModal"
               class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg flex items-center text-sm"
             >
-              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-4 h-4 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
               </svg>
-              Add Notification
+              <span class="hidden sm:inline">Add Notification</span>
             </button>
             <button
               @click="forceLogout"
               class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg flex items-center text-sm"
             >
-              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-4 h-4 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
               </svg>
-              Force Logout
+              <span class="hidden sm:inline">Logout</span>
             </button>
             <Notifications />
-            <div class="text-right hidden sm:block">
-              <p class="text-sm text-gray-500">Current Time</p>
-              <p class="text-lg font-semibold text-gray-900">{{ currentTime }}</p>
+            <div class="text-right hidden md:block">
+              <p class="text-xs text-gray-500">Current Time</p>
+              <p class="text-sm font-semibold text-gray-900">{{ currentTime }}</p>
             </div>
-            <div class="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-semibold">
+            <div class="w-9 h-9 bg-indigo-600 rounded-full flex items-center justify-center text-white font-semibold text-sm flex-shrink-0">
               {{ (authStore.currentUser?.name || authStore.currentUser?.email?.split('@')[0] || 'Admin').charAt(0).toUpperCase() }}
             </div>
           </div>
@@ -41,7 +41,7 @@
     </div>
 
       <!-- Content -->
-      <div class="p-6">
+      <div class="p-4 sm:p-6">
         <!-- Loading State -->
         <div v-if="loading" class="flex flex-col items-center justify-center h-96">
           <div class="w-12 h-12 border-4 border-gray-200 border-t-indigo-600 rounded-full animate-spin"></div>

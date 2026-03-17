@@ -2,18 +2,18 @@
   <AdminLayout>
     <!-- Page Header -->
     <div class="bg-white shadow-sm border-b border-gray-200">
-      <div class="px-6 py-4 flex items-center justify-between">
+      <div class="px-4 sm:px-6 py-4 flex flex-wrap gap-3 items-center justify-between">
         <h5 class="text-xl font-semibold text-gray-800">Projects Management</h5>
-        <div class="flex items-center space-x-4">
+        <div class="flex items-center gap-2">
           <Notifications />
           <button 
             @click="showAddProjectForm = true"
-            class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-200 flex items-center"
+            class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 flex items-center text-sm"
           >
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-4 h-4 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
             </svg>
-            Add New Project
+            <span class="hidden sm:inline">Add New Project</span>
           </button>
         </div>
       </div>
@@ -162,7 +162,7 @@
     </div>
 
     <!-- Projects List -->
-    <div class="px-6 py-6">
+    <div class="px-4 sm:px-6 py-6">
       <div class="bg-white rounded-xl shadow-md p-6">
         <div class="flex justify-between items-center mb-4">
           <h5 class="text-lg font-semibold text-gray-800">All Projects</h5>
