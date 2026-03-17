@@ -20,6 +20,7 @@
         </nav>
 
         <div class="header-actions">
+          <VisitorNotifications />
           <button class="mobile-nav-toggle" :class="{ active: isMobileMenuOpen }" @click="toggleMobileMenu">
             <span class="hamburger"></span>
           </button>
@@ -32,6 +33,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '~/stores/auth'
+import VisitorNotifications from '~/components/VisitorNotifications.vue'
 
 const route = useRoute()
 const authStore = useAuthStore()

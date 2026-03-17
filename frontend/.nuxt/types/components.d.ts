@@ -19,6 +19,7 @@ interface _GlobalComponents {
   Header: typeof import("../../components/Header.vue")['default']
   Notifications: typeof import("../../components/Notifications.vue")['default']
   PortfolioSection: typeof import("../../components/PortfolioSection.vue")['default']
+  VisitorNotifications: typeof import("../../components/VisitorNotifications.vue")['default']
   NuxtWelcome: typeof import("../../node_modules/nuxt/dist/app/components/welcome.vue")['default']
   NuxtLayout: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-layout")['default']
   NuxtErrorBoundary: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-error-boundary.vue")['default']
@@ -47,6 +48,7 @@ interface _GlobalComponents {
   LazyHeader: LazyComponent<typeof import("../../components/Header.vue")['default']>
   LazyNotifications: LazyComponent<typeof import("../../components/Notifications.vue")['default']>
   LazyPortfolioSection: LazyComponent<typeof import("../../components/PortfolioSection.vue")['default']>
+  LazyVisitorNotifications: LazyComponent<typeof import("../../components/VisitorNotifications.vue")['default']>
   LazyNuxtWelcome: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/welcome.vue")['default']>
   LazyNuxtLayout: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/nuxt-layout")['default']>
   LazyNuxtErrorBoundary: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/nuxt-error-boundary.vue")['default']>

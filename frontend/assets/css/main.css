@@ -5,7 +5,7 @@
   --primary-light: #6d28d9;
   --secondary-color: #64748b;
   --accent-color: #ec4899;
-  --success-color: #10b981;
+  --success-color: #8b5cf6;
   --danger-color: #ef4444;
   --warning-color: #f59e0b;
   --info-color: #06b6d4;
@@ -949,6 +949,43 @@ body {
 .btn:disabled:hover {
   transform: none !important;
   box-shadow: var(--shadow-md) !important;
+}
+
+/* SweetAlert2 Custom Styles */
+.swal2-icon.swal2-success {
+  border-color: #8b5cf6 !important;
+  color: #8b5cf6 !important;
+}
+
+.swal2-icon.swal2-success .swal2-success-ring {
+  border-color: #8b5cf6 !important;
+}
+
+.swal2-icon.swal2-success .swal2-success-line-tip,
+.swal2-icon.swal2-success .swal2-success-line-long {
+  background-color: #8b5cf6 !important;
+}
+
+.swal2-icon.swal2-success [class^='swal2-success-line'] {
+  background-color: #8b5cf6 !important;
+}
+
+.swal2-icon.swal2-success .swal2-success-circular-line-left,
+.swal2-icon.swal2-success .swal2-success-circular-line-right {
+  background-color: #8b5cf6 !important;
+}
+
+.swal2-icon.swal2-success .swal2-success-fix {
+  background-color: #8b5cf6 !important;
+}
+
+/* SweetAlert2 confirm button for success dialogs */
+.swal2-popup.swal2-modal.swal2-icon-success .swal2-confirm {
+  background-color: #8b5cf6 !important;
+}
+
+.swal2-confirm:focus {
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3) !important;
 }
 
 

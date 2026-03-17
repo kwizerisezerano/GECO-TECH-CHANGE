@@ -21,6 +21,7 @@ USE gecorwanda;
 
 -- Drop existing tables to recreate them (for clean migration)
 SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS notification_reads;
 DROP TABLE IF EXISTS notifications;
 DROP TABLE IF EXISTS pdf_files;
 DROP TABLE IF EXISTS donation;
@@ -127,14 +128,23 @@ CREATE TABLE notifications (
     title VARCHAR(255) NOT NULL,
     message TEXT NOT NULL,
     type ENUM('info', 'success', 'warning', 'error') DEFAULT 'info',
-    related_entity_type VARCHAR(50), -- 'beneficiary', 'partner', 'project', 'donation', etc.
+    related_entity_type VARCHAR(50),
     related_entity_id INT,
-    is_read BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    INDEX idx_is_read (is_read),
     INDEX idx_type (type),
     INDEX idx_related_entity (related_entity_type, related_entity_id),
     INDEX idx_created_at (created_at)
+);
+
+-- Notification reads table (tracks which IP has read which notification)
+CREATE TABLE notification_reads (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    notification_id INT NOT NULL,
+    ip_address VARCHAR(45) NOT NULL,
+    read_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_notification_ip (notification_id, ip_address),
+    INDEX idx_ip_address (ip_address),
+    FOREIGN KEY (notification_id) REFERENCES notifications(id) ON DELETE CASCADE
 );
 
 -- Insert some default data for testing

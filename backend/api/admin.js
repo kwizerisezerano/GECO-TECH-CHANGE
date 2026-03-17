@@ -43,6 +43,11 @@ const upload = multer({
   }
 });
 
+// Helper to get client IP
+function getClientIP(req) {
+  return (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').split(',')[0].trim() || '127.0.0.1';
+}
+
 // Helper function to create notifications
 async function createNotification(title, message, type = 'info', relatedEntityType = null, relatedEntityId = null) {
   try {
@@ -1009,15 +1014,18 @@ router.delete('/members/:id', async (req, res) => {
   }
 });
 
-// Get notifications
+// Get notifications (is_read is per-IP)
 router.get('/notifications', async (req, res) => {
   try {
+    const ip = getClientIP(req);
     const [notifications] = await db.execute(`
-      SELECT id, title, message, type, related_entity_type, related_entity_id, is_read, created_at 
-      FROM notifications 
-      ORDER BY created_at DESC
+      SELECT n.id, n.title, n.message, n.type, n.related_entity_type, n.related_entity_id, n.created_at,
+             IF(nr.ip_address IS NOT NULL, TRUE, FALSE) AS is_read
+      FROM notifications n
+      LEFT JOIN notification_reads nr ON nr.notification_id = n.id AND nr.ip_address = ?
+      ORDER BY n.created_at DESC
       LIMIT 50
-    `);
+    `, [ip]);
     
     res.json({
       success: true,
@@ -1055,7 +1063,8 @@ router.post('/notifications', async (req, res) => {
         message,
         type: type || 'info',
         related_entity_type: cleanRelatedEntityType,
-        related_entity_id: cleanRelatedEntityId
+        related_entity_id: cleanRelatedEntityId,
+        is_read: false
       }
     });
   } catch (error) {
@@ -1125,30 +1134,27 @@ router.put('/notifications/:id', async (req, res) => {
   }
 });
 
-// Mark notification as read
+// Mark notification as read (per IP)
 router.put('/notifications/:id/read', async (req, res) => {
   try {
     const { id } = req.params;
+    const ip = getClientIP(req);
     
-    const [result] = await db.execute('UPDATE notifications SET is_read = TRUE WHERE id = ?', [id]);
-    
-    if (result.affectedRows > 0) {
-      res.json({
-        success: true,
-        message: 'Notification marked as read'
-      });
-    } else {
-      res.status(404).json({
-        success: false,
-        message: 'Notification not found'
-      });
+    // Verify notification exists
+    const [rows] = await db.execute('SELECT id FROM notifications WHERE id = ?', [id]);
+    if (rows.length === 0) {
+      return res.status(404).json({ success: false, message: 'Notification not found' });
     }
+    
+    await db.execute(
+      'INSERT IGNORE INTO notification_reads (notification_id, ip_address) VALUES (?, ?)',
+      [id, ip]
+    );
+    
+    res.json({ success: true, message: 'Notification marked as read' });
   } catch (error) {
     console.error('Mark notification as read error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Failed to mark notification as read'
-    });
+    res.status(500).json({ success: false, message: 'Failed to mark notification as read' });
   }
 });
 
@@ -1179,23 +1185,21 @@ router.delete('/notifications/:id', async (req, res) => {
   }
 });
 
-// Get unread notifications count
+// Get unread notifications count (per IP)
 router.get('/notifications/unread/count', async (req, res) => {
   try {
-    const [result] = await db.execute('SELECT COUNT(*) as count FROM notifications WHERE is_read = FALSE');
+    const ip = getClientIP(req);
+    const [result] = await db.execute(`
+      SELECT COUNT(*) as count FROM notifications n
+      WHERE NOT EXISTS (
+        SELECT 1 FROM notification_reads nr WHERE nr.notification_id = n.id AND nr.ip_address = ?
+      )
+    `, [ip]);
     
-    res.json({
-      success: true,
-      data: {
-        unread_count: result[0].count
-      }
-    });
+    res.json({ success: true, data: { unread_count: result[0].count } });
   } catch (error) {
     console.error('Get unread notifications count error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Failed to get unread notifications count'
-    });
+    res.status(500).json({ success: false, message: 'Failed to get unread notifications count' });
   }
 });
 
