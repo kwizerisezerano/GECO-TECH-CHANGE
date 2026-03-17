@@ -138,6 +138,9 @@ router.get('/dashboard-stats', async (req, res) => {
     // Total members
     const [members] = await db.execute('SELECT COUNT(*) as count FROM people WHERE person_type = "member"');
     
+    // Total users (admin users)
+    const [users] = await db.execute('SELECT COUNT(*) as count FROM admin_users');
+    
     // Total partners
     const [partners] = await db.execute('SELECT COUNT(*) as count FROM partners');
     
@@ -242,6 +245,7 @@ router.get('/dashboard-stats', async (req, res) => {
         projectStats,
         totalBeneficiaries: beneficiaries[0].count,
         totalMembers: members[0].count,
+        totalUsers: users[0].count,
         totalPartners: partners[0].count,
         totalDonations: donations[0].count,
         totalDonationAmount: donations[0].total_amount || 0,
