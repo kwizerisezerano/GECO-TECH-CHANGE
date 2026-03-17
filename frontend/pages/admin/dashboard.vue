@@ -74,23 +74,24 @@
               </div>
             </div>
 
-            <!-- Users -->
+            <!-- Members -->
             <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
               <div class="flex items-center justify-between">
                 <div>
-                  <p class="text-sm font-medium text-gray-600">Users</p>
-                  <p class="text-3xl font-bold text-gray-900 mt-2">{{ dashboardData.totalUsers || 0 }}</p>
+                  <p class="text-sm font-medium text-gray-600">Members</p>
+                  <p class="text-3xl font-bold text-gray-900 mt-2">{{ dashboardData.totalMembers }}</p>
                   <div class="flex items-center mt-2">
                     <svg class="w-4 h-4 text-green-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                     </svg>
-                    <span class="text-sm text-green-600 font-medium">+{{ getUserGrowth() || 0 }}%</span>
+                    <span class="text-sm text-green-600 font-medium">+{{ getMemberGrowth() || 0 }}%</span>
                     <span class="text-xs text-gray-500 ml-1">this month</span>
                   </div>
                 </div>
-                <div class="bg-purple-100 rounded-lg p-3">
-                  <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                <div class="bg-green-100 rounded-lg p-3">
+                  <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M7 14s-1 0-1-1 1-4 5-4 5 4 1 4-1 1H7zm4-6a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                    <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 2v1c0 .55.45 1 1 1h4.216zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
                   </svg>
                 </div>
               </div>
@@ -159,27 +160,27 @@
                 class="bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center font-medium"
               >
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                 </svg>
                 Add Beneficiary
-              </NuxtLink>
-              <NuxtLink
-                to="/admin/partners"
-                class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center font-medium"
-              >
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                </svg>
-                Add Partner
               </NuxtLink>
               <NuxtLink
                 to="/admin/members"
                 class="bg-purple-600 hover:bg-purple-700 text-white py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center font-medium"
               >
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                 </svg>
                 Add Member
+              </NuxtLink>
+              <NuxtLink
+                to="/admin/partners"
+                class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center font-medium"
+              >
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                Add Partner
               </NuxtLink>
             </div>
           </div>
@@ -902,6 +903,7 @@ const getProjectGrowth = () => Math.floor(Math.random() * 20) + 5
 const getBeneficiaryGrowth = () => Math.floor(Math.random() * 15) + 8
 const getPartnerGrowth = () => Math.floor(Math.random() * 10) + 3
 const getUserGrowth = () => Math.floor(Math.random() * 12) + 4
+const getMemberGrowth = () => Math.floor(Math.random() * 8) + 2
 
 // Update current time every second
 const updateCurrentTime = () => {

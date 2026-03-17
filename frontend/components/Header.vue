@@ -11,7 +11,6 @@
             <li><a href="/#about" class="nav-link" @click="scrollToSection('about')">About</a></li>
             <li><a href="/#services" class="nav-link" @click="scrollToSection('services')">Services</a></li>
             <li><a href="/#stats" class="nav-link" @click="scrollToSection('stats')">Impact</a></li>
-            <li v-if="authStore.isAuthenticated"><NuxtLink to="/admin/projects" class="nav-link" @click="closeMobileMenu">Manage Projects</NuxtLink></li>
             <li><a href="/#projects" class="nav-link" @click="scrollToSection('projects')">Projects</a></li>
             <li><a href="/#partners" class="nav-link" @click="scrollToSection('partners')">Partners</a></li>
             <li><a href="/#portfolio" class="nav-link" @click="scrollToSection('portfolio')">Stories</a></li>

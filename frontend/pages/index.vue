@@ -272,9 +272,21 @@
                   <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
                 </svg>
               </div>
-              <div class="stat-number">14,506</div>
-              <div class="stat-label">People in Treatment</div>
-              <div class="stat-description">Across 42 hospitals in 30 districts</div>
+              <div class="stat-number">{{ stats.beneficiaries }}+</div>
+              <div class="stat-label">Beneficiaries</div>
+              <div class="stat-description">People receiving our support services</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">
+                <svg width="32" height="32" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M7 14s-1 0-1-1 1-4 5-4 5 4 1 4-1 1H7zm4-6a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                  <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 2v1c0 .55.45 1 1 1h4.216zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+                </svg>
+              </div>
+              <div class="stat-number">{{ stats.members }}+</div>
+              <div class="stat-label">Team Members</div>
+              <div class="stat-description">Dedicated professionals serving our community</div>
             </div>
 
             <div class="stat-card">
@@ -306,8 +318,8 @@
                   <path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1 0 8 13.5 5.5 5.5 0 0 0 0-11zm1 5.5a1 1 0 1 1-2 0 1 1 0 0 1-2 0z"/>
                 </svg>
               </div>
-              <div class="stat-number">{{ stats.donations }}+</div>
-              <div class="stat-label">Supporters</div>
+              <div class="stat-number">{{ stats.partners }}+</div>
+              <div class="stat-label">Partners</div>
               <div class="stat-description">Making our work possible every day</div>
             </div>
           </div>
@@ -864,14 +876,25 @@
           </div>
           
           <div class="partners-grid">
-            <!-- Government Partners -->
-            <div class="partner-category" v-if="partners.filter(p => p.partnership_type === 'Government').length > 0">
+            <!-- Empty State -->
+            <div v-if="partners.length === 0" class="empty-state">
+              <div class="empty-state-icon">
+                <svg width="64" height="64" viewBox="0 0 16 16" fill="currentColor" class="text-gray-400">
+                  <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687z"/>
+                </svg>
+              </div>
+              <h3>No partners found</h3>
+              <p>Check back soon or contact us to become our first partner!</p>
+            </div>
+            
+            <!-- Funding Partners -->
+            <div class="partner-category" v-if="partners.filter(p => p.partnership_type === 'funding').length > 0">
               <div class="category-header">
-                <h3>Government Partners</h3>
-                <span class="partner-count">{{ partners.filter(p => p.partnership_type === 'Government').length }}</span>
+                <h3>Funding Partners</h3>
+                <span class="partner-count">{{ partners.filter(p => p.partnership_type === 'funding').length }}</span>
               </div>
               <div class="partner-list">
-                <div v-for="partner in partners.filter(p => p.partnership_type === 'Government')" :key="partner.id" class="partner-item">
+                <div v-for="partner in partners.filter(p => p.partnership_type === 'funding')" :key="partner.id" class="partner-item">
                   <div class="partner-logo">
                     <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
                       <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
@@ -884,14 +907,14 @@
               </div>
             </div>
 
-            <!-- International NGO Partners -->
-            <div class="partner-category" v-if="partners.filter(p => p.partnership_type === 'International NGO').length > 0">
+            <!-- Implementation Partners -->
+            <div class="partner-category" v-if="partners.filter(p => p.partnership_type === 'implementation').length > 0">
               <div class="category-header">
-                <h3>International NGO Partners</h3>
-                <span class="partner-count">{{ partners.filter(p => p.partnership_type === 'International NGO').length }}</span>
+                <h3>Implementation Partners</h3>
+                <span class="partner-count">{{ partners.filter(p => p.partnership_type === 'implementation').length }}</span>
               </div>
               <div class="partner-list">
-                <div v-for="partner in partners.filter(p => p.partnership_type === 'International NGO')" :key="partner.id" class="partner-item">
+                <div v-for="partner in partners.filter(p => p.partnership_type === 'implementation')" :key="partner.id" class="partner-item">
                   <div class="partner-logo">
                     <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
                       <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
@@ -904,14 +927,34 @@
               </div>
             </div>
 
-            <!-- Private Sector Partners -->
-            <div class="partner-category" v-if="partners.filter(p => p.partnership_type === 'Private Sector').length > 0">
+            <!-- Technical Partners -->
+            <div class="partner-category" v-if="partners.filter(p => p.partnership_type === 'technical').length > 0">
               <div class="category-header">
-                <h3>Private Sector Partners</h3>
-                <span class="partner-count">{{ partners.filter(p => p.partnership_type === 'Private Sector').length }}</span>
+                <h3>Technical Partners</h3>
+                <span class="partner-count">{{ partners.filter(p => p.partnership_type === 'technical').length }}</span>
               </div>
               <div class="partner-list">
-                <div v-for="partner in partners.filter(p => p.partnership_type === 'Private Sector')" :key="partner.id" class="partner-item">
+                <div v-for="partner in partners.filter(p => p.partnership_type === 'technical')" :key="partner.id" class="partner-item">
+                  <div class="partner-logo">
+                    <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                    </svg>
+                  </div>
+                  <div class="partner-info">
+                    <h4>{{ partner.partner_name }}</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- General Partners -->
+            <div class="partner-category" v-if="partners.filter(p => p.partnership_type === 'general').length > 0">
+              <div class="category-header">
+                <h3>General Partners</h3>
+                <span class="partner-count">{{ partners.filter(p => p.partnership_type === 'general').length }}</span>
+              </div>
+              <div class="partner-list">
+                <div v-for="partner in partners.filter(p => p.partnership_type === 'general')" :key="partner.id" class="partner-item">
                   <div class="partner-logo">
                     <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
                       <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
@@ -925,13 +968,13 @@
             </div>
 
             <!-- Other Partners -->
-            <div class="partner-category" v-if="partners.filter(p => !['Government', 'International NGO', 'Private Sector'].includes(p.partnership_type)).length > 0">
+            <div class="partner-category" v-if="partners.filter(p => !['funding', 'implementation', 'technical', 'general'].includes(p.partnership_type)).length > 0">
               <div class="category-header">
                 <h3>Other Partners</h3>
-                <span class="partner-count">{{ partners.filter(p => !['Government', 'International NGO', 'Private Sector'].includes(p.partnership_type)).length }}</span>
+                <span class="partner-count">{{ partners.filter(p => !['funding', 'implementation', 'technical', 'general'].includes(p.partnership_type)).length }}</span>
               </div>
               <div class="partner-list">
-                <div v-for="partner in partners.filter(p => !['Government', 'International NGO', 'Private Sector'].includes(p.partnership_type))" :key="partner.id" class="partner-item">
+                <div v-for="partner in partners.filter(p => !['funding', 'implementation', 'technical', 'general'].includes(p.partnership_type))" :key="partner.id" class="partner-item">
                   <div class="partner-logo">
                     <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
                       <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
@@ -1061,6 +1104,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import PortfolioSection from '~/components/PortfolioSection.vue'
+import Swal from 'sweetalert2'
 import '~/assets/css/svg-enhanced.css'
 
 const stats = ref({
@@ -1085,9 +1129,13 @@ onMounted(async () => {
     const projectsData = await $fetch(`${useRuntimeConfig().public.apiBase}/projects`)
     projects.value = projectsData || []
     
-    // Fetch partners
-    const partnersData = await $fetch(`${useRuntimeConfig().public.apiBase}/partners`)
-    partners.value = partnersData || []
+    // Fetch partners from admin API (to get decrypted names)
+    const partnersResponse = await $fetch('http://localhost:3001/api/admin/partners')
+    if (partnersResponse.success) {
+      partners.value = partnersResponse.data || []
+    } else {
+      partners.value = []
+    }
   } catch (error) {
     console.error('Data fetch error:', error)
   }
@@ -1115,6 +1163,113 @@ const submitForm = async () => {
   isSubmitting.value = true
   submitStatus.value = null
   
+  // Validation
+  if (!form.value.name.trim()) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Name is required'
+    })
+    isSubmitting.value = false
+    return
+  }
+  
+  // Name validation - only letters and spaces
+  const nameRegex = /^[a-zA-Z\s]+$/
+  if (!nameRegex.test(form.value.name.trim())) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Name can only contain letters and spaces'
+    })
+    isSubmitting.value = false
+    return
+  }
+  
+  // Email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (!emailRegex.test(form.value.email.trim())) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Please enter a valid email address'
+    })
+    isSubmitting.value = false
+    return
+  }
+  
+  // Phone number validation (optional but if provided, should be valid)
+  if (form.value.phone.trim()) {
+    const phoneRegex = /^\d{10,17}$/
+    const cleanPhone = form.value.phone.replace(/\D/g, '') // Remove non-digits
+    if (!phoneRegex.test(cleanPhone)) {
+      await Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: 'Phone number must be between 10 and 17 digits'
+      })
+      isSubmitting.value = false
+      return
+    }
+    form.value.phone = cleanPhone // Update with cleaned phone number
+  }
+  
+  // Subject validation
+  if (!form.value.subject.trim()) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'validation Error',
+      text: 'Subject is required'
+    })
+    isSubmitting.value = false
+    return
+  }
+  
+  // Subject validation - only letters, numbers, and basic punctuation
+  const subjectRegex = /^[a-zA-Z0-9\s\-\.\?\!]+$/
+  if (!subjectRegex.test(form.value.subject.trim())) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Subject can only contain letters, numbers, and basic punctuation'
+    })
+    isSubmitting.value = false
+    return
+  }
+  
+  // Message validation
+  if (!form.value.message.trim()) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Message is required'
+    })
+    isSubmitting.value = false
+    return
+  }
+  
+  // Message validation - minimum length
+  if (form.value.message.trim().length < 10) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Message must be at least 10 characters long'
+    })
+    isSubmitting.value = false
+    return
+  }
+  
+  // Message validation - maximum length
+  if (form.value.message.trim().length > 1000) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: 'Message must be less than 1000 characters'
+    })
+    isSubmitting.value = false
+    return
+  }
+  
   try {
     const response = await $fetch(`${useRuntimeConfig().public.apiBase}/contact`, {
       method: 'POST',
@@ -1125,26 +1280,34 @@ const submitForm = async () => {
       }
     })
     
-    submitStatus.value = {
-      type: 'success',
-      message: 'Thank you for your message! We will get back to you soon.'
-    }
-    
-    // Reset form
-    form.value = {
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: ''
+    if (response.success) {
+      await Swal.fire({
+        icon: 'success',
+        title: 'Message Sent Successfully!',
+        text: 'Thank you for your message! We will get back to you soon.',
+        confirmButtonColor: '#667eea'
+      })
+      
+      // Reset form
+      form.value = {
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: ''
+      }
+    } else {
+      throw new Error(response.message || 'Failed to send message')
     }
     
   } catch (error) {
     console.error('Form submission error:', error)
-    submitStatus.value = {
-      type: 'error',
-      message: 'Sorry, there was an error sending your message. Please try again.'
-    }
+    await Swal.fire({
+      icon: 'error',
+      title: 'Submission Failed',
+      text: 'Sorry, there was an error sending your message. Please try again.',
+      confirmButtonColor: '#e53e3e'
+    })
   } finally {
     isSubmitting.value = false
   }
