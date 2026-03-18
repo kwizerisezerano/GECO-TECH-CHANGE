@@ -1,5 +1,6 @@
 const mysql = require('mysql2/promise');
 require('dotenv').config();
+const { updateRealData } = require('./update_real_data');
 
 /**
  * Database Migration Script for GECO RWANDA
@@ -196,15 +197,15 @@ async function runMigration() {
       console.log(`   ${index + 1}. ${tableName}`);
     });
     
-    // Show sample data counts
-    const [projectCount] = await connection.execute('SELECT COUNT(*) as count FROM projects');
-    
-    console.log('\n📈 Sample data inserted:');
-    console.log(`   • Projects: ${projectCount[0].count}`);
-    console.log('   • Partners: Will be added through update_real_data.js');
+    console.log('\n📈 Tables created: ' + tables.length);
     
     console.log('\n🎉 Database setup completed successfully!');
-    console.log('💡 You can now start your server with: npm run dev');
+    console.log('💡 Seeding real data...');
+
+    // Auto-seed all real data (admin, projects, partners)
+    await updateRealData();
+
+    console.log('\n✅ All done! You can now start your server with: npm run dev');
     
   } catch (error) {
     console.error('❌ Migration failed:', error.message);
