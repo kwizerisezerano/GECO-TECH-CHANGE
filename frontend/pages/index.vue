@@ -1130,7 +1130,7 @@ onMounted(async () => {
     projects.value = projectsData || []
     
     // Fetch partners from admin API (to get decrypted names)
-    const partnersResponse = await $fetch('http://localhost:3001/api/admin/partners')
+    const partnersResponse = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/partners`)
     if (partnersResponse.success) {
       partners.value = partnersResponse.data || []
     } else {

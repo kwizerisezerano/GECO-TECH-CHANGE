@@ -2944,7 +2944,8 @@ const styles$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
 const ____path_ = defineEventHandler(async (event) => {
   var _a;
   const path = getRouterParam(event, "path");
-  const targetUrl = `http://localhost:3001/api/${path}`;
+  const config = useRuntimeConfig();
+  const targetUrl = `${config.public.apiBase}/${path}`;
   try {
     const response = await $fetch(targetUrl, {
       method: event.node.req.method,

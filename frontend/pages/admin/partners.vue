@@ -282,7 +282,7 @@ const handleLogout = async () => {
 
 const fetchPartners = async () => {
   try {
-    const response = await $fetch('http://localhost:3001/api/admin/partners')
+    const response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/partners`)
     if (response.success) {
       partners.value = response.data
     }
@@ -421,7 +421,7 @@ const addPartner = async () => {
   }
   
   try {
-    const response = await $fetch('http://localhost:3001/api/admin/partners', {
+    const response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/partners`, {
       method: 'POST',
       body: {
         ...formData.value,
@@ -534,7 +534,7 @@ const updatePartner = async () => {
   }
   
   try {
-    const response = await $fetch(`http://localhost:3001/api/admin/partners/${editingPartner.value.id}`, {
+    const response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/partners/${editingPartner.value.id}`, {
       method: 'PUT',
       body: {
         ...formData.value,
@@ -574,7 +574,7 @@ const deletePartner = async (partner) => {
   
   if (result.isConfirmed) {
     try {
-      const response = await $fetch(`http://localhost:3001/api/admin/partners/${partner.id}`, {
+      const response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/partners/${partner.id}`, {
         method: 'DELETE'
       })
       

@@ -1,6 +1,7 @@
 export default defineEventHandler(async (event) => {
   const path = getRouterParam(event, 'path')
-  const targetUrl = `http://localhost:3001/api/${path}`
+  const config = useRuntimeConfig()
+  const targetUrl = `${config.public.apiBase}/${path}`
   
   try {
     const response = await $fetch(targetUrl, {
@@ -10,7 +11,6 @@ export default defineEventHandler(async (event) => {
         ? await readRawBody(event) 
         : undefined
     })
-    
     return response
   } catch (error) {
     throw createError({

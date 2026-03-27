@@ -596,7 +596,8 @@ const addNotification = async () => {
   addingNotification.value = true
   
   try {
-    const response = await $fetch('http://localhost:3001/api/admin/notifications', {
+    const config = useRuntimeConfig()
+    const response = await $fetch(`${config.public.apiBase}/admin/notifications`, {
       method: 'POST',
       body: notificationForm.value
     })
@@ -658,7 +659,8 @@ const fetchDashboardData = async () => {
     error.value = ''
     
     // Try to get real data from backend
-    const response = await $fetch('http://localhost:3001/api/admin/dashboard-stats')
+    const config = useRuntimeConfig()
+  const response = await $fetch(`${config.public.apiBase}/admin/dashboard-stats`)
     
     if (response.success) {
       dashboardData.value = response.data

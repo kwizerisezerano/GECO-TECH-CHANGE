@@ -338,7 +338,7 @@ const fetchProjects = async () => {
     loading.value = true
     errorMessage.value = ''
     
-    const response = await $fetch('http://localhost:3001/api/admin/projects')
+    const response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/projects`)
     console.log('Projects response:', response)
     
     if (response.success) {
@@ -468,7 +468,7 @@ const handleAddProject = async () => {
   
   try {
     console.log('Sending API request...')
-    const response = await $fetch('http://localhost:3001/api/admin/projects', {
+    const response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/projects`, {
       method: 'POST',
       body: {
         ...newProject.value,
@@ -956,7 +956,7 @@ const updateProject = async (projectId, data) => {
   }
   
   try {
-    const response = await $fetch(`http://localhost:3001/api/admin/projects/${projectId}`, {
+    const response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/projects/${projectId}`, {
       method: 'PUT',
       body: data
     })
@@ -994,7 +994,7 @@ const deleteProject = async (projectId) => {
 
   if (result.isConfirmed) {
     try {
-      const response = await $fetch(`http://localhost:3001/api/admin/projects/${projectId}`, {
+      const response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/projects/${projectId}`, {
         method: 'DELETE'
       })
       

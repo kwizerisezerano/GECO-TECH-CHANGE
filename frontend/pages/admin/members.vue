@@ -295,7 +295,7 @@ const handleLogout = async () => {
 
 const fetchMembers = async () => {
   try {
-    const response = await $fetch('http://localhost:3001/api/admin/members')
+    const response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/members`)
     if (response.success) {
       members.value = response.data
     }
@@ -449,7 +449,7 @@ const saveMember = async () => {
     let response
     if (editingMember.value) {
       // Update existing member
-      response = await $fetch(`http://localhost:3001/api/admin/members/${editingMember.value.id}`, {
+      response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/members/${editingMember.value.id}`, {
         method: 'PUT',
         body: {
           ...memberForm.value,
@@ -459,7 +459,7 @@ const saveMember = async () => {
       })
     } else {
       // Add new member
-      response = await $fetch('http://localhost:3001/api/admin/members', {
+      response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/members`, {
         method: 'POST',
         body: {
           ...memberForm.value,
@@ -505,7 +505,7 @@ const deleteMember = async (memberId, memberName) => {
   
   if (result.isConfirmed) {
     try {
-      const response = await $fetch(`http://localhost:3001/api/admin/members/${memberId}`, {
+      const response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/members/${memberId}`, {
         method: 'DELETE'
       })
       

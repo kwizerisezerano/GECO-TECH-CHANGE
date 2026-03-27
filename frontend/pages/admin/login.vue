@@ -122,15 +122,14 @@ const handleLogin = async () => {
   error.value = ''
   
   try {
-    // Validate form inputs
     if (!form.value.email || !form.value.password) {
       error.value = 'Please enter both email and password'
       return
     }
     
-    // Try backend API first
+    const config = useRuntimeConfig()
     try {
-      const response = await $fetch('http://localhost:3001/api/admin/login', {
+      const response = await $fetch(`${config.public.apiBase}/admin/login`, {
         method: 'POST',
         body: form.value
       })

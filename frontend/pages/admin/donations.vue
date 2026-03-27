@@ -143,7 +143,7 @@ const handleLogout = async () => {
 
 const fetchDonations = async () => {
   try {
-    const response = await $fetch('http://localhost:3001/api/admin/donations')
+    const response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/donations`)
     if (response.success) {
       donations.value = response.data
     }

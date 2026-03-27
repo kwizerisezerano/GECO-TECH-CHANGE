@@ -307,7 +307,7 @@ const handleLogout = async () => {
 
 const fetchUsers = async () => {
   try {
-    const response = await $fetch('http://localhost:3001/api/admin/users')
+    const response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/users`)
     if (response.success) {
       users.value = response.data
     }
@@ -496,13 +496,13 @@ const saveUser = async () => {
     let response
     if (editingUser.value) {
       // Update existing user
-      response = await $fetch(`http://localhost:3001/api/admin/users/${editingUser.value.id}`, {
+      response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/users/${editingUser.value.id}`, {
         method: 'PUT',
         body: userForm.value
       })
     } else {
       // Add new user
-      response = await $fetch('http://localhost:3001/api/admin/users', {
+      response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/users`, {
         method: 'POST',
         body: userForm.value
       })
@@ -544,7 +544,7 @@ const deleteUser = async (userId, userName) => {
   
   if (result.isConfirmed) {
     try {
-      const response = await $fetch(`http://localhost:3001/api/admin/users/${userId}`, {
+      const response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/users/${userId}`, {
         method: 'DELETE'
       })
       

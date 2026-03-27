@@ -229,7 +229,7 @@ const editFormData = ref({
 
 const fetchBeneficiaries = async () => {
   try {
-    const response = await $fetch('http://localhost:3001/api/admin/beneficiaries')
+    const response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/beneficiaries`)
     if (response.success) {
       beneficiaries.value = response.data
     }
@@ -327,7 +327,7 @@ const addBeneficiary = async () => {
   }
   
   try {
-    const response = await $fetch('http://localhost:3001/api/admin/beneficiaries', {
+    const response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/beneficiaries`, {
       method: 'POST',
       body: {
         ...formData.value,
@@ -414,7 +414,7 @@ const updateBeneficiary = async () => {
   }
   
   try {
-    const response = await $fetch(`http://localhost:3001/api/admin/beneficiaries/${editingBeneficiary.value.id}`, {
+    const response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/beneficiaries/${editingBeneficiary.value.id}`, {
       method: 'PUT',
       body: {
         ...editFormData.value,
@@ -457,7 +457,7 @@ const deleteBeneficiary = async (beneficiary) => {
 
   if (result.isConfirmed) {
     try {
-      const response = await $fetch(`http://localhost:3001/api/admin/beneficiaries/${beneficiary.id}`, {
+      const response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/beneficiaries/${beneficiary.id}`, {
         method: 'DELETE'
       })
       

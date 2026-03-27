@@ -268,7 +268,8 @@ const toggleNotifications = () => {
 
 const fetchNotifications = async () => {
   try {
-    const response = await $fetch('http://localhost:3001/api/admin/notifications')
+    const config = useRuntimeConfig()
+    const response = await $fetch(`${config.public.apiBase}/admin/notifications`)
     if (response.success) {
       notifications.value = response.data
       // Count unread notifications
@@ -286,7 +287,8 @@ const fetchNotifications = async () => {
 
 const fetchUnreadCount = async () => {
   try {
-    const response = await $fetch('http://localhost:3001/api/admin/notifications/unread/count')
+    const config = useRuntimeConfig()
+    const response = await $fetch(`${config.public.apiBase}/admin/notifications/unread/count`)
     if (response.success) {
       unreadCount.value = response.data.unread_count
     }
@@ -299,7 +301,8 @@ const fetchUnreadCount = async () => {
 
 const markAsRead = async (id) => {
   try {
-    const response = await $fetch(`http://localhost:3001/api/admin/notifications/${id}/read`, {
+    const config = useRuntimeConfig()
+    const response = await $fetch(`${config.public.apiBase}/admin/notifications/${id}/read`, {
       method: 'PUT'
     })
     if (response.success) {
@@ -329,7 +332,8 @@ const markAllAsRead = async () => {
 
 const deleteNotification = async (id) => {
   try {
-    const response = await $fetch(`http://localhost:3001/api/admin/notifications/${id}`, {
+    const config = useRuntimeConfig()
+    const response = await $fetch(`${config.public.apiBase}/admin/notifications/${id}`, {
       method: 'DELETE'
     })
     if (response.success) {
@@ -534,7 +538,8 @@ const updateNotification = async () => {
   updating.value = true
   
   try {
-    const response = await $fetch(`http://localhost:3001/api/admin/notifications/${editingNotificationId.value}`, {
+    const config = useRuntimeConfig()
+    const response = await $fetch(`${config.public.apiBase}/admin/notifications/${editingNotificationId.value}`, {
       method: 'PUT',
       body: editForm.value
     })

@@ -215,7 +215,7 @@ const handleLogout = async () => {
 
 const fetchPublications = async () => {
   try {
-    const response = await $fetch('http://localhost:3001/api/admin/publications')
+    const response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/publications`)
     if (response.success) {
       publications.value = response.data
     }
@@ -257,7 +257,7 @@ const deletePublication = async (publication) => {
   
   if (result.isConfirmed) {
     try {
-      const response = await $fetch(`http://localhost:3001/api/admin/publications/${publication.id}`, {
+      const response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/publications/${publication.id}`, {
         method: 'DELETE'
       })
       
@@ -336,7 +336,7 @@ const uploadPublication = async () => {
     const formData = new FormData()
     formData.append('file', selectedFile.value)
     
-    const response = await $fetch('http://localhost:3001/api/admin/publications', {
+    const response = await $fetch(`${useRuntimeConfig().public.apiBase}/admin/publications`, {
       method: 'POST',
       body: formData
     })

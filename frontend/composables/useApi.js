@@ -1,18 +1,9 @@
-/**
- * API composable for making backend requests
- */
 export const useApi = () => {
   const config = useRuntimeConfig()
   
   const apiCall = async (endpoint, options = {}) => {
     try {
-      // For admin endpoints, use the full backend URL
-      const url = endpoint.startsWith('/admin') 
-        ? `http://localhost:3001/api${endpoint}`
-        : `${config.public.apiBase}${endpoint}`
-      
-      console.log('API Call:', url, options)
-      
+      const url = `${config.public.apiBase}${endpoint}`
       return await $fetch(url, {
         ...options,
         headers: {
@@ -26,7 +17,5 @@ export const useApi = () => {
     }
   }
   
-  return {
-    apiCall
-  }
+  return { apiCall }
 }
